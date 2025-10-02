@@ -1,0 +1,90 @@
+@startuml
+'https://plantuml.com/class-diagram
+skinparam classAttributeIconSize 0
+
+class Main {
+{static} main(args:String[])
+}
+
+class PointOfSale {
+- idLastSale : int
+- catalogFileName : String
++ makeNewSale() : int
++ addLineItemToSale(idSale : int, \n\tprodName : String, qty : int)
++ printReceiptOfSale(saleId : int)
++ payOneSale(saleId : int, amount : double)
++ printChangeOfSale(saleId : int)
+- searchSaleById(int id) : Sale
+}
+
+class ProductCatalog {
++ ProductCatalog(fileName : String)
++ searchByName(name : String) : ProductSpecification
+- addProductSpecification(name : String, price : double)
+}
+
+note left of ProductCatalog::ProductCatalog {
+text file with
+Coca-cola 1.20
+Nestea    1.50
+Moritz    1.90
+...
+}
+
+class ProductSpecification {
+- price : double
+- name : String
++ incrementQuantity(qty : int)
+}
+
+class Sale {
+- id : int
+- dateTime : LocalDateTime
++ Sale(id : int)
++ addLineItem(prodSpec : ProductSpecification, \n\tqty : int)
++ printReceipt()
++ payCash(amount : double) : double
++ payCreditCard(amountToPay: double,
+        ccnumber: String)
++ printChange()
+- total() : double
+}
+
+abstract Payment {
+# amountToPay : double
++ Payment(amount : double)
+{abstract}+ print()
+{abstract}+ pay()
+}
+
+class PaymentInCash extends Payment {
+-amountHanded: double
++ PaymentInCash(amountToPay : double,
+ amountHanded: double)
++ change(totalSale : double) : double
+}
+
+class PaymentCreditCard extends Payment {
+-ccnumber : String
+-authorized : boolean
+-CC_LIMIT : double
++ PaymentCreditCard(ccnumber : int,
+    amountToPay : double)
+- authorized() : boolean
++ print
+}
+
+class SaleLineItem {
+- quantity : int
++ incrementQuantity()
++ subtotal() : double
++ print()
+}
+
+PointOfSale o--> "*" Sale : sales
+Sale *--> "*" SaleLineItem : saleLineItems
+SaleLineItem --> "1" ProductSpecification : productSpecification
+PointOfSale --> "1" ProductCatalog : productCatalog
+ProductCatalog o--> " * " ProductSpecification : productSpecifications
+Sale ---> "0.1" Payment : payment
+@enduml
