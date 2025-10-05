@@ -12,8 +12,9 @@ class PointOfSale {
 + makeNewSale() : int
 + addLineItemToSale(idSale : int, \n\tprodName : String, qty : int)
 + printReceiptOfSale(saleId : int)
-+ payOneSale(saleId : int, amount : double)
-+ printChangeOfSale(saleId : int)
++ payOneSaleCash(saleId : int, amount : double)
++ payOneSaleCard(saleId : int, ccnumber : String)
++ printPayment(saleId : int)
 - searchSaleById(int id) : Sale
 }
 
@@ -34,7 +35,6 @@ Moritz    1.90
 class ProductSpecification {
 - price : double
 - name : String
-+ incrementQuantity(qty : int)
 }
 
 class Sale {
@@ -42,16 +42,36 @@ class Sale {
 - dateTime : LocalDateTime
 + Sale(id : int)
 + addLineItem(prodSpec : ProductSpecification, \n\tqty : int)
-+ printReceipt()
-+ pay(amount : double) : double
-+ printChange()
++ payCash(amountHanded : double)
++ payCreditCard(amountToPay: double,
+        ccnumber: String)
++ printPayment()
 - total() : double
++ printReceipt()
 }
 
-class PaymentInCash {
-- amount : double
-+ PaymentInCash(amount : double)
+abstract Payment {
+# amountToPay : double
++ Payment(amountToPay : double)
+{abstract}+ print()
+{abstract}+ pay()
+}
+
+class PaymentInCash extends Payment {
+-amountHanded: double
++ PaymentInCash(amountToPay : double,
+ amountHanded: double)
 + change(totalSale : double) : double
+}
+
+class PaymentCreditCard extends Payment {
+-ccnumber : String
+-authorized : boolean
+-CC_LIMIT : double
++ PaymentCreditCard(ccnumber : int,
+    amountToPay : double)
+- authorized() : boolean
++ print
 }
 
 class SaleLineItem {
@@ -66,5 +86,5 @@ Sale *--> "*" SaleLineItem : saleLineItems
 SaleLineItem --> "1" ProductSpecification : productSpecification
 PointOfSale --> "1" ProductCatalog : productCatalog
 ProductCatalog o--> " * " ProductSpecification : productSpecifications
-Sale ---> "1" PaymentInCash
+Sale ---> "0.1" Payment : payment
 @enduml

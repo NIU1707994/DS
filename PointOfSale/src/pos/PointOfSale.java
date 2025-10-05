@@ -47,13 +47,13 @@ public class PointOfSale {
   }
 
   public void payOneSaleCard(int saleId, String ccnumber) {
-    /*Sale sale = searchSaleById(saleId);
-    sale.payCash(amount);*/
+    Sale sale = searchSaleById(saleId);
+    sale.payCreditCard(ccnumber);
   }
 
-  public void printChangeOfSale(int saleId) {
+  public void printPayment(int saleId) {
     Sale sale = searchSaleById(saleId);
-    sale.printChange();
+    sale.printPayment();
   }
 
   public boolean isSalePaid(int id) {

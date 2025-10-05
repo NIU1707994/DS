@@ -56,7 +56,7 @@ public class Mediator {
         int id = currentTableListener.getSaleId();
         if (!pointOfSale.isSalePaid(id) && (paidAmount > 0)) {
           pointOfSale.payOneSaleCash(id, paidAmount);
-          pointOfSale.printChangeOfSale(id);
+          pointOfSale.printPayment(id);
           paidAmount = 0;
           textAmount.setText("0.0");
         } else {

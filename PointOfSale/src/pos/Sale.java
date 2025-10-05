@@ -62,13 +62,14 @@ public class Sale {
     System.out.printf("Total %.2f\n", total);
   }
 
-  public void payCash(double amount) {
+  public void payCash(double amountHanded) {
     assert !isPaid : "sale " + id + " has already been paid";
-    payment = new PaymentInCash(amount, total());
+    payment = new PaymentInCash(amountHanded, total());
+    payment.print();
     isPaid = true;
   }
 
-  public void payCreditCard(double amountToPay, String ccnumber) {
+  public void payCreditCard(String ccnumber) {
     assert !isPaid : "sale " + id + " has already been paid";
     payment = new PaymentCreditCard(total(), ccnumber);
     if (((PaymentCreditCard) payment).isAuthorized()) {
@@ -76,9 +77,13 @@ public class Sale {
     }
   }
 
-  public void printChange() {
+  /*public void printChange() {
     assert payment != null : "No payment for sale " + id;
     System.out.printf("\nAmount paid : %.2f\nChange : %.2f\n", payment.getAmountToPay(), payment.change(total()));
+  }*/
+
+  public void printPayment() {
+    payment.print();
   }
 
   public boolean isPaid() {

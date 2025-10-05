@@ -21,7 +21,7 @@ public class Main {
     pointOfSale.printReceiptOfSale(idSale);
     double handedAmount = 20.;
     pointOfSale.payOneSaleCash(idSale, handedAmount);
-    pointOfSale.printChangeOfSale(idSale);
+    pointOfSale.printPayment(idSale);
   }
   // the old main
   /*
