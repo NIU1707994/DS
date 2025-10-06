@@ -3,7 +3,7 @@ package pos_creditcard;
 import java.util.*;
 
 public class CashBox {
-  Map<Double, Integer> coin = new TreeMap<>(Comparator.reverseOrder());
+  private Map<Double, Integer> coin = new TreeMap<>(Comparator.reverseOrder());
 
   private void fillCashBox() {
     coin.put(0.01, 0);
@@ -36,9 +36,7 @@ public class CashBox {
     }
   }
 
-
-
-  public CashBox add(CashBox c) {
+  public void add(CashBox c) {
     for (Map.Entry<Double, Integer> entry : c.coin.entrySet()) {
       if (c.coin.get(entry.getKey()) > 0) {
         coin.put(entry.getKey(), entry.getValue() +  c.coin.get(entry.getKey()));
@@ -47,16 +45,14 @@ public class CashBox {
         coin.put(entry.getKey(), c.coin.get(entry.getKey()));
       }
     }
-    return this;
   }
 
-  public CashBox sub(CashBox c) {
+  public void sub(CashBox c) {
     for (Map.Entry<Double, Integer> entry : c.coin.entrySet()) {
       if (c.coin.get(entry.getKey()) > 0) {
         coin.put(entry.getKey(), entry.getValue() -  c.coin.get(entry.getKey()));
       }
     }
-    return this;
   }
 
   @Override
@@ -66,14 +62,6 @@ public class CashBox {
       toReturn += entry.getKey() + ": " + entry.getValue() + "\n";
     }
     return toReturn;
-  }
-
-  public boolean lessEqual(double ccLimit) {
-    double total = 0;
-    for (Map.Entry<Double, Integer> entry : coin.entrySet()) {
-      total += entry.getValue() * entry.getKey();
-    }
-    return total <= ccLimit;
   }
 
   public boolean greaterEqual(double amountToPay) {
