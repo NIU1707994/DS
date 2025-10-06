@@ -1,19 +1,15 @@
 package pos_creditcard;
 
-public class PaymentInCash extends Payment {
-  double amountHanded;
+public abstract class PaymentInCash extends Payment {
+  CashBox amountHanded;
 
-  public PaymentInCash(double amountHanded, double amountToPay) {
+  public PaymentInCash(CashBox amountHanded, double amountToPay) {
     super(amountToPay);
-    assert amountHanded >= amountToPay;
+    assert amountHanded.greaterEqual(amountToPay);
     this.amountHanded = amountHanded;
   }
 
-  private double change() {
-    double change = amountHanded - amountToPay;
-    assert change >= 0;
-    return change;
-  }
+  protected abstract String change();
 
   @Override
   public void print() {

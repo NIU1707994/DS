@@ -57,11 +57,12 @@ abstract Payment {
 {abstract}+ pay()
 }
 
-class PaymentInCash extends Payment {
+abstract PaymentInCash extends Payment {
 -amountHanded: double
 + PaymentInCash(amountToPay : double,
  amountHanded: double)
-+ change(totalSale : double) : double
++ print()
+{abstract}# change() : String
 }
 
 class PaymentCreditCard extends Payment {
@@ -71,7 +72,7 @@ class PaymentCreditCard extends Payment {
 + PaymentCreditCard(ccnumber : int,
     amountToPay : double)
 - authorized() : boolean
-+ print
++ print()
 }
 
 class SaleLineItem {

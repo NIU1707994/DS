@@ -11,5 +11,4 @@ public abstract class Payment {
   }
 
   public abstract void print();
-  public abstract void pay();
 }

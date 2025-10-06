@@ -17,7 +17,7 @@ public class Main {
     //Coca-cola 3 x 1.2 = 3.6
     //Total 11.2
     pointOfSale.printReceiptOfSale(idSale);
-    double handedAmount = 20.;
+    CashBox handedAmount = new CashBox(10., 2);
     pointOfSale.payOneSaleCash(idSale, handedAmount);
     pointOfSale.printPayment(idSale);
     System.out.println("---------------------------------");

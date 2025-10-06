@@ -1,17 +1,13 @@
 package pos;
 
-public class PaymentInCash extends Payment {
+public abstract class PaymentInCash extends Payment {
   private double amountHanded;
-  public PaymentInCash(double amountToPay, double amountHanded) {
+  public PaymentInCash(double amountHanded, double amountToPay) {
     super(amountToPay);
     this.amountHanded = amountHanded;
   }
 
-  protected double change() {
-    double change = amountToPay - amountHanded; // better than sale.total(), avoids a dependence
-    assert change >= 0;
-    return change;
-  }
+  protected abstract String change();
 
   public double getAmountHanded() {
     return amountHanded;
@@ -20,10 +16,5 @@ public class PaymentInCash extends Payment {
   @Override
   public void print() {
     System.out.println("Change: " + change());
-  }
-
-  @Override
-  public void pay() {
-
   }
 }

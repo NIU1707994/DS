@@ -25,11 +25,6 @@ public class PaymentCreditCard extends Payment {
     }
   }
 
-  @Override
-  public void pay() {
-
-  }
-
   public boolean isAuthorized() {
     return authorized;
   }

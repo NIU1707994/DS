@@ -41,7 +41,7 @@ public class PointOfSale {
     sale.printReceipt();
   }
 
-  public void payOneSaleCash(int saleId, double amountHanded) {
+  public void payOneSaleCash(int saleId, CashBox amountHanded) {
     Sale sale = searchSaleById(saleId);
     sale.payCash(amountHanded);
   }
