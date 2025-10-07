@@ -13,7 +13,8 @@ public class PayListener implements ActionListener {
 
   @Override
   public void actionPerformed(ActionEvent actionEvent) {
-    mediator.pay();
+    String changeMaking = "optimal";
+    mediator.pay(changeMaking);
     //the paid amount also goes to mediator
   }
 }

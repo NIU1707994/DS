@@ -26,6 +26,7 @@ public class CashBox {
   public CashBox(Double key, int quantity)
   {
     fillCashBox();
+    assert coin.containsKey(key);
     coin.put(key, quantity);
   }
 
@@ -33,6 +34,29 @@ public class CashBox {
     fillCashBox();
     for (Map.Entry<Double, Integer> entry : amount.entrySet()) {
       coin.put(entry.getKey(), entry.getValue());
+    }
+  }
+
+  public CashBox(double amount)
+  {
+    fillCashBox();
+    if (coin.containsKey(amount)) {
+      coin.put(amount, coin.get(amount) + 1);
+    }
+    else {
+      comuteAmount(amount);
+    }
+  }
+
+  private void comuteAmount(double amount) {
+    if (amount > 0) {
+      for (Double key : coin.keySet()) {
+        if (key >= amount) {
+          int quantity = (int) (amount / key);
+          coin.put(key, quantity);
+          amount = amount - key * quantity;
+        }
+      }
     }
   }
 
@@ -75,7 +99,7 @@ public class CashBox {
   public double total() {
     double total = 0;
     for (Map.Entry<Double, Integer> entry : coin.entrySet()) {
-      total += entry.getValue();
+      total += entry.getKey()*entry.getValue();
     }
     return total;
   }
@@ -86,5 +110,15 @@ public class CashBox {
 
   public void put(double key, int quantity) {
     coin.put(key, quantity);
+  }
+
+  public boolean greater(int i) {
+    return total() > i;
+  }
+
+  public void setZero() {
+    for (Map.Entry<Double, Integer> entry : coin.entrySet()) {
+      coin.put(entry.getKey(), 0);
+    }
   }
 }

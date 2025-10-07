@@ -11,7 +11,6 @@ public class Sale {
   private ArrayList<SaleLineItem> saleLineItems = new ArrayList<>();
   private LocalDateTime dateTime = LocalDateTime.now();
   private Payment payment;
-  private String changeMaking;
 
   public Sale(int id) {
     this.id = id;
@@ -63,9 +62,9 @@ public class Sale {
     System.out.printf("Total %.2f\n", total);
   }
 
-  public void payCash(double amountHanded) {
+  public void payCash(CashBox amountHanded, String changeMaking) {
     assert !isPaid : "sale " + id + " has already been paid";
-    if (changeMaking.equals("Optimal")) {
+    if (changeMaking.equals("optimal")) {
       payment = new PaymentInCashGreedy(amountHanded, total());
     } else {
       payment = new PaymentInCashRandom(amountHanded, total());

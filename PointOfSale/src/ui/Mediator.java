@@ -1,5 +1,6 @@
 package ui;
 
+import pos.CashBox;
 import pos.PointOfSale;
 
 import javax.swing.*;
@@ -7,7 +8,7 @@ import javax.swing.*;
 public class Mediator {
   JButton selectedTable;
   JTextField textAmount; // to set it to 0.0 once a payment is made
-  double paidAmount = 0.0;
+  CashBox paidAmount = new CashBox(10., 2);
   private final PointOfSale pointOfSale;
   private TableListener currentTableListener;
 
@@ -50,14 +51,14 @@ public class Mediator {
     }
   }
 
-  public void pay() {
+  public void pay(String changeMaking) {
     if (currentTableListener != null) {
       if (currentTableListener.hasASale()) {
         int id = currentTableListener.getSaleId();
-        if (!pointOfSale.isSalePaid(id) && (paidAmount > 0)) {
-          pointOfSale.payOneSaleCash(id, paidAmount);
+        if (!pointOfSale.isSalePaid(id) && (paidAmount.greater(0))) {
+          pointOfSale.payOneSaleCash(id, paidAmount, changeMaking);
           pointOfSale.printPayment(id);
-          paidAmount = 0;
+          paidAmount.setZero();
           textAmount.setText("0.0");
         } else {
           System.out.println("Sale of table " + selectedTable.getText() + " has already been paid");
@@ -66,8 +67,8 @@ public class Mediator {
     }
   }
 
-  public void setPaidAmount(double amount) {
-    assert amount > 0;
+  public void setPaidAmount(CashBox amount) {
+    assert amount.greater(0);
     paidAmount = amount;
   }
 

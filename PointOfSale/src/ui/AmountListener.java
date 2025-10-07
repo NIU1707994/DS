@@ -1,5 +1,7 @@
 package ui;
 
+import pos.CashBox;
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -15,7 +17,7 @@ public class AmountListener implements ActionListener {
 
   @Override
   public void actionPerformed(ActionEvent actionEvent) {
-    double amount = Double.parseDouble(textField.getText());
+    CashBox amount = new  CashBox(Double.parseDouble(textField.getText()));
     mediator.setPaidAmount(amount);
   }
 }

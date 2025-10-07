@@ -1,15 +1,15 @@
 package pos;
 
 public abstract class PaymentInCash extends Payment {
-  private double amountHanded;
-  public PaymentInCash(double amountHanded, double amountToPay) {
+  protected CashBox amountHanded;
+  public PaymentInCash(CashBox amountHanded, double amountToPay) {
     super(amountToPay);
     this.amountHanded = amountHanded;
   }
 
   protected abstract String change();
 
-  public double getAmountHanded() {
+  public CashBox getAmountHanded() {
     return amountHanded;
   }
 
