@@ -1,0 +1,64 @@
+@startuml
+
+
+skinparam classAttributeIconSize 0
+'skinparam linetype ortho
+
+interface ArithmeticExpression {
++ {abstract} calculate() : double
+}
+
+class Constant implements ArithmeticExpression {
+- value : double
+--
++ calculate() : double
+}
+
+' note left of Constant
+' return value
+' end note
+
+abstract BinaryOperator implements ArithmeticExpression {
+BinaryOperator(left, right : ArithmeticExpression)
+}
+
+BinaryOperator *--> ArithmeticExpression : " # left"
+BinaryOperator *--> ArithmeticExpression : " # right"
+
+' note left of BinaryOperator
+' left = leftOperand
+' right = rightOperand
+' end note
+
+class Sum extends BinaryOperator {
+--
++ calculate()
+}
+
+' note bottom of Sum
+' return left.calculate()
+'        + right.calculate()
+' end note
+
+class Product extends BinaryOperator {
++ calculate()
+}
+
+' note bottom of Product
+' return left.calculate() *
+'     right.calculate()
+' end note
+
+class Subtract extends BinaryOperator {
+--
++ calculate()
+}
+
+
+class Division extends BinaryOperator {
+--
++ calculate()
+}
+
+
+@enduml

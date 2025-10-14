@@ -1,0 +1,38 @@
+@startuml
+skinparam classAttributeIconSize 0
+
+class Constant implements ArithmeticExpression {
+- value : double
++ calculate() : double
+}
+
+note bottom of Constant
+com es calculate() ?
+return value;
+
+Constant c = new Constant(1.234);
+System.out.println(c.calculate());
+end note
+
+class Sum implements ArithmeticExpression {
+- left : ArithmeticExpression
+- right : ArithmeticExpression
+--
++ calculate() : double
++ Sum(left : ArithmeticExpression, right : ArithmeticExpression)
+}
+
+note bottom of Sum
+al constructor:
+this.left = left
+this.right = right
+
+com es calculate() ?
+return left.calculate() + right.calculate()
+end note
+
+interface ArithmeticExpression {
++ {abstract} calculate(): double
+}
+
+@enduml

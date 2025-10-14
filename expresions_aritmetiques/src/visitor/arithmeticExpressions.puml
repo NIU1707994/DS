@@ -1,0 +1,95 @@
+@startuml
+
+skinparam classAttributeIconSize 0
+
+interface Visitor {
++ {abstract} visitSum (s : Sum) : void
++ {abstract} visitSubtract (s : Subtract) : void
++ {abstract} visitProduct (p : Product) : void
++ {abstract} visitDivision (d : Division) : void
++ {abstract} visitConstant (c : Constant) : void
+}
+
+class Calculator implements Visitor {
+- stack : Stack<Double>
+--
++ visitSum (s : Sum)
++ visitSubtract (s : Subtract)
++ visitProduct (p : Product)
++ visitDivision (d : Division)
++ visitConstant (c : Constant)
++ getResult() : double
+}
+
+class Printer implements Visitor {
++ visitSum(s : Sum)
++ visitSubtract(s : Subtract)
++ visitProduct(p : Product)
++ visitDivision(d : Division)
++ visitConstant(c : Constant)
+}
+
+abstract ArithmeticExpression {
++ {abstract} acceptVisitor(v : Visitor) : void
+}
+
+class Constant implements ArithmeticExpression {
+- value : double
+--
++ acceptVisitor(v : Visitor) : void
+}
+
+note bottom of Constant
+visitConstant(this);
+end note
+
+
+abstract BinaryOperator implements ArithmeticExpression {
+# left : ArithmeticExpression
+# right : ArithmeticExpression
+--
+BinaryOperator(left, right : ArithmeticExpression)
+}
+
+BinaryOperator *--> ArithmeticExpression : "2 left, right"
+
+
+
+class Sum extends BinaryOperator {
+--
++ acceptVisitor(v : Visitor) : void
+}
+
+note bottom of Sum
+visitSum(this);
+end note
+
+class Product extends BinaryOperator {
++ acceptVisitor(v : Visitor) : void
+}
+
+note bottom of Product
+visitProduct(this);
+end note
+
+class Subtract extends BinaryOperator {
+--
++ acceptVisitor(v : Visitor) : void
+}
+
+note bottom of Subtract
+visitSubtract(this);
+end note
+
+
+class Division extends BinaryOperator {
+--
++ acceptVisitor(v : Visitor) : void
+}
+
+note bottom of Division
+visitDivision(this);
+end note
+
+
+@enduml
