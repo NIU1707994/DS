@@ -1,17 +1,17 @@
 @startuml
-
+!pragma layout smetana
 
 skinparam classAttributeIconSize 0
 'skinparam linetype ortho
 
 interface ArithmeticExpression {
-+ {abstract} calculate() : double
++ {abstract} evaluate(DualNumber dn) : double
 }
 
 class Constant implements ArithmeticExpression {
 - value : double
 --
-+ calculate() : double
++ evaluate(DualNumber dn) : double
 }
 
 ' note left of Constant
@@ -32,14 +32,8 @@ BinaryOperator *--> ArithmeticExpression : " # right"
 
 class Sum extends BinaryOperator {
 --
-+ calculate()
++ evaluate(DualNumber dn)
 }
-
-' note bottom of Sum
-' return left.calculate()
-'        + right.calculate()
-' end note
-
 class Product extends BinaryOperator {
 + calculate()
 }
@@ -51,13 +45,13 @@ class Product extends BinaryOperator {
 
 class Subtract extends BinaryOperator {
 --
-+ calculate()
++ evaluate(DualNumber dn)
 }
 
 
 class Division extends BinaryOperator {
 --
-+ calculate()
++ evaluate(DualNumber dn)
 }
 
 
