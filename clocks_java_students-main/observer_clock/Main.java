@@ -7,9 +7,12 @@ import java.util.List;
 public class Main {
   public static void main(String[] args) {
     ClockTimer clockTimer = new ClockTimer(10);
-    Clock countDown = new CountDownTimer(4, ChronoUnit.SECONDS);
-    clockTimer.addObserver(countDown);
-    countDown.show();
+      StopWatch stopWatch = new StopWatch();
+      clockTimer.addObserver(stopWatch);
+      stopWatch.show();
+//    Clock countDown = new CountDownTimer(4, ChronoUnit.SECONDS);
+//    clockTimer.addObserver(countDown);
+//    countDown.show();
     /*List<Clock> clocks = new ArrayList<>(List.of(
         new AnalogClock(0, "Cerdanyola, Catalonia"),
         new DigitalClock(-9, "Anchorage, Alaska"),
