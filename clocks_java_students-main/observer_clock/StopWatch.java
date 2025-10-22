@@ -21,7 +21,6 @@ public class StopWatch extends Clock {
 
     public StopWatch() {
         countTime = Duration.ZERO;
-        this.repaintPeriod = 10;
 
         panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
@@ -31,7 +30,8 @@ public class StopWatch extends Clock {
         clockLabel.setFont(new Font(Font.DIALOG, Font.PLAIN, 72));
         clockLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         panel.add(clockLabel);
-
+        updateClockLabel();
+        this.repaintPeriod = 10;
         startStopButton = new JButton("Start");
         startStopButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -43,13 +43,15 @@ public class StopWatch extends Clock {
     }
 
     private void startStopButtonPressed() {
-        if (startStopButton.getText().equals("Start")){
+        if (startStopButton.getText().equals("Stop")){
             this.o.deleteObserver(this);
-            startStopButton.setText("Stop");
+            active = false;
+            startStopButton.setText("Start");
         }
         else  {
             this.o.addObserver(this);
-            startStopButton.setText("Start");
+            active = true;
+            startStopButton.setText("Stop");
         }
 
     }
@@ -57,9 +59,11 @@ public class StopWatch extends Clock {
     @Override
     public void update(Observable o, Object arg) {
         if (this.o == null){
-            this.o = 0;
+            this.o = o;
+            this.o.deleteObserver(this);
         }
-        if (isTimeToRepaint((LocalDateTime) arg)) {
+
+        if (isTimeToRepaint((LocalDateTime) arg) && active) {
             this.lastTimeRepaint = (LocalDateTime) arg;
             updateClockLabel();
         }

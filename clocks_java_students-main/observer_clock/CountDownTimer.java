@@ -10,8 +10,8 @@ import java.time.temporal.Temporal;
 import java.util.Observable;
 
 public class CountDownTimer extends Clock {
-  Duration countDown;
-  Duration startingTime;
+  private Duration countDown;
+  private Duration startingTime;
   private long amount;
   private ChronoUnit chronoUnit;
   private JLabel clockLabel;
@@ -95,7 +95,7 @@ public class CountDownTimer extends Clock {
     timer.start();
   }*/
 
-  public void updateClockLabel() {
+  private void updateClockLabel() {
     // see https://www.geeksforgeeks.org/java/localdatetime-plus-method-in-java-with-examples/
 
     String formattedCountdown = String.format("%d:%02d:%02d",

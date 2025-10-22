@@ -1,0 +1,24 @@
+@startuml
+'https://plantuml.com/class-diagram
+skinparam classAttributeIconSize 0
+
+abstract Clock
+class ClockTimer {
+  - timer : Timer
+  - period : int
+
+}
+class DigitalClock
+class AnalogClock
+
+package "java.util" {
+abstract class Observable
+interface Observer
+    Observable o-right->"*"Observer : observers
+}
+
+Clock ..up|> Observer
+ClockTimer --up|> Observable
+
+
+@enduml

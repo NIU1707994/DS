@@ -23,8 +23,4 @@ public class ClockTimer extends Observable {
     timer = new Timer();
     timer.schedule(timerTask, period, period);
   }
-
-  public int getPeriod() {
-    return period;
-  }
 }

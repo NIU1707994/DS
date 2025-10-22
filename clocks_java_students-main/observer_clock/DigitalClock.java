@@ -68,7 +68,7 @@ public class DigitalClock extends Clock {
     timer.start();
   }*/
 
-  public void updateClockLabel() {
+  private void updateClockLabel() {
     LocalDateTime now = LocalDateTime.now().plus(hoursOffsetTimeZone, ChronoUnit.HOURS);
     // see https://www.geeksforgeeks.org/java/localdatetime-plus-method-in-java-with-examples/
 
