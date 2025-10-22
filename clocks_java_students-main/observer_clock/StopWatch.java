@@ -16,6 +16,7 @@ public class StopWatch extends Clock {
     private JLabel clockLabel;
     private JButton startStopButton;
     private Duration countTime;
+    private Observable o;
     boolean active = false;
 
     public StopWatch() {
@@ -43,11 +44,11 @@ public class StopWatch extends Clock {
 
     private void startStopButtonPressed() {
         if (startStopButton.getText().equals("Start")){
-            active = true;
+            this.o.deleteObserver(this);
             startStopButton.setText("Stop");
         }
         else  {
-            active = false;
+            this.o.addObserver(this);
             startStopButton.setText("Start");
         }
 
@@ -55,6 +56,9 @@ public class StopWatch extends Clock {
 
     @Override
     public void update(Observable o, Object arg) {
+        if (this.o == null){
+            this.o = 0;
+        }
         if (isTimeToRepaint((LocalDateTime) arg)) {
             this.lastTimeRepaint = (LocalDateTime) arg;
             updateClockLabel();
@@ -76,7 +80,7 @@ public class StopWatch extends Clock {
     }
 
     public void updateClockLabel() {
-        if (active) countTime = countTime.plus(repaintPeriod,  ChronoUnit.MILLIS);
+        countTime = countTime.plus(repaintPeriod,  ChronoUnit.MILLIS);
 
         // see https://www.geeksforgeeks.org/java/localdatetime-plus-method-in-java-with-examples/
 
