@@ -7,7 +7,7 @@ import java.util.List;
 public class Main {
   public static void main(String[] args) {
     ClockTimer clockTimer = new ClockTimer(10);
-    List<Clock> clocks = new ArrayList<>(List.of(
+    List<Widget> widgets = new ArrayList<>(List.of(
         new AnalogClock(0, "Cerdanyola, Catalonia"),
         new DigitalClock(-9, "Anchorage, Alaska"),
         new AnalogClock(3, "Moscow, Russia"),
@@ -18,9 +18,9 @@ public class Main {
         new StopWatch()
     ));
     // see https://www.geeksforgeeks.org/java/initialize-an-arraylist-in-java/
-    for (Clock clock : clocks) {
-      clockTimer.addObserver(clock);
-      clock.show();
+    for (Widget widget : widgets) {
+      clockTimer.addObserver(widget);
+      widget.show();
     }
   }
 }

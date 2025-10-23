@@ -9,17 +9,20 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.Observable;
+import java.util.Observer;
 
 
 // adapted from https://stackoverflow.com/questions/67553152/how-do-i-create-a-clock-using-timer
-public class StopWatch extends Clock {
+public class StopWatch extends Widget {
     private JLabel clockLabel;
     private JButton startStopButton;
     private Duration countTime;
     private Observable o;
     boolean active = false;
+  private LocalDateTime lastTimeRepaint;
 
-    public StopWatch() {
+
+  public StopWatch() {
         countTime = Duration.ZERO;
 
         panel = new JPanel();

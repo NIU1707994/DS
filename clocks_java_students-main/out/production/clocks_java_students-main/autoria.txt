@@ -1,0 +1,4 @@
+1706732 Pol Cantero Martinez
+1707994 Albert Salazar Palacios
+
+In this project, we both did the first part and have distributed the second part. Albert has done the countdown and Pol has done the Stopwatch

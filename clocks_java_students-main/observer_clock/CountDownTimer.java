@@ -9,13 +9,14 @@ import java.time.temporal.ChronoUnit;
 import java.time.temporal.Temporal;
 import java.util.Observable;
 
-public class CountDownTimer extends Clock {
+public class CountDownTimer extends Widget {
   private Duration countDown;
   private Duration startingTime;
   private long amount;
   private ChronoUnit chronoUnit;
   private JLabel clockLabel;
   private LocalDateTime initialTime;
+  private LocalDateTime lastTimeRepaint;
 
   public CountDownTimer(long amount, ChronoUnit unit) {
     this.repaintPeriod = 1000;
