@@ -2,8 +2,6 @@ package observer_clock;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
@@ -18,6 +16,7 @@ public class DigitalClock extends Clock {
   public DigitalClock(int hoursOffsetTimeZoneOffset, String worldPlace) {
     this.hoursOffsetTimeZone = hoursOffsetTimeZoneOffset;
     this.repaintPeriod = 100;
+    this.worldPlace = worldPlace;
 
     panel = new JPanel();
     panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));

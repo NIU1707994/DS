@@ -10,6 +10,7 @@ public abstract class Clock implements Observer {
   protected int repaintPeriod;    // milliseconds
   protected int hoursOffsetTimeZone;
   protected LocalDateTime lastTimeRepaint;
+  protected String worldPlace;
 
   protected abstract boolean isTimeToRepaint(LocalDateTime now);
 

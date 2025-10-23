@@ -2,11 +2,9 @@ package observer_clock;
 
 import javax.swing.*;
 import java.awt.*;
-import java.sql.Time;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
-import java.time.temporal.Temporal;
 import java.util.Observable;
 
 public class CountDownTimer extends Clock {

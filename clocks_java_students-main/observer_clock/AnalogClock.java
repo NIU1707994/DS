@@ -8,8 +8,6 @@ import java.util.Observable;
 
 // adapted from https://stackoverflow.com/questions/67553152/how-do-i-create-a-clock-using-timer
 public class AnalogClock extends Clock {
-  private String worldPlace;
-
 
   public AnalogClock(int hoursOffsetTimeZone, String worldPlace) {
     this.worldPlace = worldPlace;
