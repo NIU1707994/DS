@@ -3,73 +3,80 @@
 skinparam classAttributeIconSize 0
 !pragma layout smetana
 
-abstract Clock {
+abstract Widget {
 #repaintPeriod : int
+#jPanel : JPanel
+{abstract}+show()
+{abstract}#isTimeToRepaint(now : LocalDateTime): boolean
+{abstract}-updateClockLabel()
+}
+
+abstract Clock extends Widget{
+#repaintPeriod: int
 #hoursOffsetTimeZone : int
 #lastTimeRepaint : LocalDateTime
-#jPanel : JPanel
-{abstract}#isTimeToRepaint(now : LocalDateTime): boolean
-{abstract}+show()
+#worldPlace :  String
 }
 
 class ClockTimer {
-  - timer : Timer
-  - period : int
-
+- timer : Timer
+- period : int
 }
+
 class DigitalClock extends Clock {
 -formatter : DateTimeFormatter
 -clockLabel : JLabel
-#isTimeToRepaint(now : LocalDateTime): boolean
-+show()
-+update(o: Observable, arg : Object)
--updateClockLabel()
 }
 
 class AnalogClock extends Clock {
 -worldPlace : String
-#isTimeToRepaint(now : LocalDateTime): boolean
-+show()
-+update(o: Observable, arg : Object)
--updateClockLabel()
 }
 
-class CountDownTimer extends Clock {
+class CountDownTimer extends Widget {
 -countDown: Duration
 -countDown: Duration
 -amount : long
 -chronoUnit: ChronoUnit
 -clockLabel : JLabel
 -initialTime : LocalDateTime
-#isTimeToRepaint(now : LocalDateTime): boolean
-+show()
-+update(o: Observable, arg : Object)
--updateClockLabel()
 -updateCountDown(now : LocalDateTime) : boolean
 }
 
-class StopWatch extends Clock {
+class StopWatch extends Widget {
 -clockLabel : JLabel
 -startStopButton : JButton
 -countTime : Duration
 -o : Observable
 -active : boolean
-#isTimeToRepaint(now : LocalDateTime): boolean
-+show()
-+update(o: Observable, arg : Object)
--updateClockLabel()
 -startStopButtonPressed()
 }
 
 
-class "AnalogClock.MyJPanel" as MyJPanel {
+class "AnalogClock.MyJPanel" as MyJPanel{
   + paintComponent()
   + drawHand()
   + drawClockFace()
 }
 
 AnalogClock --> MyJPanel : inner class
-package "java.util" {
+package "java" {
+
+package "time" {
+class LocalDateTime
+class DateTimeFormatter
+class Duration
+DateTimeFormatter -[hidden]right-> LocalDateTime
+}
+
+
+package "swing"{
+class JPanel
+class JLabel
+class JButton
+JPanel -[hidden]right-> JLabel
+}
+
+package "util" {
 abstract class Observable {
 +setChanged()
 +notifyObservers(arg : Object);
@@ -80,9 +87,13 @@ interface Observer{
 
     Observable o-right->"*"Observer : observers
 }
+}
 
-Clock ..up|> Observer
+Widget ..up|> Observer
 ClockTimer --up|> Observable
 
+StopWatch --up|> Observable
+
+MyJPanel --up|> JPanel
 
 @enduml
