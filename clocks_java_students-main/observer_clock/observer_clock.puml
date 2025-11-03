@@ -58,7 +58,7 @@ class "AnalogClock.MyJPanel" as MyJPanel{
   + drawClockFace()
 }
 
-AnalogClock --> MyJPanel : inner class
+AnalogClock +--> MyJPanel : inner class
 package "java" {
 
 package "time" {

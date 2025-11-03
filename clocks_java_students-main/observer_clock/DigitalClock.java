@@ -16,6 +16,7 @@ public class DigitalClock extends Clock {
   private JLabel clockLabel;
 
   public DigitalClock(int hoursOffsetTimeZoneOffset, String worldPlace) {
+    this.worldPlace = worldPlace;
     this.hoursOffsetTimeZone = hoursOffsetTimeZoneOffset;
     this.repaintPeriod = 100;
 
@@ -29,7 +30,7 @@ public class DigitalClock extends Clock {
     panel.add(clockLabel);
     JLabel placeLabel = new JLabel();
     placeLabel.setFont(new Font(Font.DIALOG, Font.PLAIN, 16));
-    placeLabel.setText(worldPlace);
+    placeLabel.setText(this.worldPlace);
     placeLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
     panel.add(placeLabel);
 

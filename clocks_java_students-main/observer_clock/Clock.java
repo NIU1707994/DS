@@ -8,5 +8,6 @@ import java.util.Observer;
 public abstract class Clock extends Widget {
   // this is just to have in Main.java a list with digital and analog clocks
   protected int hoursOffsetTimeZone;
+  protected String worldPlace;
   protected LocalDateTime lastTimeRepaint;
 }

@@ -9,10 +9,20 @@ import java.util.TimerTask;
 public class ClockTimer extends Observable {
   private Timer timer;
   private int period;
+  private static ClockTimer uniqueClock = null;
 
-  public ClockTimer(int period) {
-    this.period = period;
+  private ClockTimer() {
+    period = 10;
+  }
 
+  public static ClockTimer getUniqueClock() {
+    if (uniqueClock == null) {
+      uniqueClock = new ClockTimer();
+    }
+    return uniqueClock;
+  }
+
+  public void start() {
     TimerTask timerTask = new TimerTask() {
       @Override
       public void run() {

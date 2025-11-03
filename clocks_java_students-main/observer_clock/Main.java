@@ -6,7 +6,8 @@ import java.util.List;
 
 public class Main {
   public static void main(String[] args) {
-    ClockTimer clockTimer = new ClockTimer(10);
+    ClockTimer clockTimer = ClockTimer.getUniqueClock();
+    clockTimer.start();
     List<Widget> widgets = new ArrayList<>(List.of(
         new AnalogClock(0, "Cerdanyola, Catalonia"),
         new DigitalClock(-9, "Anchorage, Alaska"),
