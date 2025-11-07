@@ -1,0 +1,80 @@
+Chain 1
+
+Code: 1111 for Door: d1 at Time: 2025-11-07T20:24:01.002810900 Door is: Unlocked
+Handle Open
+door d1 opened
+Code: 2222 for Door: d1 at Time: 2025-11-07T20:24:01.012819300 Door is: Unlocked
+door d1 opened
+Alarm Fired
+Code: 1234 for Door: d1 at Time: 2025-11-07T20:24:01.012819300 Door is: Unlocked
+Handle Open
+1 trials
+End of the chain
+Code: 4321 for Door: d1 at Time: 2025-11-07T20:24:01.014821400 Door is: Unlocked
+Handle Open
+2 trials
+End of the chain
+Code: 5555 for Door: d1 at Time: 2025-11-07T20:24:01.014821400 Door is: Unlocked
+Handle Open
+3 trials
+Door has been locked
+End of the chain
+Code: 6666 for Door: d1 at Time: 2025-11-07T20:24:01.014821400 Door is: Locked
+Code: 7777 for Door: d1 at Time: 2025-11-07T20:24:01.014821400 Door is: Locked
+Code: 1111 for Door: d1 at Time: 2025-11-07T20:24:01.014821400 Door is: Locked
+Code: 3333 for Door: d1 at Time: 2025-11-07T20:24:01.014821400 Door is: Locked
+Unlocked!
+Code: 2222 for Door: d1 at Time: 2025-11-07T20:24:01.014821400 Door is: Unlocked
+door d1 opened
+Alarm Fired
+
+-----------------------------------------
+
+Chain 2
+
+Code: 1111 for Door: d1 at Time: 2025-11-07T20:24:01.014821400 Door is: Unlocked
+Handle Open
+door d1 opened
+Code: 1234 for Door: d1 at Time: 2025-11-07T20:24:01.014821400 Door is: Unlocked
+Handle Open
+1 trials
+End of the chain
+Code: 4321 for Door: d1 at Time: 2025-11-07T20:24:01.014821400 Door is: Unlocked
+Handle Open
+2 trials
+End of the chain
+Code: 5555 for Door: d1 at Time: 2025-11-07T20:24:01.014821400 Door is: Unlocked
+Handle Open
+3 trials
+End of the chain
+Code: 5678 for Door: d1 at Time: 2025-11-07T20:24:01.014821400 Door is: Unlocked
+Handle Open
+4 trials
+End of the chain
+
+-----------------------------------------
+
+Chain 3
+
+Code: 1111 for Door: d1 at Time: 2025-11-07T20:24:01.014821400 Door is: Unlocked
+Handle Open
+door d1 opened
+Code: 1234 for Door: d1 at Time: 2025-11-07T20:24:01.015822500 Door is: Unlocked
+Handle Open
+1 trials
+End of the chain
+Code: 4321 for Door: d1 at Time: 2025-11-07T20:24:01.015822500 Door is: Unlocked
+Handle Open
+2 trials
+End of the chain
+Code: 5555 for Door: d1 at Time: 2025-11-07T20:24:01.015822500 Door is: Unlocked
+Handle Open
+3 trials
+End of the chain
+Code: 5678 for Door: d1 at Time: 2025-11-07T20:24:01.015822500 Door is: Unlocked
+Handle Open
+4 trials
+End of the chain
+Code: 2222 for Door: d1 at Time: 2025-11-07T20:24:01.015822500 Door is: Unlocked
+door d1 opened
+Alarm Fired
