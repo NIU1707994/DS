@@ -6,6 +6,7 @@ public class FireAlarm extends CodeHandler {
     this.codeFireAlarm = code;
   }
 
+  @Override
   protected void handleCode(String code, Door door) {
     if (!door.isLocked()) {
       if (code.equals(codeFireAlarm)) {

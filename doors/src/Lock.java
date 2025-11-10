@@ -3,6 +3,7 @@ public class Lock extends CodeHandler {
     super(nextHandler);
   }
 
+  @Override
   protected void handleCode(String code, Door door) {
     if (door.getNumTrials() == 3) {
       door.lock();
