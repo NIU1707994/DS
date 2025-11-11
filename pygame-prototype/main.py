@@ -17,7 +17,7 @@ pygame.display.set_mode((Screen.width, Screen.height))
 
 pygame.display.set_caption("Pygame")
 
-level = 'medium'
+level = 'hard'
 
 if level=='easy':
     factory_flying = FactorySprites([Bird()], [300], [pygame.USEREVENT + 1])

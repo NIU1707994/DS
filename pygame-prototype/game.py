@@ -130,5 +130,4 @@ class Game:
             pygame.mixer.music.stop()
             self._collision_sound.play()
             pygame.time.wait(2000)  # seconds, to play collision sound
-
         pygame.mixer.quit()
