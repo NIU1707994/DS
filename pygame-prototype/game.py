@@ -10,12 +10,12 @@ from pygame.locals import (
 
 from screen import Screen
 from player import Player
-from bird import Bird
-from cloud import Cloud
+from savePunctuation import SavePunctuation
 
 
 class Game:
-    def __init__(self, factory_flying, factory_landscape):
+    def __init__(self, factory_flying, factory_landscape, multiplyier):
+        self._multiplyier = multiplyier
         self._factory_flying = factory_flying
         self._factory_landscape = factory_landscape
         self._initialize_game()
@@ -26,6 +26,7 @@ class Game:
     def _initialize_game(self):
         # Setup the clock for a decent frame rate
         self._clock = pygame.time.Clock()
+        self._punctuation = 0
         # Create and get the screen object
         self._screen = pygame.display.set_mode((Screen.width, Screen.height))
         # Create custom events for adding a new bird and cloud
@@ -78,13 +79,15 @@ class Game:
             # Should we add a new bird?
             elif event.type in self._factory_flying.getEventTypes():
                 # Create the new bird, and add it to our sprite groups
-                new_flying = self._factory_flying.make(event.type)
+                for i in range(len(self._factory_flying.getEventTypes())):
+                    new_flying = self._factory_flying.make(event.type, i)
                 self._flying_sprites.add(new_flying)
                 self._all_sprites.add(new_flying)
             # Should we add a new cloud?
             elif event.type in self._factory_landscape.getEventTypes():
                 # Create the new cloud, and add it to our sprite groups
-                new_landscape = self._factory_landscape.make(event.type)
+                for i in range(len(self._factory_landscape.getEventTypes())):
+                    new_landscape = self._factory_landscape.make(event.type, i)
                 self._landscape_sprites.add(new_landscape)
                 self._all_sprites.add(new_landscape)
 
@@ -122,11 +125,16 @@ class Game:
             self._update()
             self._draw()
             self._keep_frame_rate()
+            self._punctuation += 1
 
         # Check if any bird have collided with the player
         if self._collision():
             # If so, remove the player
             self._player.kill()
+            self._punctuation +=  self._multiplyier
+            print("Punctuation: ", self._punctuation)
+            save = SavePunctuation()
+            save.save("Player 1", self._punctuation)
             # Stop any moving sounds and play the collision sound
             self._player.stop_move_sounds()
             pygame.mixer.music.stop()

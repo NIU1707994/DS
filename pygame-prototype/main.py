@@ -17,19 +17,22 @@ pygame.display.set_mode((Screen.width, Screen.height))
 
 pygame.display.set_caption("Pygame")
 
-level = 'hard'
+level = 'easy'
 
 if level=='easy':
+    multiplyier = 1
     factory_flying = FactorySprites([Bird()], [300], [pygame.USEREVENT + 1])
     factory_landscape = FactorySprites([Cloud()], [400], [pygame.USEREVENT + 10])
 elif level=='medium':
+    multiplyier = 3
     factory_flying = FactorySprites([Bird(), Umbrella()], [400, 500], [pygame.USEREVENT + 1, pygame.USEREVENT + 2])
     factory_landscape = FactorySprites([Cloud(), Mountain()], [500, 2000,], [pygame.USEREVENT + 10, pygame.USEREVENT + 11])
 else:
+    multiplyier = 5
     factory_flying = FactorySprites([Bird(), Umbrella(), Jet(), Missile()], [400, 500, 600, 700], [pygame.USEREVENT + 1, pygame.USEREVENT + 2, pygame.USEREVENT + 3, pygame.USEREVENT + 4])
     factory_landscape = FactorySprites([Cloud(), Mountain()], [500, 2000,], [pygame.USEREVENT + 10, pygame.USEREVENT + 11])
     
 
 # play
-game = Game(factory_flying, factory_landscape)
+game = Game(factory_flying, factory_landscape, multiplyier)
 game.play()
