@@ -37,5 +37,5 @@ class Bird(GameSprite):
         if self.rect.right < 0:
             self.kill()
             
-    def clone():
+    def clone(self):                
         return Bird()

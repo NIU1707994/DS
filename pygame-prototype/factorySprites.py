@@ -3,6 +3,15 @@ class FactorySprites():
         self.__prototypes = prototypes
         self.__eventTypes = eventTypes
         self.__periods =  periods
+
+    def getPeriods(self):
+        return self.__periods
     
-    def make(self):
-        return self._prototypes[event_type - self.__eventTypes[0]].clone()
+    def getEventTypes(self):
+        return self.__eventTypes
+    
+    def getPrototypes(self):
+        return self.__prototypes
+    
+    def make(self, event_type):
+        return self.__prototypes[event_type - self.__eventTypes[0]].clone()

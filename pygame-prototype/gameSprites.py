@@ -4,8 +4,8 @@ from abc import ABC, abstractmethod
 
 class GameSprite(pygame.sprite.Sprite, ABC):
     def __init__(self):
-        pass
+        super(GameSprite, self).__init__()
     
     @abstractmethod
-    def clone():
+    def clone(self):
         return GameSprite()
