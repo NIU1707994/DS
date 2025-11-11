@@ -1,0 +1,9 @@
+Per a afegir els Missils, Jets, Umbrella i Mountain el que he fet ha sigut
+assignar a cada un d'ells un número d'event, he creat dues classes abstractes, ja que
+els Sprites de col·lisió tenen els mateixos atributs i en cas que en tinguessin els de
+Landscape si es comparteixen es podrien ficar al seu també.
+He modificat les funcions initialize_game() perquè recorri tots els events i períodes
+de les factories per tal d'assignar cada event al seu període; make_object() perquè tingui
+dos tipus de Sprites els de landscape i els de col·lisions; process_event() de forma que quan
+clonarà un objecte el que sigui busca l'event i retorna l'objecte corresponent a aquell 
+event per la seva posició.

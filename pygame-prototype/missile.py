@@ -2,10 +2,10 @@ import pygame
 import random
 import math
 from pygame.locals import RLEACCEL
-from gameSprites import GameSprite
+from colissionSprites import CollisionSprites
 from screen import Screen
 
-class Missile(GameSprite):
+class Missile(CollisionSprites):
     Max_Speed = 10
     Min_Speed = 5
 

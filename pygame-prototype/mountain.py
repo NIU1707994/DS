@@ -1,11 +1,10 @@
 import pygame
-import random
 from pygame.locals import RLEACCEL
 
 from screen import Screen
-from gameSprites import GameSprite
+from landscapeSprites import LandscapeSprites
 
-class Mountain(GameSprite):
+class Mountain(LandscapeSprites):
     def __init__(self):
         super(Mountain, self).__init__()
         self.surf = pygame.image.load("icons/mountain.png").convert()

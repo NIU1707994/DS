@@ -2,13 +2,13 @@ import pygame
 import random
 import math
 from pygame.locals import RLEACCEL
-from gameSprites import GameSprite
+from colissionSprites import CollisionSprites
 from screen import Screen
 
 
 # Define the enemy object extending pygame.sprite.Sprite
 # Instead of a surface, we use an image for a better looking sprite
-class Bird(GameSprite):
+class Bird(CollisionSprites):
     Max_Speed = 10
     Min_Speed = 5
 

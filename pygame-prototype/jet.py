@@ -2,13 +2,10 @@ import pygame
 import random
 import math
 from pygame.locals import RLEACCEL
-from gameSprites import GameSprite
+from colissionSprites import CollisionSprites
 from screen import Screen
 
-class Jet(GameSprite):
-    Max_Speed = 10
-    Min_Speed = 5
-
+class Jet(CollisionSprites):
     def __init__(self):
         super(Jet, self).__init__()
         self.surf = pygame.image.load("icons/jet.png").convert()

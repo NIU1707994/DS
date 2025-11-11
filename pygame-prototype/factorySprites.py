@@ -13,5 +13,8 @@ class FactorySprites():
     def getPrototypes(self):
         return self.__prototypes
     
-    def make(self, event_type, i):
-        return self.__prototypes[event_type - self.__eventTypes[0]].clone()
+    def getEventTypesByPosition(self, i):
+        return self.__eventTypes[i]
+    
+    def make(self, eventType):
+        return self.__prototypes[eventType - self.__eventTypes[0]].clone()

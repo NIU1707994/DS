@@ -3,7 +3,6 @@
 skinparam classAttributeIconSize 0
 ' use +, \#, - instead of icons for public, protected, private
 
-
 package pygame {
   class Sprite {
     + update()
@@ -12,16 +11,44 @@ package pygame {
   class Sound
 }
 
-class Bird extends Sprite {
-+ {static} Min_Speed : int
-+ {static} Max_Speed : int
-- speed : int
-- time : int
-+update()
+abstract CollissionSprites extends GameSprites {
+# {static} Min_Speed : int
+# {static} Max_Speed : int
+# speed : int
+# time : int
 }
 
-class Cloud extends Sprite {
+abstract LandscapeSprites extends GameSprites {
+}
+
+class Bird extends CollissionSprites {
 +update()
++clone() : Bird
+}
+
+class Umbrella extends CollissionSprites {
++update()
++clone() : Umbrella
+}
+
+class Jet extends CollissionSprites {
++update()
++clone() : Jet
+}
+
+class Missile extends CollissionSprites {
++update()
++clone() : Missile
+}
+
+class Cloud extends LandscapeSprites {
++update()
++clone() : Cloud
+}
+
+class Mountain extends LandscapeSprites {
++update()
++clone() : Mountain
 }
 
 class Player extends Sprite {
@@ -31,6 +58,16 @@ class Player extends Sprite {
 + stop_move_sounds()
 }
 
+class FactorySprites {
+  -eventTypes : int
+  -periods : int
+  +make(eventType : int) : GameSprite
+}
+
+class GameSprites extends Sprite {
+  {abstract}+clone() : GameSprite
+}
+
 class Game {
 - clock : Clock
 - screen : Surface
@@ -38,26 +75,33 @@ class Game {
 - add_cloud_event_type : int
 - user_quits : boolean
 + play()
-''' comment out private methods
-'- initialize_game()
-'- make_objects()
-'- load_music_and_sound()
-'- play_music()
-'- process_event()
-'- draw()
-'- collision() : boolean
-'- game_over() : boolean
-'- keep_frame_rate()
-'- update()
+- initialize_game()
+- make_objects()
+- load_music_and_sound()
+- play_music()
+- process_event()
+- draw()
+- collision() : boolean
+- game_over() : boolean
+- keep_frame_rate()
+- update()
 }
 
 Game --> Sprite : all_sprites "1..*"
-Game --> Bird : birds "*"
-Game --> Cloud : clouds "*"
 Game --> Player : player "1"
 
+Game --> FactorySprites : factory_flying "1"
+Game --> FactorySprites : factory_landscape "1"
+
+Game --> GameSprites : flying_sprites "*"
+Game --> GameSprites : landscape_sprites "*"
+
+FactorySprites o--> GameSprites : prototypes "1..*"
+
 ''' positioning
-Player -[hidden]down-> Game
+Player -[hidden]down-> Sprite
+FactorySprites -[hidden]right-> GameSprites
+FactorySprites -[hidden]right-> Sprite
 Sprite -[hidden]down-> Bird
 Sprite -[hidden]down-> Cloud
 @enduml
