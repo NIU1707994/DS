@@ -9,8 +9,6 @@ from screen import Screen
 # Define the enemy object extending pygame.sprite.Sprite
 # Instead of a surface, we use an image for a better looking sprite
 class Bird(CollisionSprites):
-    Max_Speed = 10
-    Min_Speed = 5
 
     def __init__(self):
         super(Bird, self).__init__()

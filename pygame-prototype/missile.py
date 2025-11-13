@@ -6,8 +6,6 @@ from colissionSprites import CollisionSprites
 from screen import Screen
 
 class Missile(CollisionSprites):
-    Max_Speed = 10
-    Min_Speed = 5
 
     def __init__(self):
         super(Missile, self).__init__()

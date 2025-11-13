@@ -59,9 +59,11 @@ class Player extends Sprite {
 }
 
 class FactorySprites {
-  -eventTypes : int
-  -periods : int
+  -eventTypes : int[]
+  -periods : int[]
   +make(eventType : int) : GameSprite
+  +init_events(starting_event : int) : int[]
+  +getEventTypesByPosition(position : int) : int
 }
 
 class GameSprites extends Sprite {

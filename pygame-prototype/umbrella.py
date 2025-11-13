@@ -6,8 +6,6 @@ from colissionSprites import CollisionSprites
 from screen import Screen
 
 class Umbrella(CollisionSprites):
-    Max_Speed = 10
-    Min_Speed = 5
 
     def __init__(self):
         super(Umbrella, self).__init__()
@@ -26,7 +24,7 @@ class Umbrella(CollisionSprites):
         self.time += 1
         speed_y = self.speed
         speed_x = 0.75 * self.speed \
-                  * math.sin(2 * math.pi * self.time / (0.05 * Screen.height))
+                  * math.cos(2 * math.pi * self.time / (0.05 * Screen.height))
         self.rect.move_ip(speed_x, speed_y)
         if self.rect.top > Screen.height:
             self.kill()

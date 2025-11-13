@@ -1,8 +1,11 @@
 class FactorySprites():
-    def __init__ (self, prototypes, periods, eventTypes):
+    def __init__ (self, prototypes, periods, eventType):
         self.__prototypes = prototypes
-        self.__eventTypes = eventTypes
+        self.__eventTypes = self.init_events(eventType)
         self.__periods =  periods
+
+    def init_events(self, starting_event):
+        return [starting_event + i for i in range(len(self.__prototypes))]
 
     def getPeriods(self):
         return self.__periods

@@ -1,11 +1,11 @@
 import pygame
 import random
-import math
 from pygame.locals import RLEACCEL
 from colissionSprites import CollisionSprites
 from screen import Screen
 
 class Jet(CollisionSprites):
+    
     def __init__(self):
         super(Jet, self).__init__()
         self.surf = pygame.image.load("icons/jet.png").convert()
