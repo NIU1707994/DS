@@ -1,3 +1,5 @@
+import 'package:exercise_flutter_acs/screen_list_places.dart';
+import 'package:exercise_flutter_acs/tree.dart';
 import 'package:flutter/material.dart';
 
 import 'data.dart';
@@ -22,7 +24,12 @@ class TheDrawer {
             leading: const Icon(Icons.holiday_village),
             // https://material.io/resources/icons
             title: const Text('Places'),
-            onTap: () {},
+            onTap: () {
+              Navigator.of(context).pop();
+              Navigator.of(context).push(MaterialPageRoute<void>(
+                  builder: (context) =>
+                      ScreenListPlaces(root: getTree("building").root)));
+            },
           ),
           ListTile(
             leading: const Icon(Icons.group),
@@ -30,9 +37,10 @@ class TheDrawer {
             onTap: () {
               Navigator.of(context).pop(); // close drawer
               Navigator.of(context).push(MaterialPageRoute<void>(
-                builder: (context) => ScreenListGroups(userGroups: Data.userGroups),
+                builder: (context) =>
+                    ScreenListGroups(userGroups: Data.userGroups),
               ));
-              },
+            },
           ),
           ListTile(
             leading: const Icon(Icons.favorite),
