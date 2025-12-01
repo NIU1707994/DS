@@ -27,12 +27,17 @@ class _ScreenListGroupsState extends State<ScreenListGroups> {
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
-        child: const Icon(Icons.add),
-        onPressed: () => {
-          Navigator.of(context).push(
-              MaterialPageRoute(builder: (context) => ScreenInfoUserGroup()))
-        },
-      ),
+          child: const Icon(Icons.add),
+          onPressed: () => {
+                Navigator.of(context)
+                    .push(MaterialPageRoute(
+                        builder: (context) => ScreenInfoUserGroup()))
+                    .then((_) {
+                  setState(() {
+                    userGroups = Data.userGroups;
+                  });
+                }),
+              }),
       drawer: TheDrawer(context).drawer,
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.primary,

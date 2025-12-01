@@ -42,6 +42,7 @@ class UserGroup {
   UserGroup.empty() {
     name = "";
     description = "";
+    users = [];
   }
 }
 

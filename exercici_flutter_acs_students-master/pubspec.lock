@@ -70,6 +70,11 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.3"
+  flutter_localizations:
+    dependency: transitive
+    description: flutter
+    source: sdk
+    version: "0.0.0"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -79,10 +84,10 @@ packages:
     dependency: "direct main"
     description:
       name: intl
-      sha256: "3bc132a9dbce73a7e4a21a17d06e1878839ffbf975568bc875c60537824b0c4d"
+      sha256: "3df61194eb431efc39c4ceba583b95633a403f46c9fd341e550ce0bfa50e9aa5"
       url: "https://pub.dev"
     source: hosted
-    version: "0.18.1"
+    version: "0.20.2"
   leak_tracker:
     dependency: transitive
     description:
@@ -219,10 +224,11 @@ packages:
   weekday_selector:
     dependency: "direct main"
     description:
-      name: weekday_selector
-      sha256: "783954997aa30a8890b24196784543752dbf179282ca4d9139ecd70d63fea99e"
-      url: "https://pub.dev"
-    source: hosted
+      path: "."
+      ref: e9c604a8cabb04ea3a169c3379c270c59810e4b0
+      resolved-ref: e9c604a8cabb04ea3a169c3379c270c59810e4b0
+      url: "https://github.com/smaho-engineering/weekday_selector.git"
+    source: git
     version: "1.1.0"
 sdks:
   dart: ">=3.8.0-0 <4.0.0"
