@@ -1,7 +1,6 @@
 import 'screen_blank.dart';
 import 'package:flutter/material.dart';
 
-
 void main() {
   runApp(const MyApp());
 }
@@ -23,7 +22,7 @@ class MyApp extends StatelessWidget {
           bodyMedium: TextStyle(fontSize: 20), // size of hello
         ),
         // see https://docs.flutter.dev/cookbook/design/themes
-      ),
+      ), // ✅ DEBUG condicional (mejor performance)
       home: const ScreenBlank(),
     );
   }

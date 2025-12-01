@@ -1,8 +1,9 @@
+import 'package:exercise_flutter_acs/screen_info_user_group.dart';
 import 'package:flutter/material.dart';
 
 import 'data.dart';
 import 'the_drawer.dart';
-import 'scree_list_users.dart';
+import 'screen_group_options.dart';
 
 class ScreenListGroups extends StatefulWidget {
   List<UserGroup> userGroups;
@@ -27,16 +28,9 @@ class _ScreenListGroupsState extends State<ScreenListGroups> {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.add),
-        onPressed: () {
-          // TODO: assign names like New group 1, New group 2...
-          UserGroup newUserGroup = UserGroup(
-              Data.defaultName,
-              Data.defaultDescription,
-              Data.defaultAreas,
-              Data.defaultSchedule,
-              Data.defaultActions, <User>[]);
-          userGroups.add(newUserGroup);
-          setState(() {});
+        onPressed: () => {
+          Navigator.of(context).push(
+              MaterialPageRoute(builder: (context) => ScreenInfoUserGroup()))
         },
       ),
       drawer: TheDrawer(context).drawer,
@@ -63,7 +57,7 @@ class _ScreenListGroupsState extends State<ScreenListGroups> {
       trailing: Text('${userGroup.users.length}'),
       onTap: () => Navigator.of(context)
           .push(MaterialPageRoute<void>(
-              builder: (context) => ScreeListUsers(
+              builder: (context) => ScreenGroupOptions(
                     userGroup: userGroup,
                   )))
           .then((var v) => setState(() {})),
