@@ -82,13 +82,13 @@ class _ScreenUserDetailState extends State<ScreenUserDetail> {
               TextField(
                 controller: _controllerName,
                 decoration: const InputDecoration(
-                    border: OutlineInputBorder(), labelText: 'Name Group'),
+                    border: OutlineInputBorder(), labelText: 'Name'),
               ),
               const SizedBox(height: 16),
               TextField(
                 controller: _controllerCredential,
                 decoration: const InputDecoration(
-                    border: OutlineInputBorder(), labelText: 'Description'),
+                    border: OutlineInputBorder(), labelText: 'Credential'),
                 maxLines: null,
               ),
               const SizedBox(
