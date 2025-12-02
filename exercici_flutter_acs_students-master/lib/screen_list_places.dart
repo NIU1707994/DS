@@ -1,27 +1,38 @@
+import 'package:exercise_flutter_acs/data.dart';
+import 'package:exercise_flutter_acs/screen_doors_settings.dart';
 import 'package:flutter/material.dart';
 
 import 'tree.dart';
 import 'the_drawer.dart';
-import 'screen_list_users.dart';
 
 class ScreenListPlaces extends StatefulWidget {
-  Area root;
+  Area? root;
+  // TODO: change string to Areas when implemented
+  UserGroup? userGroup;
 
-  ScreenListPlaces({super.key, required this.root});
+  ScreenListPlaces({super.key, this.root, this.userGroup});
 
   @override
   State<ScreenListPlaces> createState() => _ScreenListPlaces();
 }
 
 class _ScreenListPlaces extends State<ScreenListPlaces> {
-  late Area root;
+  Area? root;
+  UserGroup? userGroup;
   late List<dynamic> areas;
 
   @override
   void initState() {
     super.initState();
-    root = widget.root;
-    areas = root.children;
+    if (widget.root != null) {
+      root = widget.root;
+      areas = root!.children;
+    } else if (widget.userGroup != null) {
+      userGroup = widget.userGroup;
+      areas = userGroup!.areas;
+    } else {
+      areas = [];
+    }
   }
 
   @override
@@ -31,7 +42,7 @@ class _ScreenListPlaces extends State<ScreenListPlaces> {
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.primary,
         foregroundColor: Theme.of(context).colorScheme.onPrimary,
-        title: Text(root.id),
+        title: Text((root != null) ? root!.id : "User Group ${userGroup!.name} areas"),
       ),
       body: ListView.separated(
         // it's like ListView.builder() but better
@@ -48,13 +59,26 @@ class _ScreenListPlaces extends State<ScreenListPlaces> {
   Widget _buildRow(dynamic area, int index) {
     return ListTile(
       title: Text(area.id),
-      trailing: Text('${area.children.length}'),
-      onTap: () => Navigator.of(context)
-          .push(MaterialPageRoute<void>(
-              builder: (context) => ScreenListPlaces(
+      trailing: Text(area is Area ? '${area.children.length}' : area.state),
+      onTap: () {
+        if (area is Area) {
+          Navigator.of(context)
+              .push(MaterialPageRoute<void>(
+              builder: (context) =>
+                  ScreenListPlaces(
                     root: area,
                   )))
-          .then((var v) => setState(() {})),
-    );
+              .then((var v) => setState(() {}));
+        } else if (area is Door) {
+          Navigator.of(context)
+              .push(MaterialPageRoute<void>(
+              builder: (context) =>
+                  ScreenDoorsSettings(
+                    door: area
+                  )))
+              .then((var v) => setState(() {}));
+        }
+      })
+    ;
   }
 }

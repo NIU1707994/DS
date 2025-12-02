@@ -1,5 +1,6 @@
 import 'package:exercise_flutter_acs/data.dart';
 import 'package:exercise_flutter_acs/screen_action_list.dart';
+import 'package:exercise_flutter_acs/screen_list_places.dart';
 import 'package:exercise_flutter_acs/screen_schedule.dart';
 import 'package:exercise_flutter_acs/screen_info_user_group.dart';
 import 'package:flutter/material.dart';
@@ -125,7 +126,7 @@ class _ScreenGroupOptionsState extends State<ScreenGroupOptions> {
             InkWell(
               onTap: () => {
                 Navigator.of(context).push(MaterialPageRoute<void>(
-                    builder: (context) => ScreeListUsers(userGroup: userGroup)))
+                    builder: (context) => ScreenListPlaces(userGroup: userGroup)))
               },
               child: Card(
                 color: Colors.grey.shade700,

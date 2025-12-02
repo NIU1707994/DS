@@ -58,7 +58,7 @@ class _ScreenListUsersState extends State<ScreeListUsers> {
     return ListTile(
         title: Text(userGroup.name),
         trailing: Text('${userGroup.users.length}'),
-        onTap: () => Navigator.of(context) //.push(route).then(onValue),
+        onTap: () => Navigator.of(context)
         );
   }
 }
