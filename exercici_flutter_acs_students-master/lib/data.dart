@@ -14,8 +14,14 @@ class Actions {
 class User {
   late String name;
   late String credential;
+  late String imageName;
 
-  User(this.name, this.credential);
+  User(this.name, this.credential, this.imageName);
+  User.empty() {
+    name = "";
+    credential = "";
+    imageName = "faces/new_user.png";
+  }
 }
 
 class Schedule {
@@ -70,8 +76,8 @@ class Data {
       scheduleAdmin,
       Actions.all,
       [
-        User("Ana", "89325"),
-        User("Aureli", "87325"),
+        User("Ana", "89325", images["ana"]!),
+        User("Aureli", "87325", images["aureli"]!),
       ]);
 
   // Managers
@@ -93,10 +99,10 @@ class Data {
       scheduleManagers,
       Actions.all,
       [
-        User("Manel", "43762"),
-        User("Miquel", "77832"),
-        User("Maria", "89324"),
-        User("Maure", "12345"),
+        User("Manel", "43762", images["manel"]!),
+        User("Miquel", "77832", images["miquel"]!),
+        User("Maria", "89324", images["maria"]!),
+        User("Maure", "12345", images["maure"]!),
       ]);
 
   // Employees
@@ -115,9 +121,9 @@ class Data {
       scheduleEmployees,
       [Actions.open, Actions.close, Actions.unlockShortly],
       [
-        User("Eva", "89325"),
-        User("Eulalia", "87325"),
-        User("Esteve", "43623"),
+        User("Eva", "89325", images["eva"]!),
+        User("Eulalia", "87325", images["eulalia"]!),
+        User("Esteve", "43623", images["esteve"]!),
       ]);
 
   static List<UserGroup> userGroups = [admin, managers, employees];

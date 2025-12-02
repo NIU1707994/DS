@@ -30,6 +30,10 @@ environment:
 dependencies:
   # to get DateFormater in screen_schedule
   intl: ^0.20.2
+  file_picker:
+    git:
+      url: https://github.com/miguelpruivo/flutter_file_picker.git
+      ref: master
   #weekday_selector: ^1.1.0
   weekday_selector:
     git:

@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:exercise_flutter_acs/screen_user_detail.dart';
 import 'package:flutter/material.dart';
 
 import 'data.dart';
@@ -26,16 +29,11 @@ class _ScreenListUsersState extends State<ScreeListUsers> {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.add),
-        onPressed: () {
-          // TODO: assign names like New group 1, New group 2...
-          UserGroup newUserGroup = UserGroup(
-              Data.defaultName,
-              Data.defaultDescription,
-              Data.defaultAreas,
-              Data.defaultSchedule,
-              Data.defaultActions, <User>[]);
-          setState(() {});
-        },
+        onPressed: () => {
+          Navigator.of(context).
+          push(MaterialPageRoute(builder: (context) => ScreenUserDetail(userGroup: userGroup)))
+              .then((newUser) => setState(() {
+          }))}
       ),
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.primary,
@@ -56,9 +54,15 @@ class _ScreenListUsersState extends State<ScreeListUsers> {
 
   Widget _buildRow(User user, int index) {
     return ListTile(
-        title: Text(userGroup.name),
-        trailing: Text('${userGroup.users.length}'),
-        onTap: () => Navigator.of(context)
-        );
+      leading: CircleAvatar(foregroundImage:
+        user.imageName.startsWith('http') ? NetworkImage(user.imageName) : FileImage(File(user.imageName)) as ImageProvider),
+      title: Text(user.name),
+      trailing: Text(user.credential),
+      onTap: () => Navigator.of(context).
+        push(MaterialPageRoute(builder: (context) => ScreenUserDetail(userGroup: userGroup, user: user)))
+          .then((newUser) => setState(() {
+          user = newUser;
+      }))
+      );
   }
 }
