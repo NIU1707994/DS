@@ -22,8 +22,8 @@ class _ScreeScheduleState extends State<ScreeSchedule> {
 
     newSchedule = userGroup.schedule;
     for (int day in newSchedule.weekdays) {
-      if (day >= 1 && day <= 7) {
-        weekdays[day - 1] = true;
+      if (day >= 0 && day < 7) {
+        weekdays[day] = true;
       }
     }
   }
@@ -35,9 +35,6 @@ class _ScreeScheduleState extends State<ScreeSchedule> {
         backgroundColor: Theme.of(context).colorScheme.primary,
         foregroundColor: Theme.of(context).colorScheme.onPrimary,
         title: Text("Schedule ${userGroup.name}"),
-        leading: IconButton(
-            onPressed: () => {Navigator.of(context).pop()},
-            icon: Icon(Icons.arrow_back)),
       ),
       body: Center(
         child: Container(
@@ -87,12 +84,13 @@ class _ScreeScheduleState extends State<ScreeSchedule> {
                     WeekdaySelector(
                         onChanged: (int day) => {
                               setState(() {
+                                day = day % 7;
                                 weekdays[day] = !weekdays[day];
                                 newSchedule.weekdays.clear();
 
                                 for (int i = 0; i < weekdays.length; i++) {
                                   if (weekdays[i]) {
-                                    newSchedule.weekdays.add(i + 1);
+                                    newSchedule.weekdays.add(i);
                                   }
                                 }
                               })
@@ -144,7 +142,7 @@ class _ScreeScheduleState extends State<ScreeSchedule> {
                         onPressed: () {
                           saveChanges();
                         },
-                        child: const Text("Sumbit"),
+                        child: const Text("Submit"),
                       )),
                 )
               ]),
@@ -156,7 +154,7 @@ class _ScreeScheduleState extends State<ScreeSchedule> {
   void saveChanges() {
     for (int i = 0; i < weekdays.length; i++) {
       if (weekdays[i]) {
-        newSchedule.weekdays.add(i + 1);
+        newSchedule.weekdays.add(i);
       }
     }
     List<UserGroup> userGroups = Data.userGroups;
@@ -190,8 +188,17 @@ class _ScreeScheduleState extends State<ScreeSchedule> {
       initialTime: TimeOfDay(
           hour: newSchedule.fromTime.hour, minute: newSchedule.fromTime.minute),
     );
+
+    if (newStartTime == null) return;
+    int newStartMinutes = newStartTime.hour * 60 + newStartTime.minute;
+    int currentEndMinutes = newSchedule.toTime.hour * 60 + newSchedule.toTime.minute;
+
     setState(() {
-      newSchedule.fromTime = newStartTime!;
+      if (newStartMinutes >= currentEndMinutes) {
+        _showAlert("Hora incorrecta", "L'hora d'inici ha de ser anterior a l'hora de finalització.");
+      } else {
+        newSchedule.fromTime = newStartTime;
+      }
     });
   }
 
@@ -216,8 +223,17 @@ class _ScreeScheduleState extends State<ScreeSchedule> {
       initialTime: TimeOfDay(
           hour: newSchedule.toTime.hour, minute: newSchedule.toTime.minute),
     );
+
+    if (newEndTime == null) return;
+    int currentStartMinutes = newSchedule.fromTime.hour * 60 + newSchedule.fromTime.minute;
+    int newEndMinutes = newEndTime.hour * 60 + newEndTime.minute;
+
     setState(() {
-      newSchedule.toTime = newEndTime!;
+      if (newEndMinutes <= currentStartMinutes) {
+        _showAlert("Hora incorrecta", "L'hora de finalització ha de ser posterior a l'hora d'inici.");
+      } else {
+        newSchedule.toTime = newEndTime;
+      }
     });
   }
 

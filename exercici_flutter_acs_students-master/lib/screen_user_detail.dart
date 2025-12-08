@@ -98,7 +98,7 @@ class _ScreenUserDetailState extends State<ScreenUserDetail> {
                 onPressed: () {
                   saveNames();
                 },
-                child: const Text("Sumbit"),
+                child: const Text("Submit"),
               ),
             ],
           ),

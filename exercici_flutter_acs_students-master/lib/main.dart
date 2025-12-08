@@ -1,5 +1,5 @@
-import 'screen_blank.dart';
 import 'package:flutter/material.dart';
+import 'screen_blank.dart';
 
 void main() {
   runApp(const MyApp());

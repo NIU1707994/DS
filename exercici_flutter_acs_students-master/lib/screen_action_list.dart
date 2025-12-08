@@ -57,6 +57,10 @@ class _ScreenActionListState extends State<ScreenActionList> {
       int index = listUserGroups.indexOf(userGroup);
       listUserGroups[index].actions = newActions;
     }
+
+    ScaffoldMessenger.of(context)
+        .showSnackBar(const SnackBar(content: Text("Accions guardades correctament!")));
+
   }
 
   @override
@@ -88,7 +92,7 @@ class _ScreenActionListState extends State<ScreenActionList> {
               onPressed: () {
                 _saveActions();
               },
-              child: const Text("Sumbit"),
+              child: const Text("Submit"),
             ),
           ],
         ),

@@ -73,7 +73,7 @@ class _ScreenInfoUserGroupState extends State<ScreenInfoUserGroup> {
                 onPressed: () {
                   saveNames();
                 },
-                child: const Text("Sumbit"),
+                child: const Text("Submit"),
               ),
             ],
           ),
