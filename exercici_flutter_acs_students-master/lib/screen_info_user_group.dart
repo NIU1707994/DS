@@ -2,8 +2,8 @@ import 'package:exercise_flutter_acs/data.dart';
 import 'package:flutter/material.dart';
 
 class ScreenInfoUserGroup extends StatefulWidget {
-  UserGroup? userGroup;
-  ScreenInfoUserGroup({super.key, this.userGroup});
+  UserGroup userGroup;
+  ScreenInfoUserGroup({super.key, required this.userGroup});
 
   @override
   State<ScreenInfoUserGroup> createState() => _ScreenInfoUserGroupState();
@@ -11,29 +11,14 @@ class ScreenInfoUserGroup extends StatefulWidget {
 
 class _ScreenInfoUserGroupState extends State<ScreenInfoUserGroup> {
   late UserGroup userGroup;
-  late TextEditingController _controllerName;
-  late TextEditingController _controllerDescription;
-  late String _appBarTitle;
+  // This key makes possible the unique identification of the form
+  // Also, the change of variables by the content of the text fields.
+  final _formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
     super.initState();
-
-    userGroup = widget.userGroup ?? UserGroup.empty();
-    _controllerName = TextEditingController();
-    _controllerDescription = TextEditingController();
-
-    _controllerName.text = userGroup.name;
-    _controllerDescription.text = userGroup.description;
-    _appBarTitle =
-        "Info ${userGroup.name.isNotEmpty ? userGroup.name : 'new user group'}";
-  }
-
-  @override
-  void dispose() {
-    _controllerName.dispose();
-    _controllerDescription.dispose();
-    super.dispose();
+    userGroup = widget.userGroup;
   }
 
   @override
@@ -42,67 +27,71 @@ class _ScreenInfoUserGroupState extends State<ScreenInfoUserGroup> {
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.primary,
         foregroundColor: Theme.of(context).colorScheme.onPrimary,
-        title: Text(_appBarTitle),
-        leading: IconButton(
-            onPressed: () => {Navigator.of(context).pop(userGroup)},
-            icon: Icon(Icons.arrow_back)),
+        title: Text("Info ${userGroup!.name}"),
+        leading: IconButton(onPressed: () {
+          Navigator.pop(context, userGroup);
+        }, icon: const Icon(Icons.arrow_back)),
       ),
-      body: Center(
-        child: SizedBox(
-          width: 300,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              TextField(
-                controller: _controllerName,
-                decoration: const InputDecoration(
-                    border: OutlineInputBorder(), labelText: 'Name Group'),
-              ),
-              const SizedBox(height: 16),
-              TextField(
-                controller: _controllerDescription,
-                decoration: const InputDecoration(
-                    border: OutlineInputBorder(), labelText: 'Description'),
-                maxLines: null,
-              ),
-              const SizedBox(
-                height: 16,
-              ),
-              TextButton(
-                onPressed: () {
-                  saveNames();
-                },
-                child: const Text("Submit"),
-              ),
-            ],
+      body: Form(
+        key: _formKey,
+        child: Center(
+          child: SizedBox(
+            width: 300,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                TextFormField(
+                  decoration: const InputDecoration(
+                      border: OutlineInputBorder(), labelText: 'Name Group'),
+                  initialValue: "${userGroup!.name}",
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter some text';
+                    }
+                    return null;
+                  },
+                  onSaved: (value) {
+                    userGroup.name = value ?? ''; // '' Will never happen,
+                    // because we are validating.
+                  },
+                ),
+                const SizedBox(height: 16),
+                TextFormField(
+                  decoration: const InputDecoration(
+                      border: OutlineInputBorder(), labelText: 'Description'), maxLines: 5,
+                  initialValue: "${userGroup!.description}",
+                  onSaved: (value) {
+                    userGroup.description = value ?? ''; // '' Will never happen,
+                    // because we are validating.
+                  },
+                ),
+                const SizedBox(
+                  height: 16,
+                ),
+                TextButton(
+                  onPressed: () {
+                    submitFunction();
+                  },
+                  child: const Text("Submit"),
+                ),
+              ],
+            ),
           ),
         ),
       ),
     );
   }
 
-  void saveNames() {
+  void submitFunction() {
     setState(() {
-      List<UserGroup> userGroups = Data.userGroups;
-      if (userGroups.contains(userGroup)) {
-        var index = userGroups.indexOf(userGroup);
-
-        userGroup.name = _controllerName.text;
-        userGroup.description = _controllerDescription.text;
-
-        userGroups[index] = userGroup;
-      } else {
-        userGroup.name = _controllerName.text;
-        userGroup.description = _controllerDescription.text;
-        userGroups.add(userGroup);
+      if (_formKey.currentState!.validate()){
+        _formKey.currentState!.save();
+        ScaffoldMessenger.of(context)
+            .showSnackBar(
+          const SnackBar(content: Text('Saved')),
+        );
       }
-
-      _appBarTitle =
-          "Info ${_controllerName.text.isNotEmpty ? _controllerName.text : 'new user group'}";
-
-      ScaffoldMessenger.of(context)
-          .showSnackBar(const SnackBar(content: Text("Saved!")));
     });
   }
 }

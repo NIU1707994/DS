@@ -45,7 +45,6 @@ class _ScreenGroupOptionsState extends State<ScreenGroupOptions> {
                             ScreenInfoUserGroup(userGroup: userGroup)))
                     .then((newUserGroup) => setState(() {
                           userGroup = newUserGroup as UserGroup;
-
                           _appBarName = userGroup.name;
                         }))
               },

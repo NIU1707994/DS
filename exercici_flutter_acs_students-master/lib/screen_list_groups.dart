@@ -28,16 +28,20 @@ class _ScreenListGroupsState extends State<ScreenListGroups> {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
           child: const Icon(Icons.add),
-          onPressed: () => {
-                Navigator.of(context)
-                    .push(MaterialPageRoute(
-                        builder: (context) => ScreenInfoUserGroup()))
-                    .then((_) {
-                  setState(() {
-                    userGroups = Data.userGroups;
-                  });
-                }),
-              }),
+          onPressed: () {
+            // We create a default user and we edit it in screen_info_user_group
+            UserGroup newUserGroup = UserGroup(
+                Data.defaultName,
+                Data.defaultDescription,
+                Data.defaultAreas,
+                Data.defaultSchedule,
+                Data.defaultActions, <User>[]);
+            userGroups.add(newUserGroup);
+            setState(() {});
+            Navigator.of(context)
+                .push(MaterialPageRoute(builder: (context) => ScreenInfoUserGroup(userGroup: newUserGroup,)))
+                .then((var v) => setState(() {}));
+          }),
       drawer: TheDrawer(context).drawer,
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.primary,
