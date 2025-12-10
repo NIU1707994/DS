@@ -152,11 +152,21 @@ class _ScreeScheduleState extends State<ScreeSchedule> {
   }
 
   void saveChanges() {
+    String? error = _validateForm();
+
+    if (error != null) {
+      _showAlert("Dades incorrectes", error);
+      return;
+    }
+
+    // Si tot és correcte, guardem
+    newSchedule.weekdays.clear();
     for (int i = 0; i < weekdays.length; i++) {
       if (weekdays[i]) {
         newSchedule.weekdays.add(i);
       }
     }
+
     List<UserGroup> userGroups = Data.userGroups;
     if (userGroups.contains(userGroup)) {
       var index = userGroups.indexOf(userGroup);
@@ -168,73 +178,82 @@ class _ScreeScheduleState extends State<ScreeSchedule> {
   }
 
   void _pickStartDate() async {
+    DateTime initial = newSchedule.fromDate;
+    DateTime first = DateTime(2000);
+
     DateTime? newStartDate = await showDatePicker(
         context: context,
-        firstDate: DateTime(newSchedule.fromDate.year),
-        lastDate: DateTime(newSchedule.fromDate.year + 5),
-        initialDate: newSchedule.fromDate);
-    setState(() {
-      if (newStartDate!.isAfter(newSchedule.toDate)) {
-        _showAlert("Rande dates", "From date is after toDate");
-      } else {
+        firstDate: first,
+        lastDate: DateTime(DateTime.now().year + 10),
+        initialDate: initial
+    );
+
+    if (newStartDate != null) {
+      setState(() {
         newSchedule.fromDate = newStartDate;
-      }
-    });
+      });
+    }
+  }
+
+  void _pickEndDate() async {
+    DateTime initial = newSchedule.toDate;
+    DateTime first = DateTime(2000);
+
+    DateTime? newEndDate = await showDatePicker(
+        context: context,
+        firstDate: first,
+        lastDate: DateTime(DateTime.now().year + 10),
+        initialDate: initial
+    );
+
+    if (newEndDate != null) {
+      setState(() {
+        newSchedule.toDate = newEndDate;
+      });
+    }
   }
 
   void _pickStartTime() async {
     TimeOfDay? newStartTime = await showTimePicker(
       context: context,
-      initialTime: TimeOfDay(
-          hour: newSchedule.fromTime.hour, minute: newSchedule.fromTime.minute),
+      initialTime: newSchedule.fromTime,
     );
 
-    if (newStartTime == null) return;
-    int newStartMinutes = newStartTime.hour * 60 + newStartTime.minute;
-    int currentEndMinutes = newSchedule.toTime.hour * 60 + newSchedule.toTime.minute;
-
-    setState(() {
-      if (newStartMinutes >= currentEndMinutes) {
-        _showAlert("Hora incorrecta", "L'hora d'inici ha de ser anterior a l'hora de finalització.");
-      } else {
+    if (newStartTime != null) {
+      setState(() {
         newSchedule.fromTime = newStartTime;
-      }
-    });
-  }
-
-  void _pickEndDate() async {
-    DateTime? newEndDate = await showDatePicker(
-        context: context,
-        firstDate: DateTime(newSchedule.toDate.year),
-        lastDate: DateTime(newSchedule.toDate.year + 5),
-        initialDate: newSchedule.toDate);
-    setState(() {
-      if (newEndDate!.isAfter(newSchedule.fromDate)) {
-        newSchedule.toDate = newEndDate;
-      } else {
-        _showAlert("Rande dates", "From date is after toDate");
-      }
-    });
+      });
+    }
   }
 
   void _pickEndTime() async {
     TimeOfDay? newEndTime = await showTimePicker(
       context: context,
-      initialTime: TimeOfDay(
-          hour: newSchedule.toTime.hour, minute: newSchedule.toTime.minute),
+      initialTime: newSchedule.toTime,
     );
 
-    if (newEndTime == null) return;
-    int currentStartMinutes = newSchedule.fromTime.hour * 60 + newSchedule.fromTime.minute;
-    int newEndMinutes = newEndTime.hour * 60 + newEndTime.minute;
-
-    setState(() {
-      if (newEndMinutes <= currentStartMinutes) {
-        _showAlert("Hora incorrecta", "L'hora de finalització ha de ser posterior a l'hora d'inici.");
-      } else {
+    if (newEndTime != null) {
+      setState(() {
         newSchedule.toTime = newEndTime;
-      }
-    });
+      });
+    }
+  }
+
+  String? _validateForm() {
+    // Validar Dates
+    if (newSchedule.fromDate.isAfter(newSchedule.toDate)) {
+      return "La data d'inici ha de ser anterior a la data de finalització.";
+    }
+
+    // Validar Hores
+    int startMinutes = newSchedule.fromTime.hour * 60 + newSchedule.fromTime.minute;
+    int endMinutes = newSchedule.toTime.hour * 60 + newSchedule.toTime.minute;
+
+    if (startMinutes >= endMinutes) {
+      return "L'hora d'inici ha de ser anterior a l'hora de finalització.";
+    }
+
+    return null;
   }
 
   void _showAlert(String title, String message) {
@@ -258,4 +277,5 @@ class _ScreeScheduleState extends State<ScreeSchedule> {
           );
         });
   }
+
 }
