@@ -1,7 +1,7 @@
 import 'package:exercise_flutter_acs/data.dart';
 import 'package:exercise_flutter_acs/requests.dart';
 import 'package:exercise_flutter_acs/screen_doors_settings.dart';
-import 'package:exercise_flutter_acs/screen_space.dart';
+import 'package:exercise_flutter_acs/screen_sapce.dart';
 import 'package:flutter/material.dart';
 
 import 'tree.dart';
@@ -73,7 +73,7 @@ class _ScreenListPlaces extends State<ScreenListPlaces> {
           } else if (item is Area) {
             Navigator.of(context)
                 .push(MaterialPageRoute<void>(
-                    builder: (context) => ScreenSpace(id: item.id)))
+                    builder: (context) => ScreenSapce(id: item.id)))
                 .then((var v) => setState(() {}));
           }
         });
