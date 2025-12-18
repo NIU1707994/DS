@@ -28,7 +28,7 @@ class TheDrawer {
               Navigator.of(context).pop();
               Navigator.of(context).push(MaterialPageRoute<void>(
                   builder: (context) =>
-                      ScreenListPlaces(root: getTree("building").root)));
+                      ScreenListPlaces(id: "building")));
             },
           ),
           ListTile(

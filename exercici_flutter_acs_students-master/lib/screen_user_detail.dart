@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:exercise_flutter_acs/data.dart';
 import 'package:flutter/material.dart';
+import 'package:path/path.dart' as p;
 
 class ScreenUserDetail extends StatefulWidget {
   UserGroup? userGroup;
@@ -63,7 +64,9 @@ class _ScreenUserDetailState extends State<ScreenUserDetail> {
                   shape: const CircleBorder(),
                 ),
                   onPressed: () async {
-                    FilePickerResult? result = await FilePicker.platform.pickFiles();
+                    FilePickerResult? result = await FilePicker.platform.pickFiles(
+                      initialDirectory: p.join(Directory.current.path, './faces')
+                    );
 
                     if (result != null) {
                       user.imageName = result.files.single.path!;

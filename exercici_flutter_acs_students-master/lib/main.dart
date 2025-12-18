@@ -24,6 +24,7 @@ class MyApp extends StatelessWidget {
         // see https://docs.flutter.dev/cookbook/design/themes
       ), // ✅ DEBUG condicional (mejor performance)
       home: const ScreenBlank(),
+
     );
   }
 }
