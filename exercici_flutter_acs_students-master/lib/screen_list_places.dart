@@ -34,6 +34,7 @@ class _ScreenListPlaces extends State<ScreenListPlaces> {
 
   @override
   Widget build(BuildContext context) {
+<<<<<<< HEAD
     return FutureBuilder<Tree>(
       future: futureTree,
       builder: (context, snapshot) {
@@ -56,11 +57,36 @@ class _ScreenListPlaces extends State<ScreenListPlaces> {
         // MENTRE ESPEREM: Mostrem la rodeta de càrrega
         return const Scaffold(body: Center(child: CircularProgressIndicator()));
       },
+=======
+    return Scaffold(
+      drawer: TheDrawer(context).drawer,
+      appBar: AppBar(
+        backgroundColor: Theme.of(context).colorScheme.primary,
+        foregroundColor: Theme.of(context).colorScheme.onPrimary,
+        title: Text(
+            (root != null) ? root!.id : "User Group ${userGroup!.name} areas"),
+        leading: root!.id == "building"
+            ? null
+            : IconButton(
+                onPressed: () => {Navigator.of(context).pop()},
+                icon: const Icon(Icons.arrow_back)),
+      ),
+      body: ListView.separated(
+        // it's like ListView.builder() but better
+        // because it includes a separator between items
+        padding: const EdgeInsets.all(16.0),
+        itemCount: areas.length,
+        itemBuilder: (BuildContext context, int index) =>
+            _buildRow(areas[index], index),
+        separatorBuilder: (BuildContext context, int index) => const Divider(),
+      ),
+>>>>>>> 1b2f0b2 (Cosetes (no se quines))
     );
   }
 
   Widget _buildRow(dynamic item) {
     return ListTile(
+<<<<<<< HEAD
       title: Text(item.id),
       onTap: () {
         if (item is Area) {
@@ -82,5 +108,24 @@ class _ScreenListPlaces extends State<ScreenListPlaces> {
         }
       })
     ;
+=======
+        title: Text(area.id),
+        trailing: Text(area is Area ? '${area.children.length}' : area.state),
+        onTap: () {
+          if (area is Area) {
+            Navigator.of(context)
+                .push(MaterialPageRoute<void>(
+                    builder: (context) => ScreenListPlaces(
+                          root: area,
+                        )))
+                .then((var v) => setState(() {}));
+          } else if (area is Door) {
+            Navigator.of(context)
+                .push(MaterialPageRoute<void>(
+                    builder: (context) => ScreenDoorsSettings(door: area)))
+                .then((var v) => setState(() {}));
+          }
+        });
+>>>>>>> 1b2f0b2 (Cosetes (no se quines))
   }
 }
