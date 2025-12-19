@@ -125,12 +125,7 @@ class _ScreenGroupOptionsState extends State<ScreenGroupOptions> {
             InkWell(
               onTap: () => {
                 Navigator.of(context).push(MaterialPageRoute<void>(
-<<<<<<< HEAD
                     builder: (context) => ScreenListPlaces(id: userGroup.name)))
-=======
-                    builder: (context) =>
-                        ScreenListPlaces(userGroup: userGroup)))
->>>>>>> 1b2f0b2 (Cosetes (no se quines))
               },
               child: Card(
                 color: Colors.grey.shade700,
