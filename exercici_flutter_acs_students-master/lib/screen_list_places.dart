@@ -73,7 +73,7 @@ class _ScreenListPlaces extends State<ScreenListPlaces> {
           } else if (item is Area) {
             Navigator.of(context)
                 .push(MaterialPageRoute<void>(
-                    builder: (context) => ScreenSapce(id: item.id)))
+                    builder: (context) => ScreenSpace(id: item.id)))
                 .then((var v) => setState(() {}));
           }
         });

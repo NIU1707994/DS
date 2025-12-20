@@ -6,30 +6,54 @@ import 'package:flutter/material.dart';
 import 'tree.dart';
 import 'the_drawer.dart';
 
-class ScreenSapce extends StatefulWidget {
-//  Area? root;
-  // TODO: change string to Areas when implemented
-//  UserGroup? userGroup;
-
-//  ScreenListPlaces({super.key, this.root, this.userGroup});
+class ScreenSpace extends StatefulWidget {
   final String id;
-  const ScreenSapce({super.key, required this.id});
+  const ScreenSpace({super.key, required this.id});
 
   @override
-  State<ScreenSapce> createState() => _ScreenSpace();
+  State<ScreenSpace> createState() => _ScreenSpace();
 }
 
-class _ScreenSpace extends State<ScreenSapce> {
+class _ScreenSpace extends State<ScreenSpace> {
   //Area? root;
   //UserGroup? userGroup;
   //late List<dynamic> areas;
   late Future<Tree> futureTree;
+  late IconData favouriteIcon = Icons.favorite_border;
+  late IconData lockedAreaIcon = Icons.lock_outline;
+  Area? root;
+  late String state;
 
   @override
   void initState() {
     super.initState();
     // Demanem les dades al servidor només començar
     futureTree = getTree(widget.id);
+    state = 'lock';
+  }
+
+  void _addFavourites() {
+    root!.favourite = !root!.favourite;
+
+    setState(() {
+      favouriteIcon = root!.favourite ? Icons.favorite : Icons.favorite_border;
+    });
+
+  }
+
+  void _lockUnlockArea() {
+    setState(() {
+      if (state == 'lock') {
+        lockedAreaIcon = Icons.lock_open;
+        state = 'unlock';
+        unlockArea(root!);
+      } else {
+        lockedAreaIcon = Icons.lock_outline;
+        state = 'lock';
+        lockArea(root!);
+      }
+    });
+
   }
 
   @override
@@ -39,11 +63,15 @@ class _ScreenSpace extends State<ScreenSapce> {
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           // QUAN LES DADES ARRIBEN:
-          Area root = snapshot.data!.root;
-          List<dynamic> items = root.children;
+          root = snapshot.data!.root;
+          List<dynamic> items = root!.children;
 
           return Scaffold(
-            appBar: AppBar(title: Text(root.id)),
+            appBar: AppBar(title: Text(root!.id),
+            actions: [
+              IconButton(onPressed: _addFavourites, icon: Icon(favouriteIcon)),
+              IconButton(onPressed: _lockUnlockArea, icon: Icon(lockedAreaIcon)),
+            ],),
             body: ListView.separated(
               itemCount: items.length,
               separatorBuilder: (context, index) => const Divider(),
@@ -61,12 +89,24 @@ class _ScreenSpace extends State<ScreenSapce> {
   }
 
   Widget _buildRow(Door item) {
+    late IconData icon;
+
+    if (item.state != 'propped') {
+      icon = item.closed ? (Icons.sensor_door_sharp) : Icons.meeting_room;
+    } else {
+      icon = Icons.warning;
+    }
+
     return ListTile(
-        leading: item.closed
-            ? const Icon(Icons.sensor_door_sharp)
-            : const Icon(Icons.meeting_room),
-        title: Text(item.id),
-        subtitle: Text(item.state),
+        leading: Icon(icon, size: 35,),
+        title: Text(item.id,
+                    style: const TextStyle(
+                      fontSize: 20,),),
+        subtitle: Text(
+                        item.state,
+                        style: const TextStyle(
+                        fontSize: 15
+        ),),
         onTap: () {
           Navigator.of(context)
               .push(MaterialPageRoute<void>(

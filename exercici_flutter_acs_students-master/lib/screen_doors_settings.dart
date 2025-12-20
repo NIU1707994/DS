@@ -59,6 +59,14 @@ class _ScreenDoorsSettingsState extends State<ScreenDoorsSettings> {
         enableActions[0] = true;
         enableActions[1] = true;
         break;
+      case 'propped':
+        enableSatates[0] = door.closed;
+        enableSatates[1] = false;
+        enableSatates[2] = true;
+
+        enableActions[0] = true;
+        enableActions[1] = true;
+        break;
       default:
     }
   }
@@ -75,17 +83,20 @@ class _ScreenDoorsSettingsState extends State<ScreenDoorsSettings> {
 
       _futureDoor = Future.value(door);
 
-      snackBarText = "The door has been locked";
+      _showSnackBarMessage("The door has been locked");
     } else if (door.state == 'unlocked') {
       await unlockDoor(door);
 
       _futureDoor = Future.value(door);
 
-      snackBarText = "The door has been unlocked";
-    }
+      _showSnackBarMessage("The door has been unlocked");
+    } else {
+      await unlockShortlyDoor(door);
 
-    ScaffoldMessenger.of(context)
-        .showSnackBar(SnackBar(content: Text(snackBarText)));
+      _futureDoor = Future.value(door);
+
+      _showSnackBarMessage("The door has been unlocked shortly");
+    }
 
     setState(() {
       updateEnabledOption();
@@ -98,8 +109,12 @@ class _ScreenDoorsSettingsState extends State<ScreenDoorsSettings> {
 
       if (action == 'close') {
         door.closed = true;
+
+        _showSnackBarMessage("The door has been closed");
       } else {
         door.closed = false;
+
+        _showSnackBarMessage("The door has been opened");
       }
     });
 
@@ -110,6 +125,12 @@ class _ScreenDoorsSettingsState extends State<ScreenDoorsSettings> {
     setState(() {
       updateEnabledOption();
     });
+  }
+
+  void _showSnackBarMessage(String message) {
+    ScaffoldMessenger.of(context)
+        .showSnackBar(SnackBar(content: Text(message),
+    duration: const Duration(seconds: 1),));
   }
 
   @override
@@ -136,7 +157,7 @@ class _ScreenDoorsSettingsState extends State<ScreenDoorsSettings> {
                             value: 'locked',
                             tooltip: 'Locked',
                             icon: const Padding(
-                              padding: EdgeInsets.all(20.0),
+                              padding: EdgeInsets.all(8.0),
                               child: Icon(
                                 Icons.lock_outline,
                                 size: 50,
@@ -147,10 +168,10 @@ class _ScreenDoorsSettingsState extends State<ScreenDoorsSettings> {
                             value: 'unlocked',
                             tooltip: 'Unlocked',
                             icon: const Padding(
-                              padding: EdgeInsets.all(20.0),
+                              padding: EdgeInsets.all(8.0),
                               child: Icon(
                                 Icons.lock_open,
-                                size: 60,
+                                size: 50,
                               ),
                             ),
                             enabled: enableSatates[1]),
@@ -158,9 +179,9 @@ class _ScreenDoorsSettingsState extends State<ScreenDoorsSettings> {
                             value: 'unlocked_shortly',
                             tooltip: 'Unlocked\nShortly',
                             icon: const Padding(
-                                padding: EdgeInsets.all(20.0),
+                                padding: EdgeInsets.all(8.0),
                                 child:
-                                    Icon(Icons.lock_clock_outlined, size: 60)),
+                                    Icon(Icons.lock_clock_outlined, size: 50)),
                             enabled: enableSatates[2]),
                       ],
                       selected: <String>{door.state},
@@ -178,10 +199,10 @@ class _ScreenDoorsSettingsState extends State<ScreenDoorsSettings> {
                             value: 'close',
                             tooltip: 'Close',
                             icon: const Padding(
-                              padding: EdgeInsets.all(20.0),
+                              padding: EdgeInsets.all(8.0),
                               child: Icon(
                                 Icons.sensor_door_sharp,
-                                size: 60,
+                                size: 50,
                               ),
                             ),
                             enabled: enableActions[0]),
@@ -189,10 +210,10 @@ class _ScreenDoorsSettingsState extends State<ScreenDoorsSettings> {
                             value: 'open',
                             tooltip: 'Open',
                             icon: const Padding(
-                              padding: EdgeInsets.all(20.0),
+                              padding: EdgeInsets.all(8.0),
                               child: Icon(
                                 Icons.meeting_room,
-                                size: 60,
+                                size: 50,
                               ),
                             ),
                             enabled: enableActions[1]),

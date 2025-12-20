@@ -3,7 +3,9 @@ import 'package:exercise_flutter_acs/requests.dart';
 abstract class Area {
   late String id;
   late List<dynamic> children;
+  late bool favourite = false;
   Area(this.id, this.children);
+
 }
 
 class Partition extends Area {

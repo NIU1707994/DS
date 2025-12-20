@@ -28,6 +28,25 @@ Future<Tree> getTree(String areaId) async {
   });
 }
 
+Future<void> lockArea(Area area) async {
+  await lockUnlockArea(area, 'lock');
+}
+
+Future<void> unlockArea(Area area) async {
+  await lockUnlockArea(area, 'unlock');
+}
+
+Future<void> lockUnlockArea(Area area, String action) async {
+  assert((action == 'lock') | (action == 'unlock'));
+  String strNow = DATEFORMATTER.format(DateTime.now());
+  Uri uri = Uri.parse("${BASE_URL}/reader?credential=11343&action=$action"
+      "&datetime=$strNow&areaId=${area.id}");
+  print('area ${area.id}');
+  print('${action} ${area.id}, uri $uri');
+
+  await sendRequest(uri);
+}
+
 Future<void> lockDoor(Door door) async {
   await lockUnlockDoor(door, 'lock');
 }
@@ -36,8 +55,12 @@ Future<void> unlockDoor(Door door) async {
   await lockUnlockDoor(door, 'unlock');
 }
 
+Future<void> unlockShortlyDoor(Door door) async {
+  await lockUnlockDoor(door, 'unlock_shortly');
+}
+
 Future<void> lockUnlockDoor(Door door, String action) async {
-  assert((action == 'lock') | (action == 'unlock'));
+  assert((action == 'lock') | (action == 'unlock') | (action == 'unlock_shortly'));
   String strNow = DATEFORMATTER.format(DateTime.now());
   print(DateTime.now());
   print(strNow);
@@ -50,7 +73,7 @@ Future<void> lockUnlockDoor(Door door, String action) async {
 }
 
 Future<void> openCloseDoor(Door door) async {
-  String action = door.closed ? 'open' : 'close';
+  String action = door.closed ? 'close' : 'open';
   String strNow = DATEFORMATTER.format(DateTime.now());
   print(DateTime.now());
   print(strNow);
