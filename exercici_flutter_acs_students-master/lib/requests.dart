@@ -39,7 +39,7 @@ Future<void> unlockArea(Area area) async {
 Future<void> lockUnlockArea(Area area, String action) async {
   assert((action == 'lock') | (action == 'unlock'));
   String strNow = DATEFORMATTER.format(DateTime.now());
-  Uri uri = Uri.parse("${BASE_URL}/reader?credential=11343&action=$action"
+  Uri uri = Uri.parse("${BASE_URL}/area?credential=11343&action=$action"
       "&datetime=$strNow&areaId=${area.id}");
   print('area ${area.id}');
   print('${action} ${area.id}, uri $uri');
@@ -60,7 +60,8 @@ Future<void> unlockShortlyDoor(Door door) async {
 }
 
 Future<void> lockUnlockDoor(Door door, String action) async {
-  assert((action == 'lock') | (action == 'unlock') | (action == 'unlock_shortly'));
+  assert(
+      (action == 'lock') | (action == 'unlock') | (action == 'unlock_shortly'));
   String strNow = DATEFORMATTER.format(DateTime.now());
   print(DateTime.now());
   print(strNow);

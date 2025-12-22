@@ -39,10 +39,12 @@ class _ScreenListGroupsState extends State<ScreenListGroups> {
             userGroups.add(newUserGroup);
             setState(() {});
             Navigator.of(context)
-                .push(MaterialPageRoute(builder: (context) => ScreenInfoUserGroup(userGroup: newUserGroup,)))
+                .push(MaterialPageRoute(
+                    builder: (context) => ScreenInfoUserGroup(
+                          userGroup: newUserGroup,
+                        )))
                 .then((var v) => setState(() {}));
           }),
-      drawer: TheDrawer(context).drawer,
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.primary,
         foregroundColor: Theme.of(context).colorScheme.onPrimary,

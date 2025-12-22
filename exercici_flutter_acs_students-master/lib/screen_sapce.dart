@@ -1,6 +1,9 @@
+import 'package:exercise_flutter_acs/appbar_pers.dart';
 import 'package:exercise_flutter_acs/data.dart';
 import 'package:exercise_flutter_acs/requests.dart';
 import 'package:exercise_flutter_acs/screen_doors_settings.dart';
+import 'package:exercise_flutter_acs/screen_list_groups.dart';
+import 'package:exercise_flutter_acs/screen_list_places.dart';
 import 'package:flutter/material.dart';
 
 import 'tree.dart';
@@ -19,6 +22,14 @@ class _ScreenSpace extends State<ScreenSpace> {
   //UserGroup? userGroup;
   //late List<dynamic> areas;
   late Future<Tree> futureTree;
+  int selectedIndex = 0;
+  final List<Widget> screenOptions = [
+    const ScreenListPlaces(
+      id: 'building',
+    ),
+    ScreenListGroups(userGroups: Data.userGroups),
+    //ScrenFavorites()
+  ];
   late IconData favouriteIcon = Icons.favorite_border;
   late IconData lockedAreaIcon = Icons.lock_outline;
   Area? root;
@@ -32,28 +43,19 @@ class _ScreenSpace extends State<ScreenSpace> {
     state = 'lock';
   }
 
-  void _addFavourites() {
-    root!.favourite = !root!.favourite;
-
+  void _refressPage() {
     setState(() {
-      favouriteIcon = root!.favourite ? Icons.favorite : Icons.favorite_border;
+      futureTree = getTree(widget.id);
     });
-
   }
 
-  void _lockUnlockArea() {
+  void _changeSelected(int index) {
     setState(() {
-      if (state == 'lock') {
-        lockedAreaIcon = Icons.lock_open;
-        state = 'unlock';
-        unlockArea(root!);
-      } else {
-        lockedAreaIcon = Icons.lock_outline;
-        state = 'lock';
-        lockArea(root!);
-      }
+      selectedIndex = index;
     });
 
+    Navigator.of(context).push(MaterialPageRoute<void>(
+        builder: (context) => screenOptions[selectedIndex]));
   }
 
   @override
@@ -67,15 +69,31 @@ class _ScreenSpace extends State<ScreenSpace> {
           List<dynamic> items = root!.children;
 
           return Scaffold(
-            appBar: AppBar(title: Text(root!.id),
-            actions: [
-              IconButton(onPressed: _addFavourites, icon: Icon(favouriteIcon)),
-              IconButton(onPressed: _lockUnlockArea, icon: Icon(lockedAreaIcon)),
-            ],),
+            appBar: AppbarPers(
+              id: root!.id,
+              onStateChanged: _refressPage,
+            ),
             body: ListView.separated(
               itemCount: items.length,
               separatorBuilder: (context, index) => const Divider(),
               itemBuilder: (context, index) => _buildRow(items[index]),
+            ),
+            bottomNavigationBar: BottomNavigationBar(
+              backgroundColor: Theme.of(context).colorScheme.primary,
+              selectedItemColor: Theme.of(context).colorScheme.onPrimary,
+              unselectedItemColor: Theme.of(context).colorScheme.onPrimary,
+              showSelectedLabels: true,
+              showUnselectedLabels: false,
+              items: const <BottomNavigationBarItem>[
+                BottomNavigationBarItem(
+                    icon: Icon(Icons.apartment), label: "Places"),
+                BottomNavigationBarItem(
+                    icon: Icon(Icons.group), label: "Group"),
+                BottomNavigationBarItem(
+                    icon: Icon(Icons.favorite), label: "Favorites"),
+              ],
+              currentIndex: selectedIndex!,
+              onTap: _changeSelected,
             ),
           );
         } else if (snapshot.hasError) {
@@ -98,15 +116,20 @@ class _ScreenSpace extends State<ScreenSpace> {
     }
 
     return ListTile(
-        leading: Icon(icon, size: 35,),
-        title: Text(item.id,
-                    style: const TextStyle(
-                      fontSize: 20,),),
+        leading: Icon(
+          icon,
+          size: 35,
+        ),
+        title: Text(
+          item.id,
+          style: const TextStyle(
+            fontSize: 20,
+          ),
+        ),
         subtitle: Text(
-                        item.state,
-                        style: const TextStyle(
-                        fontSize: 15
-        ),),
+          item.state,
+          style: const TextStyle(fontSize: 15),
+        ),
         onTap: () {
           Navigator.of(context)
               .push(MaterialPageRoute<void>(

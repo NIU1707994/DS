@@ -1,4 +1,7 @@
+import 'package:exercise_flutter_acs/data.dart';
 import 'package:exercise_flutter_acs/requests.dart';
+import 'package:exercise_flutter_acs/screen_list_groups.dart';
+import 'package:exercise_flutter_acs/screen_list_places.dart';
 import 'package:exercise_flutter_acs/tree.dart';
 import 'package:flutter/material.dart';
 
@@ -17,6 +20,14 @@ class _ScreenDoorsSettingsState extends State<ScreenDoorsSettings> {
   late String action;
   late List<bool> enableSatates;
   late List<bool> enableActions;
+  int selectedIndex = 0;
+  final List<Widget> screenOptions = [
+    const ScreenListPlaces(
+      id: 'building',
+    ),
+    ScreenListGroups(userGroups: Data.userGroups),
+    //ScrenFavorites()
+  ];
 
   @override
   void initState() {
@@ -128,9 +139,19 @@ class _ScreenDoorsSettingsState extends State<ScreenDoorsSettings> {
   }
 
   void _showSnackBarMessage(String message) {
-    ScaffoldMessenger.of(context)
-        .showSnackBar(SnackBar(content: Text(message),
-    duration: const Duration(seconds: 1),));
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: Text(message),
+      duration: const Duration(seconds: 1),
+    ));
+  }
+
+  void _changeSelected(int index) {
+    setState(() {
+      selectedIndex = index;
+    });
+
+    Navigator.of(context).push(MaterialPageRoute<void>(
+        builder: (context) => screenOptions[selectedIndex]));
   }
 
   @override
@@ -242,6 +263,21 @@ class _ScreenDoorsSettingsState extends State<ScreenDoorsSettings> {
                   : Container()
             ]);
           }),
+      bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: Theme.of(context).colorScheme.primary,
+        selectedItemColor: Theme.of(context).colorScheme.onPrimary,
+        unselectedItemColor: Theme.of(context).colorScheme.onPrimary,
+        showSelectedLabels: true,
+        showUnselectedLabels: false,
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(icon: Icon(Icons.apartment), label: "Places"),
+          BottomNavigationBarItem(icon: Icon(Icons.group), label: "Group"),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.favorite), label: "Favorites"),
+        ],
+        currentIndex: selectedIndex!,
+        onTap: _changeSelected,
+      ),
     );
   }
 }
