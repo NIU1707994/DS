@@ -2,7 +2,9 @@ import 'package:exercise_flutter_acs/appbar_pers.dart';
 import 'package:exercise_flutter_acs/data.dart';
 import 'package:exercise_flutter_acs/navigationbar_pers.dart';
 import 'package:exercise_flutter_acs/requests.dart';
+import 'package:exercise_flutter_acs/screen_favorites.dart';
 import 'package:exercise_flutter_acs/screen_list_groups.dart';
+import 'package:exercise_flutter_acs/screen_propped.dart';
 import 'package:exercise_flutter_acs/screen_sapce.dart';
 import 'package:flutter/material.dart';
 import 'tree.dart';
@@ -27,7 +29,8 @@ class _ScreenListPlaces extends State<ScreenListPlaces> {
       id: 'building',
     ),
     ScreenListGroups(userGroups: Data.userGroups),
-    //ScrenFavorites()
+    const ScreenFavorites(),
+    const ScreenPropped()
   ];
 
   @override
@@ -65,11 +68,12 @@ class _ScreenListPlaces extends State<ScreenListPlaces> {
           return Scaffold(
             appBar: AppbarPers(id: root.id, onStateChanged: _refressPage),
             body: ListView.separated(
-              itemCount: items.length,
+              itemCount: items.length, //ScrenFavorites()
               separatorBuilder: (context, index) => const Divider(),
               itemBuilder: (context, index) => _buildRow(items[index]),
             ),
             bottomNavigationBar: BottomNavigationBar(
+              type: BottomNavigationBarType.fixed,
               backgroundColor: Theme.of(context).colorScheme.primary,
               selectedItemColor: Theme.of(context).colorScheme.onPrimary,
               unselectedItemColor: Theme.of(context).colorScheme.onPrimary,
@@ -82,6 +86,8 @@ class _ScreenListPlaces extends State<ScreenListPlaces> {
                     icon: Icon(Icons.group), label: "Group"),
                 BottomNavigationBarItem(
                     icon: Icon(Icons.favorite), label: "Favorites"),
+                BottomNavigationBarItem(
+                    icon: Icon(Icons.warning), label: "Propped"),
               ],
               currentIndex: selectedIndex!,
               onTap: _changeSelected,
@@ -99,7 +105,11 @@ class _ScreenListPlaces extends State<ScreenListPlaces> {
 
   Widget _buildRow(dynamic item) {
     return ListTile(
-        title: Text(item.id),
+        leading: item.icon,
+        title: Text(
+          item.id,
+          style: const TextStyle(fontSize: 20, color: Colors.black),
+        ),
         onTap: () {
           if (item is Partition) {
             Navigator.of(context)

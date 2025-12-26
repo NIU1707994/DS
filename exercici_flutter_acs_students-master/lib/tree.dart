@@ -1,11 +1,18 @@
 import 'package:exercise_flutter_acs/requests.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 
 abstract class Area {
   late String id;
   late List<dynamic> children;
   late bool favourite = false;
+  Widget icon = const Icon(
+    Icons.layers,
+    size: 40,
+    color: Colors.black,
+  );
   Area(this.id, this.children);
-
+  Area.icon(this.id, this.children, this.icon);
 }
 
 class Partition extends Area {
@@ -13,13 +20,22 @@ class Partition extends Area {
 }
 
 class Space extends Area {
-  Space(String id, List<Door> children) : super(id, children);
+  Space(String id, List<Door> children)
+      : super.icon(
+            id,
+            children,
+            SvgPicture.asset(
+              './icons/icons8-habitación-64.svg',
+              width: 40,
+              height: 40,
+            ));
 }
 
 class Door {
   late String id;
   late bool closed;
   late String state;
+
   Door({required this.id, this.state = "unlocked", this.closed = true});
 }
 

@@ -1,7 +1,9 @@
 import 'package:exercise_flutter_acs/data.dart';
 import 'package:exercise_flutter_acs/requests.dart';
+import 'package:exercise_flutter_acs/screen_favorites.dart';
 import 'package:exercise_flutter_acs/screen_list_groups.dart';
 import 'package:exercise_flutter_acs/screen_list_places.dart';
+import 'package:exercise_flutter_acs/screen_propped.dart';
 import 'package:exercise_flutter_acs/tree.dart';
 import 'package:flutter/material.dart';
 
@@ -26,7 +28,8 @@ class _ScreenDoorsSettingsState extends State<ScreenDoorsSettings> {
       id: 'building',
     ),
     ScreenListGroups(userGroups: Data.userGroups),
-    //ScrenFavorites()
+    const ScreenFavorites(),
+    const ScreenPropped()
   ];
 
   @override
@@ -86,8 +89,6 @@ class _ScreenDoorsSettingsState extends State<ScreenDoorsSettings> {
     setState(() {
       door.state = newState;
     });
-
-    late String snackBarText;
 
     if (door.state == 'locked') {
       await lockDoor(door);
@@ -264,6 +265,7 @@ class _ScreenDoorsSettingsState extends State<ScreenDoorsSettings> {
             ]);
           }),
       bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
         backgroundColor: Theme.of(context).colorScheme.primary,
         selectedItemColor: Theme.of(context).colorScheme.onPrimary,
         unselectedItemColor: Theme.of(context).colorScheme.onPrimary,
@@ -274,6 +276,7 @@ class _ScreenDoorsSettingsState extends State<ScreenDoorsSettings> {
           BottomNavigationBarItem(icon: Icon(Icons.group), label: "Group"),
           BottomNavigationBarItem(
               icon: Icon(Icons.favorite), label: "Favorites"),
+          BottomNavigationBarItem(icon: Icon(Icons.warning), label: "Propped"),
         ],
         currentIndex: selectedIndex!,
         onTap: _changeSelected,

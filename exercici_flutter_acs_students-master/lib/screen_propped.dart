@@ -5,26 +5,20 @@ import 'package:exercise_flutter_acs/screen_doors_settings.dart';
 import 'package:exercise_flutter_acs/screen_favorites.dart';
 import 'package:exercise_flutter_acs/screen_list_groups.dart';
 import 'package:exercise_flutter_acs/screen_list_places.dart';
-import 'package:exercise_flutter_acs/screen_propped.dart';
+import 'package:exercise_flutter_acs/tree.dart';
 import 'package:flutter/material.dart';
 
-import 'tree.dart';
-import 'the_drawer.dart';
-
-class ScreenSpace extends StatefulWidget {
-  final String id;
-  const ScreenSpace({super.key, required this.id});
+class ScreenPropped extends StatefulWidget {
+  const ScreenPropped({super.key});
 
   @override
-  State<ScreenSpace> createState() => _ScreenSpace();
+  State<ScreenPropped> createState() => _ScreenProppedState();
 }
 
-class _ScreenSpace extends State<ScreenSpace> {
-  //Area? root;
-  //UserGroup? userGroup;
-  //late List<dynamic> areas;
-  late Future<Tree> futureTree;
+class _ScreenProppedState extends State<ScreenPropped> {
+  late Future<List<Door>> futureDoors;
   int selectedIndex = 0;
+
   final List<Widget> screenOptions = [
     const ScreenListPlaces(
       id: 'building',
@@ -33,22 +27,16 @@ class _ScreenSpace extends State<ScreenSpace> {
     const ScreenFavorites(),
     const ScreenPropped()
   ];
-  late IconData favouriteIcon = Icons.favorite_border;
-  late IconData lockedAreaIcon = Icons.lock_outline;
-  Area? root;
-  late String state;
 
   @override
   void initState() {
     super.initState();
-    // Demanem les dades al servidor només començar
-    futureTree = getTree(widget.id);
-    state = 'lock';
+    futureDoors = getProppedDoors();
   }
 
   void _refressPage() {
     setState(() {
-      futureTree = getTree(widget.id);
+      futureDoors = getProppedDoors();
     });
   }
 
@@ -63,21 +51,15 @@ class _ScreenSpace extends State<ScreenSpace> {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<Tree>(
-      future: futureTree,
+    return FutureBuilder<List<Door>>(
+      future: futureDoors,
       builder: (context, snapshot) {
         if (snapshot.hasData) {
-          // QUAN LES DADES ARRIBEN:
-          root = snapshot.data!.root;
-          List<dynamic> items = root!.children;
-
+          List<Door> items = snapshot.data!;
           return Scaffold(
-            appBar: AppbarPers(
-              id: root!.id,
-              onStateChanged: _refressPage,
-            ),
+            appBar: AppbarPers(id: 'Propped', onStateChanged: _refressPage),
             body: ListView.separated(
-              itemCount: items.length,
+              itemCount: items.length, //ScrenFavorites()
               separatorBuilder: (context, index) => const Divider(),
               itemBuilder: (context, index) => _buildRow(items[index]),
             ),

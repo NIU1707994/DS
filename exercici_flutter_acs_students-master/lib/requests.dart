@@ -21,7 +21,7 @@ Future<http.Response> sendRequest(Uri uri) async {
 }
 
 Future<Tree> getTree(String areaId) async {
-  Uri uri = Uri.parse("${BASE_URL}/get_children?$areaId");
+  Uri uri = Uri.parse("$BASE_URL/get_children?$areaId");
   return sendRequest(uri).then((http.Response response) {
     Map<String, dynamic> decoded = convert.jsonDecode(response.body);
     return Tree(decoded);
@@ -39,7 +39,7 @@ Future<void> unlockArea(Area area) async {
 Future<void> lockUnlockArea(Area area, String action) async {
   assert((action == 'lock') | (action == 'unlock'));
   String strNow = DATEFORMATTER.format(DateTime.now());
-  Uri uri = Uri.parse("${BASE_URL}/area?credential=11343&action=$action"
+  Uri uri = Uri.parse("$BASE_URL/area?credential=11343&action=$action"
       "&datetime=$strNow&areaId=${area.id}");
   print('area ${area.id}');
   print('${action} ${area.id}, uri $uri');
@@ -65,7 +65,7 @@ Future<void> lockUnlockDoor(Door door, String action) async {
   String strNow = DATEFORMATTER.format(DateTime.now());
   print(DateTime.now());
   print(strNow);
-  Uri uri = Uri.parse("${BASE_URL}/reader?credential=11343&action=$action"
+  Uri uri = Uri.parse("$BASE_URL/reader?credential=11343&action=$action"
       "&datetime=$strNow&doorId=${door.id}");
 // credential 11343 corresponds to user Ana of Administrator group
   print('door ${door.id} is ${door.state}');
@@ -78,10 +78,20 @@ Future<void> openCloseDoor(Door door) async {
   String strNow = DATEFORMATTER.format(DateTime.now());
   print(DateTime.now());
   print(strNow);
-  Uri uri = Uri.parse("${BASE_URL}/reader?credential=11343&action=$action"
+  Uri uri = Uri.parse("$BASE_URL/reader?credential=11343&action=$action"
       "&datetime=$strNow&doorId=${door.id}");
 // credential 11343 corresponds to user Ana of Administrator group
   print('door ${door.id} is ${door.state}');
   print('${action} ${door.id}, uri $uri');
   await sendRequest(uri);
 }
+
+/*
+Future<List<Door>> getProppedDoors() {
+  Uri uri = Uri.parse("$BASE_URL/get_propped");
+  return sendRequest(uri).then((http.Response response) {
+    Map<String, dynamic> decoded = convert.jsonDecode(response.body);
+    return Tree(decoded);
+  });
+}
+*/
