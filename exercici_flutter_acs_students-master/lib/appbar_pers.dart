@@ -1,3 +1,4 @@
+import 'package:exercise_flutter_acs/favourites_storage.dart';
 import 'package:exercise_flutter_acs/requests.dart';
 import 'package:exercise_flutter_acs/tree.dart';
 import 'package:flutter/material.dart';
@@ -33,7 +34,11 @@ class _AppbarPersState extends State<AppbarPers> {
     root!.favourite = !root!.favourite;
 
     setState(() {
-      favouriteIcon = root!.favourite ? Icons.favorite : Icons.favorite_border;
+      FavoritesStorage.toggleFavorite(root!);
+
+      bool isFav = FavoritesStorage.isFavorite(root!.id);
+      favouriteIcon = isFav ? Icons.favorite : Icons.favorite_border;
+      root!.favourite = isFav;
     });
   }
 
@@ -61,6 +66,14 @@ class _AppbarPersState extends State<AppbarPers> {
         if (snapshot.hasData) {
           // QUAN LES DADES ARRIBEN:
           root = snapshot.data!.root;
+
+          if (FavoritesStorage.isFavorite(root!.id)) {
+            root!.favourite = true;
+            favouriteIcon = Icons.favorite;
+          } else {
+            root!.favourite = false;
+            favouriteIcon = Icons.favorite_border;
+          }
 
           return AppBar(
             backgroundColor: Theme.of(context).colorScheme.primary,

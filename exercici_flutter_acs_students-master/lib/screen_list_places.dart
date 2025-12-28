@@ -1,11 +1,12 @@
 import 'package:exercise_flutter_acs/appbar_pers.dart';
 import 'package:exercise_flutter_acs/data.dart';
+import 'package:exercise_flutter_acs/favourites_storage.dart';
 import 'package:exercise_flutter_acs/navigationbar_pers.dart';
 import 'package:exercise_flutter_acs/requests.dart';
-import 'package:exercise_flutter_acs/screen_favorites.dart';
+import 'package:exercise_flutter_acs/screen_favourites.dart';
 import 'package:exercise_flutter_acs/screen_list_groups.dart';
 import 'package:exercise_flutter_acs/screen_propped.dart';
-import 'package:exercise_flutter_acs/screen_sapce.dart';
+import 'package:exercise_flutter_acs/screen_space.dart';
 import 'package:flutter/material.dart';
 import 'tree.dart';
 
@@ -63,7 +64,20 @@ class _ScreenListPlaces extends State<ScreenListPlaces> {
         if (snapshot.hasData) {
           // QUAN LES DADES ARRIBEN:
           Area root = snapshot.data!.root;
+
+          // Mirem si les arees que arriben son preferides o no
+          if (FavoritesStorage.isFavorite(root.id)) {
+            root.favourite = true;
+          }
+
+          for (var child in root.children) {
+            if (child is Area && FavoritesStorage.isFavorite(child.id)) {
+              child.favourite = true;
+            }
+          }
+
           List<dynamic> items = root.children;
+
 
           return Scaffold(
             appBar: AppbarPers(id: root.id, onStateChanged: _refressPage),

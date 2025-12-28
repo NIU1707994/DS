@@ -2,7 +2,7 @@ import 'package:exercise_flutter_acs/appbar_pers.dart';
 import 'package:exercise_flutter_acs/data.dart';
 import 'package:exercise_flutter_acs/requests.dart';
 import 'package:exercise_flutter_acs/screen_doors_settings.dart';
-import 'package:exercise_flutter_acs/screen_favorites.dart';
+import 'package:exercise_flutter_acs/screen_favourites.dart';
 import 'package:exercise_flutter_acs/screen_list_groups.dart';
 import 'package:exercise_flutter_acs/screen_list_places.dart';
 import 'package:exercise_flutter_acs/tree.dart';
@@ -31,12 +31,10 @@ class _ScreenProppedState extends State<ScreenPropped> {
   @override
   void initState() {
     super.initState();
-    futureDoors = getProppedDoors();
   }
 
   void _refressPage() {
     setState(() {
-      futureDoors = getProppedDoors();
     });
   }
 
@@ -134,4 +132,5 @@ class _ScreenProppedState extends State<ScreenPropped> {
               .then((var v) => setState(() {}));
         });
   }
+
 }

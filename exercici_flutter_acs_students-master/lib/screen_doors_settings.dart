@@ -1,6 +1,6 @@
 import 'package:exercise_flutter_acs/data.dart';
 import 'package:exercise_flutter_acs/requests.dart';
-import 'package:exercise_flutter_acs/screen_favorites.dart';
+import 'package:exercise_flutter_acs/screen_favourites.dart';
 import 'package:exercise_flutter_acs/screen_list_groups.dart';
 import 'package:exercise_flutter_acs/screen_list_places.dart';
 import 'package:exercise_flutter_acs/screen_propped.dart';
