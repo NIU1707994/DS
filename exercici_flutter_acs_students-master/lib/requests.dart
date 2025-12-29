@@ -94,12 +94,24 @@ Future<void> openCloseDoor(Door door) async {
   await sendRequest(uri);
 }
 
-/*
 Future<List<Door>> getProppedDoors() {
-  Uri uri = Uri.parse("$BASE_URL/get_propped");
+  List<Door> proppedDoors = List.empty(growable: true);
+  Uri uri = Uri.parse("$BASE_URL/get_propped?areaId=building");
   return sendRequest(uri).then((http.Response response) {
-    Map<String, dynamic> decoded = convert.jsonDecode(response.body);
-    return Tree(decoded);
+    if (response.statusCode == 200) {
+      Map<String, dynamic> decoded = convert.jsonDecode(response.body);
+      final doors = decoded['proppedDoors'];
+
+      for (var door in doors) {
+        proppedDoors.add(Door(
+            id: door['id'] as String,
+            state: door['state'] as String,
+            closed: door['closed'] as bool));
+      }
+
+      return proppedDoors;
+    } else {
+      throw Exception('Failed to connect to the server');
+    }
   });
 }
-*/

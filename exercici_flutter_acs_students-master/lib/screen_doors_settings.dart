@@ -9,7 +9,9 @@ import 'package:flutter/material.dart';
 
 class ScreenDoorsSettings extends StatefulWidget {
   Door door;
-  ScreenDoorsSettings({super.key, required this.door});
+  int selectedIndex;
+  ScreenDoorsSettings(
+      {super.key, required this.door, required this.selectedIndex});
 
   @override
   State<ScreenDoorsSettings> createState() => _ScreenDoorsSettingsState();
@@ -38,6 +40,7 @@ class _ScreenDoorsSettingsState extends State<ScreenDoorsSettings> {
     door = widget.door;
     state = door.state;
     action = door.closed ? 'close' : 'open';
+    selectedIndex = widget.selectedIndex;
 
     _futureDoor = Future.value(door);
 

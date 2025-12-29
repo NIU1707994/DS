@@ -17,7 +17,7 @@ class ScreenPropped extends StatefulWidget {
 
 class _ScreenProppedState extends State<ScreenPropped> {
   late Future<List<Door>> futureDoors;
-  int selectedIndex = 0;
+  int selectedIndex = 3;
 
   final List<Widget> screenOptions = [
     const ScreenListPlaces(
@@ -31,10 +31,14 @@ class _ScreenProppedState extends State<ScreenPropped> {
   @override
   void initState() {
     super.initState();
+    futureDoors = getProppedDoors();
   }
 
-  void _refressPage() {
-    setState(() {});
+  void _refressPage() async {
+    var currentDoors = await getProppedDoors();
+    setState(() {
+      futureDoors = Future.value(currentDoors);
+    });
   }
 
   void _changeSelected(int index) {
@@ -54,12 +58,25 @@ class _ScreenProppedState extends State<ScreenPropped> {
         if (snapshot.hasData) {
           List<Door> items = snapshot.data!;
           return Scaffold(
-            appBar: AppbarPers(id: 'Propped', onStateChanged: _refressPage),
-            body: ListView.separated(
-              itemCount: items.length, //ScrenFavorites()
-              separatorBuilder: (context, index) => const Divider(),
-              itemBuilder: (context, index) => _buildRow(items[index]),
+            appBar: AppBar(
+              leadingWidth: 0,
+              backgroundColor: Theme.of(context).colorScheme.primary,
+              foregroundColor: Theme.of(context).colorScheme.onPrimary,
+              title: const Text("Propped"),
+              centerTitle: true,
             ),
+            body: (items.isNotEmpty)
+                ? ListView.separated(
+                    itemCount: items.length, //ScrenFavorites()
+                    separatorBuilder: (context, index) => const Divider(),
+                    itemBuilder: (context, index) => _buildRow(items[index]),
+                  )
+                : const Center(
+                    child: Text(
+                      'There are no propped doors',
+                      style: TextStyle(fontSize: 25),
+                    ),
+                  ),
             bottomNavigationBar: BottomNavigationBar(
               type: BottomNavigationBarType.fixed,
               backgroundColor: Theme.of(context).colorScheme.primary,
@@ -77,7 +94,7 @@ class _ScreenProppedState extends State<ScreenPropped> {
                 BottomNavigationBarItem(
                     icon: Icon(Icons.warning), label: "Propped"),
               ],
-              currentIndex: selectedIndex!,
+              currentIndex: selectedIndex,
               onTap: _changeSelected,
             ),
           );
@@ -127,8 +144,11 @@ class _ScreenProppedState extends State<ScreenPropped> {
         onTap: () {
           Navigator.of(context)
               .push(MaterialPageRoute<void>(
-                  builder: (context) => ScreenDoorsSettings(door: item)))
-              .then((var v) => setState(() {}));
+                  builder: (context) => ScreenDoorsSettings(
+                        door: item,
+                        selectedIndex: 3,
+                      )))
+              .then((_) => _refressPage());
         });
   }
 }

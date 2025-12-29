@@ -148,7 +148,10 @@ class _ScreenSpace extends State<ScreenSpace> {
         onTap: () {
           Navigator.of(context)
               .push(MaterialPageRoute<void>(
-                  builder: (context) => ScreenDoorsSettings(door: item)))
+                  builder: (context) => ScreenDoorsSettings(
+                        door: item,
+                        selectedIndex: 0,
+                      )))
               .then((var v) => setState(() {}));
         });
   }
