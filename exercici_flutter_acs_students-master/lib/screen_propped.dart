@@ -34,8 +34,7 @@ class _ScreenProppedState extends State<ScreenPropped> {
   }
 
   void _refressPage() {
-    setState(() {
-    });
+    setState(() {});
   }
 
   void _changeSelected(int index) {
@@ -132,5 +131,4 @@ class _ScreenProppedState extends State<ScreenPropped> {
               .then((var v) => setState(() {}));
         });
   }
-
 }

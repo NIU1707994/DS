@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:exercise_flutter_acs/favourites_storage.dart';
 import 'package:exercise_flutter_acs/requests.dart';
 import 'package:exercise_flutter_acs/tree.dart';
@@ -17,7 +19,7 @@ class AppbarPers extends StatefulWidget implements PreferredSizeWidget {
 
 class _AppbarPersState extends State<AppbarPers> {
   late IconData favouriteIcon = Icons.favorite_border;
-  late IconData lockedAreaIcon = Icons.lock_outline;
+  late IconData lockedAreaIcon = Icons.lock_open;
   late Future<Tree> futureTree;
   Area? root;
   late String state;
@@ -42,20 +44,43 @@ class _AppbarPersState extends State<AppbarPers> {
     });
   }
 
-  void _lockUnlockArea() {
+  void _lockUnlockArea() async {
+    final previousState = state;
+    final previousIcon = lockedAreaIcon;
+
     setState(() {
       if (state == 'lock') {
-        lockedAreaIcon = Icons.lock_open;
-        state = 'unlock';
-        unlockArea(root!);
-      } else {
         lockedAreaIcon = Icons.lock_outline;
+        state = 'unlock';
+      } else {
+        lockedAreaIcon = Icons.lock_open;
         state = 'lock';
-        lockArea(root!);
       }
+    });
+    bool correct;
+    String action = (previousState == 'lock') ? 'unlock' : 'lock';
+
+    if (previousState == 'lock') {
+      correct = await unlockArea(root!);
+    } else {
+      correct = await lockArea(root!);
+    }
+
+    if (correct) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text('Area ${action}ed correctly')));
 
       widget.onStateChanged();
-    });
+    } else {
+      setState(() {
+        state = previousState;
+        lockedAreaIcon = previousIcon;
+      });
+
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content:
+              Text('Not possible to $action check if any door is propped')));
+    }
   }
 
   @override

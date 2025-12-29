@@ -1,6 +1,8 @@
 import 'package:exercise_flutter_acs/navigationbar_pers.dart';
+import 'package:exercise_flutter_acs/screen_favourites.dart';
 import 'package:exercise_flutter_acs/screen_list_groups.dart';
 import 'package:exercise_flutter_acs/screen_list_places.dart';
+import 'package:exercise_flutter_acs/screen_propped.dart';
 import 'package:exercise_flutter_acs/tree.dart';
 import 'package:flutter/material.dart';
 import 'data.dart';
@@ -81,8 +83,24 @@ class _ScreenBlankState extends State<ScreenBlank> {
               onTap: () {
                 Navigator.of(context).pop(); // close drawer
                 Navigator.of(context).push(MaterialPageRoute<void>(
-                  builder: (context) =>
-                      ScreenListGroups(userGroups: Data.userGroups),
+                  builder: (context) => const ScreenFavorites(),
+                ));
+              },
+            ),
+            InkWell(
+              child: Card(
+                  child: Container(
+                      width: 250,
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 12, horizontal: 16),
+                      child: const Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [Icon(Icons.favorite), Text("Favoutites")],
+                      ))),
+              onTap: () {
+                Navigator.of(context).pop(); // close drawer
+                Navigator.of(context).push(MaterialPageRoute<void>(
+                  builder: (context) => const ScreenPropped(),
                 ));
               },
             )

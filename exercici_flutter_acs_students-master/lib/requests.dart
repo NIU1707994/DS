@@ -11,6 +11,8 @@ Future<http.Response> sendRequest(Uri uri) async {
     if (response.statusCode == 200) {
       print("statusCode=${response.statusCode}");
       print(response.body);
+    } else if (response.statusCode == 409) {
+      print("statusCode=${response.statusCode}");
     } else {
       print("statusCode=${response.statusCode}");
       throw Exception('failed to get answer to resquest $uri');
@@ -28,15 +30,15 @@ Future<Tree> getTree(String areaId) async {
   });
 }
 
-Future<void> lockArea(Area area) async {
-  await lockUnlockArea(area, 'lock');
+Future<bool> lockArea(Area area) async {
+  return await lockUnlockArea(area, 'lock');
 }
 
-Future<void> unlockArea(Area area) async {
-  await lockUnlockArea(area, 'unlock');
+Future<bool> unlockArea(Area area) async {
+  return await lockUnlockArea(area, 'unlock');
 }
 
-Future<void> lockUnlockArea(Area area, String action) async {
+Future<bool> lockUnlockArea(Area area, String action) async {
   assert((action == 'lock') | (action == 'unlock'));
   String strNow = DATEFORMATTER.format(DateTime.now());
   Uri uri = Uri.parse("$BASE_URL/area?credential=11343&action=$action"
@@ -44,7 +46,13 @@ Future<void> lockUnlockArea(Area area, String action) async {
   print('area ${area.id}');
   print('${action} ${area.id}, uri $uri');
 
-  await sendRequest(uri);
+  final response = await sendRequest(uri);
+
+  if (response.statusCode == 200) {
+    return true;
+  }
+
+  return false;
 }
 
 Future<void> lockDoor(Door door) async {
