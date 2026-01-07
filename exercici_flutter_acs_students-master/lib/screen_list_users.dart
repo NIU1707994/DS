@@ -4,7 +4,7 @@ import 'package:exercise_flutter_acs/screen_user_detail.dart';
 import 'package:flutter/material.dart';
 
 import 'data.dart';
-import 'the_drawer.dart';
+import 'generated/l10n.dart';
 
 class ScreeListUsers extends StatefulWidget {
   UserGroup userGroup;
@@ -38,7 +38,7 @@ class _ScreenListUsersState extends State<ScreeListUsers> {
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.primary,
         foregroundColor: Theme.of(context).colorScheme.onPrimary,
-        title: Text("Users ${userGroup.name}"),
+        title: Text(S.of(context).usersTitle(userGroup.name)),
       ),
       body: ListView.separated(
         // it's like ListView.builder() but better

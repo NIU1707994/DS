@@ -3,6 +3,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:exercise_flutter_acs/data.dart';
 import 'package:flutter/material.dart';
 import 'package:path/path.dart' as p;
+import 'generated/l10n.dart';
 
 class ScreenUserDetail extends StatefulWidget {
   UserGroup? userGroup;
@@ -47,10 +48,10 @@ class _ScreenUserDetailState extends State<ScreenUserDetail> {
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.primary,
         foregroundColor: Theme.of(context).colorScheme.onPrimary,
-        title: Text("User"),
+        title: const Text("User"),
         leading: IconButton(
             onPressed: () => {Navigator.of(context).pop(user)},
-            icon: Icon(Icons.arrow_back)),
+            icon: const Icon(Icons.arrow_back)),
       ),
       body: Center(
         child: SizedBox(
@@ -84,14 +85,16 @@ class _ScreenUserDetailState extends State<ScreenUserDetail> {
               const SizedBox(height: 16),
               TextField(
                 controller: _controllerName,
-                decoration: const InputDecoration(
-                    border: OutlineInputBorder(), labelText: 'Name'),
+                decoration: InputDecoration(
+                    border: const OutlineInputBorder(),
+                    labelText: S.of(context).name),
               ),
               const SizedBox(height: 16),
               TextField(
                 controller: _controllerCredential,
-                decoration: const InputDecoration(
-                    border: OutlineInputBorder(), labelText: 'Credential'),
+                decoration: InputDecoration(
+                    border: const OutlineInputBorder(),
+                    labelText: S.of(context).credential),
                 maxLines: null,
               ),
               const SizedBox(
@@ -101,7 +104,7 @@ class _ScreenUserDetailState extends State<ScreenUserDetail> {
                 onPressed: () {
                   saveNames();
                 },
-                child: const Text("Submit"),
+                child: Text(S.of(context).submit),
               ),
             ],
           ),
@@ -131,7 +134,7 @@ class _ScreenUserDetailState extends State<ScreenUserDetail> {
       Data.userGroups[indexUserGroup] = userGroup;
 
       ScaffoldMessenger.of(context)
-          .showSnackBar(const SnackBar(content: Text("Saved!")));
+          .showSnackBar(SnackBar(content: Text(S.of(context).saved)));
     });
   }
 }

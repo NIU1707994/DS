@@ -1,9 +1,9 @@
 import 'package:exercise_flutter_acs/data.dart';
-import 'package:exercise_flutter_acs/requests.dart';
 import 'package:exercise_flutter_acs/screen_favourites.dart';
 import 'package:exercise_flutter_acs/screen_list_groups.dart';
 import 'package:exercise_flutter_acs/screen_list_places.dart';
 import 'package:flutter/material.dart';
+import 'generated/l10n.dart';
 
 class NavigationbarPers extends StatefulWidget {
   int? selectedIndex;
@@ -35,6 +35,7 @@ class _NavigationbarPersState extends State<NavigationbarPers> {
     if (selectedIndex != Null) {
       return screenOptions[selectedIndex!];
     }
+    return null;
   }
 
   void _changeSelected(int index) {
@@ -53,11 +54,14 @@ class _NavigationbarPersState extends State<NavigationbarPers> {
         unselectedItemColor: Theme.of(context).colorScheme.onPrimary,
         showSelectedLabels: true,
         showUnselectedLabels: false,
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(icon: Icon(Icons.apartment), label: "Places"),
-          BottomNavigationBarItem(icon: Icon(Icons.group), label: "Group"),
+        items: <BottomNavigationBarItem>[
+          BottomNavigationBarItem(icon: const Icon(Icons.apartment),
+              label: S.of(context).places),
+          BottomNavigationBarItem(icon: const Icon(Icons.group),
+              label: S.of(context).groups),
           BottomNavigationBarItem(
-              icon: Icon(Icons.favorite), label: "Favorites"),
+              icon: const Icon(Icons.favorite),
+              label: S.of(context).favorites),
         ],
         currentIndex: selectedIndex!,
         onTap: _changeSelected,

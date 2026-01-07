@@ -1,4 +1,3 @@
-import 'package:exercise_flutter_acs/appbar_pers.dart';
 import 'package:exercise_flutter_acs/data.dart';
 import 'package:exercise_flutter_acs/requests.dart';
 import 'package:exercise_flutter_acs/screen_doors_settings.dart';
@@ -7,6 +6,7 @@ import 'package:exercise_flutter_acs/screen_list_groups.dart';
 import 'package:exercise_flutter_acs/screen_list_places.dart';
 import 'package:exercise_flutter_acs/tree.dart';
 import 'package:flutter/material.dart';
+import 'generated/l10n.dart';
 
 class ScreenPropped extends StatefulWidget {
   const ScreenPropped({super.key});
@@ -62,7 +62,7 @@ class _ScreenProppedState extends State<ScreenPropped> {
               leadingWidth: 0,
               backgroundColor: Theme.of(context).colorScheme.primary,
               foregroundColor: Theme.of(context).colorScheme.onPrimary,
-              title: const Text("Propped"),
+              title: Text(S.of(context).propped),
               centerTitle: true,
             ),
             body: (items.isNotEmpty)
@@ -71,10 +71,10 @@ class _ScreenProppedState extends State<ScreenPropped> {
                     separatorBuilder: (context, index) => const Divider(),
                     itemBuilder: (context, index) => _buildRow(items[index]),
                   )
-                : const Center(
+                : Center(
                     child: Text(
-                      'There are no propped doors',
-                      style: TextStyle(fontSize: 25),
+                      S.of(context).noProppedDoors,
+                      style: const TextStyle(fontSize: 25),
                     ),
                   ),
             bottomNavigationBar: BottomNavigationBar(
@@ -84,15 +84,19 @@ class _ScreenProppedState extends State<ScreenPropped> {
               unselectedItemColor: Theme.of(context).colorScheme.onPrimary,
               showSelectedLabels: true,
               showUnselectedLabels: false,
-              items: const <BottomNavigationBarItem>[
+              items: <BottomNavigationBarItem>[
                 BottomNavigationBarItem(
-                    icon: Icon(Icons.apartment), label: "Places"),
+                    icon: const Icon(Icons.apartment),
+                    label: S.of(context).places),
                 BottomNavigationBarItem(
-                    icon: Icon(Icons.group), label: "Group"),
-                BottomNavigationBarItem(
-                    icon: Icon(Icons.favorite), label: "Favorites"),
-                BottomNavigationBarItem(
-                    icon: Icon(Icons.warning), label: "Propped"),
+                    icon: const Icon(Icons.group),
+                    label: S.of(context).groups),
+                 BottomNavigationBarItem(
+                    icon: const Icon(Icons.favorite),
+                     label: S.of(context).favorites),
+                 BottomNavigationBarItem(
+                    icon: const Icon(Icons.warning),
+                     label: S.of(context).propped),
               ],
               currentIndex: selectedIndex,
               onTap: _changeSelected,

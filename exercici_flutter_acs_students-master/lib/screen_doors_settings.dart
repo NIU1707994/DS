@@ -6,6 +6,7 @@ import 'package:exercise_flutter_acs/screen_list_places.dart';
 import 'package:exercise_flutter_acs/screen_propped.dart';
 import 'package:exercise_flutter_acs/tree.dart';
 import 'package:flutter/material.dart';
+import 'generated/l10n.dart';
 
 class ScreenDoorsSettings extends StatefulWidget {
   Door door;
@@ -98,19 +99,19 @@ class _ScreenDoorsSettingsState extends State<ScreenDoorsSettings> {
 
       _futureDoor = Future.value(door);
 
-      _showSnackBarMessage("The door has been locked");
+      _showSnackBarMessage(S.of(context).doorLocked);
     } else if (door.state == 'unlocked') {
       await unlockDoor(door);
 
       _futureDoor = Future.value(door);
 
-      _showSnackBarMessage("The door has been unlocked");
+      _showSnackBarMessage(S.of(context).doorUnlocked);
     } else {
       await unlockShortlyDoor(door);
 
       _futureDoor = Future.value(door);
 
-      _showSnackBarMessage("The door has been unlocked shortly");
+      _showSnackBarMessage((S.of(context).doorUnlockedShortly));
     }
 
     setState(() {
@@ -125,11 +126,11 @@ class _ScreenDoorsSettingsState extends State<ScreenDoorsSettings> {
       if (action == 'close') {
         door.closed = true;
 
-        _showSnackBarMessage("The door has been closed");
+        _showSnackBarMessage((S.of(context).doorClosed));
       } else {
         door.closed = false;
 
-        _showSnackBarMessage("The door has been opened");
+        _showSnackBarMessage((S.of(context).doorUnlocked));
       }
     });
 
@@ -164,7 +165,7 @@ class _ScreenDoorsSettingsState extends State<ScreenDoorsSettings> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("Door ${door.id}"),
+        title: Text(S.of(context).doorTitle(door.id)),
         backgroundColor: Theme.of(context).colorScheme.primary,
         foregroundColor: Theme.of(context).colorScheme.onPrimary,
       ),
@@ -180,7 +181,7 @@ class _ScreenDoorsSettingsState extends State<ScreenDoorsSettings> {
                       segments: <ButtonSegment<String>>[
                         ButtonSegment(
                             value: 'locked',
-                            tooltip: 'Locked',
+                            tooltip: S.of(context).actionLock,
                             icon: const Padding(
                               padding: EdgeInsets.all(8.0),
                               child: Icon(
@@ -191,7 +192,7 @@ class _ScreenDoorsSettingsState extends State<ScreenDoorsSettings> {
                             enabled: enableSatates[0]),
                         ButtonSegment(
                             value: 'unlocked',
-                            tooltip: 'Unlocked',
+                            tooltip: S.of(context).actionUnlock,
                             icon: const Padding(
                               padding: EdgeInsets.all(8.0),
                               child: Icon(
@@ -202,7 +203,7 @@ class _ScreenDoorsSettingsState extends State<ScreenDoorsSettings> {
                             enabled: enableSatates[1]),
                         ButtonSegment(
                             value: 'unlocked_shortly',
-                            tooltip: 'Unlocked\nShortly',
+                            tooltip: S.of(context).actionUnlockShortly,
                             icon: const Padding(
                                 padding: EdgeInsets.all(8.0),
                                 child:
@@ -222,7 +223,7 @@ class _ScreenDoorsSettingsState extends State<ScreenDoorsSettings> {
                       segments: <ButtonSegment<String>>[
                         ButtonSegment(
                             value: 'close',
-                            tooltip: 'Close',
+                            tooltip: S.of(context).actionClose,
                             icon: const Padding(
                               padding: EdgeInsets.all(8.0),
                               child: Icon(
@@ -233,7 +234,7 @@ class _ScreenDoorsSettingsState extends State<ScreenDoorsSettings> {
                             enabled: enableActions[0]),
                         ButtonSegment(
                             value: 'open',
-                            tooltip: 'Open',
+                            tooltip: S.of(context).actionOpen,
                             icon: const Padding(
                               padding: EdgeInsets.all(8.0),
                               child: Icon(
@@ -256,7 +257,7 @@ class _ScreenDoorsSettingsState extends State<ScreenDoorsSettings> {
                   ? Positioned(
                       top: screenSize.height * 0.3,
                       left: screenSize.width * 0.4,
-                      child: Container(
+                      child: SizedBox(
                         height: MediaQuery.of(context).size.height / 4,
                         width: MediaQuery.of(context).size.width / 4,
                         child: const Center(
@@ -274,14 +275,18 @@ class _ScreenDoorsSettingsState extends State<ScreenDoorsSettings> {
         unselectedItemColor: Theme.of(context).colorScheme.onPrimary,
         showSelectedLabels: true,
         showUnselectedLabels: false,
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(icon: Icon(Icons.apartment), label: "Places"),
-          BottomNavigationBarItem(icon: Icon(Icons.group), label: "Group"),
+        items: <BottomNavigationBarItem>[
+          BottomNavigationBarItem(icon: const Icon(Icons.apartment),
+              label: S.of(context).places,),
+          BottomNavigationBarItem(icon: const Icon(Icons.group),
+              label: S.of(context).groups,),
           BottomNavigationBarItem(
-              icon: Icon(Icons.favorite), label: "Favorites"),
-          BottomNavigationBarItem(icon: Icon(Icons.warning), label: "Propped"),
+              icon: const Icon(Icons.favorite),
+              label: S.of(context).favorites,),
+          BottomNavigationBarItem(icon: const Icon(Icons.warning),
+              label: S.of(context).propped,),
         ],
-        currentIndex: selectedIndex!,
+        currentIndex: selectedIndex,
         onTap: _changeSelected,
       ),
     );

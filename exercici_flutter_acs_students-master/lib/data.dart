@@ -65,8 +65,8 @@ class Data {
     DateTime.friday,
     DateTime.saturday,
     DateTime.sunday
-  ], DateTime(2023, 1, 1), DateTime(2026, 1, 1), TimeOfDay(hour: 0, minute: 0),
-      TimeOfDay(hour: 23, minute: 59));
+  ], DateTime(2023, 1, 1), DateTime(2026, 1, 1), const TimeOfDay(hour: 0, minute: 0),
+      const TimeOfDay(hour: 23, minute: 59));
   static UserGroup admin = UserGroup(
       "admin",
       "administrators",
@@ -88,8 +88,8 @@ class Data {
     DateTime.thursday,
     DateTime.friday,
     DateTime.saturday,
-  ], DateTime(2023, 9, 1), DateTime(2024, 8, 30), TimeOfDay(hour: 7, minute: 0),
-      TimeOfDay(hour: 22, minute: 0));
+  ], DateTime(2023, 9, 1), DateTime(2024, 8, 30), const TimeOfDay(hour: 7, minute: 0),
+      const TimeOfDay(hour: 22, minute: 0));
   static UserGroup managers = UserGroup(
       "managers",
       "the CEO, CTO and heads of department",
@@ -112,8 +112,8 @@ class Data {
     DateTime.wednesday,
     DateTime.thursday,
     DateTime.friday,
-  ], DateTime(2023, 9, 1), DateTime(2024, 3, 1), TimeOfDay(hour: 7, minute: 0),
-      TimeOfDay(hour: 20, minute: 0));
+  ], DateTime(2023, 9, 1), DateTime(2024, 3, 1), const TimeOfDay(hour: 7, minute: 0),
+      const TimeOfDay(hour: 20, minute: 0));
   static UserGroup employees = UserGroup(
       "employees",
       "employees of own departments plus oursourcing companies",
@@ -136,7 +136,7 @@ class Data {
     DateTime.thursday,
     DateTime.friday,
   ], DateTime.now(), DateTime.now().add(const Duration(days: 365)),
-      TimeOfDay(hour: 8, minute: 0), TimeOfDay(hour: 19, minute: 0));
+      const TimeOfDay(hour: 8, minute: 0), const TimeOfDay(hour: 19, minute: 0));
   static List<String> defaultAreas = ["ground_floor", "room3", "corridor"];
   static List<String> defaultActions = ["open", "close"];
   static String defaultName = "new group";

@@ -2,6 +2,7 @@ import 'package:exercise_flutter_acs/data.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:weekday_selector/weekday_selector.dart';
+import 'generated/l10n.dart';
 
 class ScreeSchedule extends StatefulWidget {
   late UserGroup userGroup;
@@ -34,11 +35,11 @@ class _ScreeScheduleState extends State<ScreeSchedule> {
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.primary,
         foregroundColor: Theme.of(context).colorScheme.onPrimary,
-        title: Text("Schedule ${userGroup.name}"),
+        title: Text(S.of(context).scheduleTitle(userGroup.name)),
       ),
       body: Center(
         child: Container(
-          constraints: BoxConstraints(maxWidth: 300),
+          constraints: const BoxConstraints(maxWidth: 300),
           child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -47,7 +48,7 @@ class _ScreeScheduleState extends State<ScreeSchedule> {
                   children: [
                     Container(
                         constraints: const BoxConstraints(minWidth: 100),
-                        child: const Text("From")),
+                        child: Text(S.of(context).from)),
                     const SizedBox(
                       width: 10,
                     ),
@@ -64,7 +65,7 @@ class _ScreeScheduleState extends State<ScreeSchedule> {
                   children: [
                     Container(
                         constraints: const BoxConstraints(minWidth: 100),
-                        child: const Text("To")),
+                        child: Text(S.of(context).to)),
                     const SizedBox(
                       width: 10,
                     ),
@@ -80,7 +81,7 @@ class _ScreeScheduleState extends State<ScreeSchedule> {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text("Weekdays"),
+                    Text(S.of(context).weekdays),
                     WeekdaySelector(
                         onChanged: (int day) => {
                               setState(() {
@@ -105,7 +106,7 @@ class _ScreeScheduleState extends State<ScreeSchedule> {
                   children: [
                     Container(
                         constraints: const BoxConstraints(minWidth: 100),
-                        child: const Text("From")),
+                        child: Text(S.of(context).from)),
                     const SizedBox(
                       width: 10,
                     ),
@@ -122,7 +123,7 @@ class _ScreeScheduleState extends State<ScreeSchedule> {
                   children: [
                     Container(
                         constraints: const BoxConstraints(minWidth: 100),
-                        child: const Text("To")),
+                        child: Text(S.of(context).to)),
                     const SizedBox(
                       width: 10,
                     ),
@@ -142,7 +143,7 @@ class _ScreeScheduleState extends State<ScreeSchedule> {
                         onPressed: () {
                           saveChanges();
                         },
-                        child: const Text("Submit"),
+                        child: Text(S.of(context).submit),
                       )),
                 )
               ]),
@@ -155,7 +156,7 @@ class _ScreeScheduleState extends State<ScreeSchedule> {
     String? error = _validateForm();
 
     if (error != null) {
-      _showAlert("Dades incorrectes", error);
+      _showAlert(S.of(context).incorrectData, error);
       return;
     }
 
@@ -174,7 +175,7 @@ class _ScreeScheduleState extends State<ScreeSchedule> {
     }
 
     ScaffoldMessenger.of(context)
-        .showSnackBar(const SnackBar(content: Text("Saved!")));
+        .showSnackBar(SnackBar(content: Text(S.of(context).saved)));
   }
 
   void _pickStartDate() async {
@@ -242,7 +243,7 @@ class _ScreeScheduleState extends State<ScreeSchedule> {
   String? _validateForm() {
     // Validar Dates
     if (newSchedule.fromDate.isAfter(newSchedule.toDate)) {
-      return "La data d'inici ha de ser anterior a la data de finalització.";
+      return S.of(context).dateError;
     }
 
     // Validar Hores
@@ -250,7 +251,7 @@ class _ScreeScheduleState extends State<ScreeSchedule> {
     int endMinutes = newSchedule.toTime.hour * 60 + newSchedule.toTime.minute;
 
     if (startMinutes >= endMinutes) {
-      return "L'hora d'inici ha de ser anterior a l'hora de finalització.";
+      return S.of(context).timeError;
     }
 
     return null;
@@ -272,7 +273,7 @@ class _ScreeScheduleState extends State<ScreeSchedule> {
                   onPressed: () {
                     Navigator.of(context).pop();
                   },
-                  child: const Text("Accept"))
+                  child: Text(S.of(context).accept))
             ],
           );
         });

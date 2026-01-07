@@ -7,9 +7,8 @@ import 'package:exercise_flutter_acs/screen_list_groups.dart';
 import 'package:exercise_flutter_acs/screen_list_places.dart';
 import 'package:exercise_flutter_acs/screen_propped.dart';
 import 'package:flutter/material.dart';
-
+import 'generated/l10n.dart';
 import 'tree.dart';
-import 'the_drawer.dart';
 
 class ScreenSpace extends StatefulWidget {
   final String id;
@@ -88,17 +87,21 @@ class _ScreenSpace extends State<ScreenSpace> {
               unselectedItemColor: Theme.of(context).colorScheme.onPrimary,
               showSelectedLabels: true,
               showUnselectedLabels: false,
-              items: const <BottomNavigationBarItem>[
+              items: <BottomNavigationBarItem>[
                 BottomNavigationBarItem(
-                    icon: Icon(Icons.apartment), label: "Places"),
+                    icon: const Icon(Icons.apartment),
+                    label: S.of(context).places),
                 BottomNavigationBarItem(
-                    icon: Icon(Icons.group), label: "Group"),
+                    icon: const Icon(Icons.group),
+                    label: S.of(context).groups),
                 BottomNavigationBarItem(
-                    icon: Icon(Icons.favorite), label: "Favorites"),
+                    icon: const Icon(Icons.favorite),
+                    label: S.of(context).favorites),
                 BottomNavigationBarItem(
-                    icon: Icon(Icons.warning), label: "Propped"),
+                    icon: const Icon(Icons.warning),
+                    label: S.of(context).propped),
               ],
-              currentIndex: selectedIndex!,
+              currentIndex: selectedIndex,
               onTap: _changeSelected,
             ),
           );

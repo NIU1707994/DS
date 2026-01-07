@@ -1,0 +1,74 @@
+{
+  "@@locale": "en",
+  "appTitle": "ACS",
+  "places": "Places",
+  "groups": "Groups",
+  "favorites": "Favorites",
+  "propped": "Propped",
+  "recent": "Recent",
+  "userGroups": "User groups",
+  "usersTitle": "Users {name}",
+  "@usersTitle": {
+    "placeholders": {
+      "name": {}
+    }
+  },
+  "infoTitle": "Info {name}",
+  "@infoTitle": {
+    "placeholders": {
+      "name": {}
+    }
+  },
+  "scheduleTitle": "Schedule {name}",
+  "@scheduleTitle": {
+    "placeholders": {
+      "name": {}
+    }
+  },
+  "actions": "Actions",
+  "users": "Users",
+  "info": "Info",
+  "schedule": "Schedule",
+  "submit": "Submit",
+  "saved": "Saved!",
+  "nameGroup": "Name Group",
+  "description": "Description",
+  "enterText": "Please enter some text",
+  "actionsSaved": "Actions saved correctly!",
+  "doorTitle": "Door {id}",
+  "@doorTitle": {
+    "placeholders": {
+      "id": {}
+    }
+  },
+  "doorLocked": "The door has been locked",
+  "doorUnlocked": "The door has been unlocked",
+  "doorUnlockedShortly": "The door has been unlocked shortly",
+  "doorClosed": "The door has been closed",
+  "doorOpened": "The door has been opened",
+  "areaLockedCorrectly": "Area locked correctly",
+  "areaUnlockedCorrectly": "Area unlocked correctly",
+  "errorPropCheck": "Not possible to {action} check if any door is propped",
+  "@errorPropCheck": {
+    "placeholders": {
+      "action": {}
+    }
+  },
+  "noProppedDoors": "There are no propped doors",
+  "noFavorites": "No favorites yet",
+  "from": "From",
+  "to": "To",
+  "weekdays": "Weekdays",
+  "accept": "Accept",
+  "incorrectData": "Incorrect data",
+  "dateError": "Start date must be before end date.",
+  "timeError": "Start time must be before end time.",
+  "user": "User",
+  "name": "Name",
+  "credential": "Credential",
+  "actionOpen": "Open",
+  "actionClose": "Close",
+  "actionLock": "Lock",
+  "actionUnlock": "Unlock",
+  "actionUnlockShortly": "Unlock Shortly"
+}

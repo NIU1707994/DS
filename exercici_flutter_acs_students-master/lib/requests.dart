@@ -44,7 +44,7 @@ Future<bool> lockUnlockArea(Area area, String action) async {
   Uri uri = Uri.parse("$BASE_URL/area?credential=11343&action=$action"
       "&datetime=$strNow&areaId=${area.id}");
   print('area ${area.id}');
-  print('${action} ${area.id}, uri $uri');
+  print('$action ${area.id}, uri $uri');
 
   final response = await sendRequest(uri);
 
@@ -77,7 +77,7 @@ Future<void> lockUnlockDoor(Door door, String action) async {
       "&datetime=$strNow&doorId=${door.id}");
 // credential 11343 corresponds to user Ana of Administrator group
   print('door ${door.id} is ${door.state}');
-  print('${action} ${door.id}, uri $uri');
+  print('$action ${door.id}, uri $uri');
   await sendRequest(uri);
 }
 
@@ -90,7 +90,7 @@ Future<void> openCloseDoor(Door door) async {
       "&datetime=$strNow&doorId=${door.id}");
 // credential 11343 corresponds to user Ana of Administrator group
   print('door ${door.id} is ${door.state}');
-  print('${action} ${door.id}, uri $uri');
+  print('$action ${door.id}, uri $uri');
   await sendRequest(uri);
 }
 

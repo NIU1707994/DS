@@ -1,5 +1,4 @@
 import 'package:exercise_flutter_acs/screen_list_places.dart';
-import 'package:exercise_flutter_acs/tree.dart';
 import 'package:flutter/material.dart';
 
 import 'data.dart';
@@ -28,7 +27,7 @@ class TheDrawer {
               Navigator.of(context).pop();
               Navigator.of(context).push(MaterialPageRoute<void>(
                   builder: (context) =>
-                      ScreenListPlaces(id: "building")));
+                      const ScreenListPlaces(id: "building")));
             },
           ),
           ListTile(

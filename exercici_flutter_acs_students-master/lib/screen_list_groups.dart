@@ -2,8 +2,8 @@ import 'package:exercise_flutter_acs/screen_info_user_group.dart';
 import 'package:flutter/material.dart';
 
 import 'data.dart';
-import 'the_drawer.dart';
 import 'screen_group_options.dart';
+import 'generated/l10n.dart';
 
 class ScreenListGroups extends StatefulWidget {
   List<UserGroup> userGroups;
@@ -48,7 +48,7 @@ class _ScreenListGroupsState extends State<ScreenListGroups> {
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.primary,
         foregroundColor: Theme.of(context).colorScheme.onPrimary,
-        title: const Text("User groups"),
+        title: Text(S.of(context).userGroups),
       ),
       body: ListView.separated(
         // it's like ListView.builder() but better

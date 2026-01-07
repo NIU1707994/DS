@@ -1,5 +1,6 @@
 import 'package:exercise_flutter_acs/data.dart';
 import 'package:flutter/material.dart' hide Actions;
+import 'generated/l10n.dart';
 
 class ScreenActionList extends StatefulWidget {
   UserGroup userGroup;
@@ -31,9 +32,26 @@ class _ScreenActionListState extends State<ScreenActionList> {
     }
   }
 
+  String _getLocalizedAction(String actionCode) {
+    switch (actionCode) {
+      case 'open':
+        return S.of(context).actionOpen;
+      case 'close':
+        return S.of(context).actionClose;
+      case 'lock':
+        return S.of(context).actionLock;
+      case 'unlock':
+        return S.of(context).actionUnlock;
+      case 'unlock_shortly':
+        return S.of(context).actionUnlockShortly;
+      default:
+        return actionCode; // Per si de cas
+    }
+  }
+
   Widget _buildRow(int index) {
     return ListTile(
-        title: Text(actions[index]),
+        title: Text(_getLocalizedAction(actions[index])),
         trailing: Checkbox(
             value: checkedList[index],
             onChanged: (bool? value) => {
@@ -59,8 +77,7 @@ class _ScreenActionListState extends State<ScreenActionList> {
     }
 
     ScaffoldMessenger.of(context)
-        .showSnackBar(const SnackBar(content: Text("Accions guardades correctament!")));
-
+        .showSnackBar(SnackBar(content: Text(S.of(context).actionsSaved)));
   }
 
   @override
@@ -92,7 +109,7 @@ class _ScreenActionListState extends State<ScreenActionList> {
               onPressed: () {
                 _saveActions();
               },
-              child: const Text("Submit"),
+              child: Text(S.of(context).submit),
             ),
           ],
         ),

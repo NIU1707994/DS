@@ -1,5 +1,6 @@
 import 'package:exercise_flutter_acs/data.dart';
 import 'package:flutter/material.dart';
+import 'generated/l10n.dart';
 
 class ScreenInfoUserGroup extends StatefulWidget {
   UserGroup userGroup;
@@ -27,7 +28,7 @@ class _ScreenInfoUserGroupState extends State<ScreenInfoUserGroup> {
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.primary,
         foregroundColor: Theme.of(context).colorScheme.onPrimary,
-        title: Text("Info ${userGroup!.name}"),
+        title: Text(S.of(context).infoTitle(userGroup.name)),
         leading: IconButton(onPressed: () {
           Navigator.pop(context, userGroup);
         }, icon: const Icon(Icons.arrow_back)),
@@ -42,12 +43,13 @@ class _ScreenInfoUserGroupState extends State<ScreenInfoUserGroup> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 TextFormField(
-                  decoration: const InputDecoration(
-                      border: OutlineInputBorder(), labelText: 'Name Group'),
-                  initialValue: "${userGroup!.name}",
+                  decoration: InputDecoration(
+                      border: const OutlineInputBorder(),
+                      labelText: S.of(context).nameGroup),
+                  initialValue: userGroup.name,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Please enter some text';
+                      return S.of(context).enterText;
                     }
                     return null;
                   },
@@ -58,9 +60,10 @@ class _ScreenInfoUserGroupState extends State<ScreenInfoUserGroup> {
                 ),
                 const SizedBox(height: 16),
                 TextFormField(
-                  decoration: const InputDecoration(
-                      border: OutlineInputBorder(), labelText: 'Description'), maxLines: 5,
-                  initialValue: "${userGroup!.description}",
+                  decoration: InputDecoration(
+                      border: const OutlineInputBorder(),
+                      labelText: S.of(context).description), maxLines: 5,
+                  initialValue: userGroup.description,
                   onSaved: (value) {
                     userGroup.description = value ?? ''; // '' Will never happen,
                     // because we are validating.
@@ -73,7 +76,7 @@ class _ScreenInfoUserGroupState extends State<ScreenInfoUserGroup> {
                   onPressed: () {
                     submitFunction();
                   },
-                  child: const Text("Submit"),
+                  child: Text(S.of(context).submit),
                 ),
               ],
             ),
@@ -89,7 +92,7 @@ class _ScreenInfoUserGroupState extends State<ScreenInfoUserGroup> {
         _formKey.currentState!.save();
         ScaffoldMessenger.of(context)
             .showSnackBar(
-          const SnackBar(content: Text('Saved')),
+          SnackBar(content: Text(S.of(context).saved)),
         );
       }
     });

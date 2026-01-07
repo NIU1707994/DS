@@ -1,9 +1,13 @@
-import 'dart:io';
 
 import 'package:exercise_flutter_acs/favourites_storage.dart';
 import 'package:exercise_flutter_acs/requests.dart';
 import 'package:exercise_flutter_acs/tree.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'generated/l10n.dart';
+
+import 'package:exercise_flutter_acs/main.dart';
+
 
 class AppbarPers extends StatefulWidget implements PreferredSizeWidget {
   final String id;
@@ -67,8 +71,12 @@ class _AppbarPersState extends State<AppbarPers> {
     }
 
     if (correct) {
+      String msg = (action == 'lock')
+          ? S.of(context).areaLockedCorrectly
+          : S.of(context).areaUnlockedCorrectly;
+
       ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text('Area ${action}ed correctly')));
+          .showSnackBar(SnackBar(content: Text(msg)));
 
       widget.onStateChanged();
     } else {
@@ -79,7 +87,7 @@ class _AppbarPersState extends State<AppbarPers> {
 
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           content:
-              Text('Not possible to $action check if any door is propped')));
+              Text(S.of(context).errorPropCheck(action))));
     }
   }
 
@@ -110,6 +118,27 @@ class _AppbarPersState extends State<AppbarPers> {
               IconButton(onPressed: _addFavourites, icon: Icon(favouriteIcon)),
               IconButton(
                   onPressed: _lockUnlockArea, icon: Icon(lockedAreaIcon)),
+
+              PopupMenuButton<Locale>(
+                icon: const Icon(Icons.language),
+                onSelected: (Locale newLocale) {
+                  S.load(newLocale);
+                },
+                itemBuilder: (BuildContext context) => <PopupMenuEntry<Locale>>[
+                  const PopupMenuItem<Locale>(
+                    value: Locale('en'),
+                    child: Text('English'),
+                  ),
+                  const PopupMenuItem<Locale>(
+                    value: Locale('ca'),
+                    child: Text('Català'),
+                  ),
+                  const PopupMenuItem<Locale>(
+                    value: Locale('de'),
+                    child: Text('Deutsch'),
+                  ),
+                ],
+              ),
             ],
           );
         } else if (snapshot.hasError) {

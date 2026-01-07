@@ -1,7 +1,6 @@
 import 'package:exercise_flutter_acs/appbar_pers.dart';
 import 'package:exercise_flutter_acs/data.dart';
 import 'package:exercise_flutter_acs/favourites_storage.dart';
-import 'package:exercise_flutter_acs/navigationbar_pers.dart';
 import 'package:exercise_flutter_acs/requests.dart';
 import 'package:exercise_flutter_acs/screen_favourites.dart';
 import 'package:exercise_flutter_acs/screen_list_groups.dart';
@@ -9,6 +8,7 @@ import 'package:exercise_flutter_acs/screen_propped.dart';
 import 'package:exercise_flutter_acs/screen_space.dart';
 import 'package:flutter/material.dart';
 import 'tree.dart';
+import 'generated/l10n.dart';
 
 class ScreenListPlaces extends StatefulWidget {
   final String id;
@@ -93,17 +93,21 @@ class _ScreenListPlaces extends State<ScreenListPlaces> {
               unselectedItemColor: Theme.of(context).colorScheme.onPrimary,
               showSelectedLabels: true,
               showUnselectedLabels: false,
-              items: const <BottomNavigationBarItem>[
+              items: <BottomNavigationBarItem>[
                 BottomNavigationBarItem(
-                    icon: Icon(Icons.apartment), label: "Places"),
+                    icon: const Icon(Icons.apartment),
+                    label: S.of(context).places),
                 BottomNavigationBarItem(
-                    icon: Icon(Icons.group), label: "Group"),
+                    icon: const Icon(Icons.group),
+                    label: S.of(context).groups),
                 BottomNavigationBarItem(
-                    icon: Icon(Icons.favorite), label: "Favorites"),
+                    icon: const Icon(Icons.favorite),
+                    label: S.of(context).favorites),
                 BottomNavigationBarItem(
-                    icon: Icon(Icons.warning), label: "Propped"),
+                    icon: const Icon(Icons.warning),
+                    label: S.of(context).propped),
               ],
-              currentIndex: selectedIndex!,
+              currentIndex: selectedIndex,
               onTap: _changeSelected,
             ),
           );

@@ -1,9 +1,9 @@
 import 'favourites_storage.dart';
-import 'package:exercise_flutter_acs/screen_doors_settings.dart';
 import 'package:exercise_flutter_acs/screen_list_places.dart';
 import 'package:exercise_flutter_acs/screen_space.dart';
 import 'package:exercise_flutter_acs/tree.dart';
 import 'package:flutter/material.dart';
+import 'generated/l10n.dart';
 
 class ScreenFavorites extends StatefulWidget {
   const ScreenFavorites({super.key});
@@ -27,11 +27,11 @@ class _ScreenFavoritesState extends State<ScreenFavorites> {
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.primary,
         foregroundColor: Theme.of(context).colorScheme.onPrimary,
-        title: const Text("Preferits"),
+        title: Text(S.of(context).favorites),
         centerTitle: true,
       ),
       body: visibleFavorites.isEmpty
-          ? const Center(child: Text("No hi ha preferits"))
+          ? Center(child: Text(S.of(context).noFavorites))
           : ListView.separated(
         itemCount: visibleFavorites.length,
         separatorBuilder: (context, index) => const Divider(),

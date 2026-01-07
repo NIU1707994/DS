@@ -1,11 +1,10 @@
-import 'package:exercise_flutter_acs/navigationbar_pers.dart';
 import 'package:exercise_flutter_acs/screen_favourites.dart';
 import 'package:exercise_flutter_acs/screen_list_groups.dart';
 import 'package:exercise_flutter_acs/screen_list_places.dart';
 import 'package:exercise_flutter_acs/screen_propped.dart';
-import 'package:exercise_flutter_acs/tree.dart';
 import 'package:flutter/material.dart';
 import 'data.dart';
+import 'generated/l10n.dart';
 
 class ScreenBlank extends StatefulWidget {
   const ScreenBlank({super.key});
@@ -21,7 +20,7 @@ class _ScreenBlankState extends State<ScreenBlank> {
         appBar: AppBar(
           backgroundColor: Theme.of(context).colorScheme.primary,
           foregroundColor: Theme.of(context).colorScheme.onPrimary,
-          title: const Text("ACS"),
+          title: Text(S.of(context).appTitle),
           centerTitle: true,
         ),
         body: Center(
@@ -37,12 +36,12 @@ class _ScreenBlankState extends State<ScreenBlank> {
                 width: 250,
                 padding:
                     const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
-                child: const Row(
+                child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Icon(Icons.apartment),
-                    SizedBox(width: 10),
-                    Text("Places")
+                    const Icon(Icons.apartment),
+                    const SizedBox(width: 10),
+                    Text(S.of(context).places)
                   ],
                 ),
               )),
@@ -59,9 +58,10 @@ class _ScreenBlankState extends State<ScreenBlank> {
                       width: 250,
                       padding: const EdgeInsets.symmetric(
                           vertical: 12, horizontal: 16),
-                      child: const Row(
+                      child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
-                        children: [Icon(Icons.group), Text("Groups")],
+                        children: [const Icon(Icons.group),
+                          Text(S.of(context).groups)],
                       ))),
               onTap: () {
                 Navigator.of(context).pop();
@@ -76,9 +76,9 @@ class _ScreenBlankState extends State<ScreenBlank> {
                       width: 250,
                       padding: const EdgeInsets.symmetric(
                           vertical: 12, horizontal: 16),
-                      child: const Row(
+                      child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
-                        children: [Icon(Icons.favorite), Text("Favoutites")],
+                        children: [const Icon(Icons.favorite), Text(S.of(context).favorites)],
                       ))),
               onTap: () {
                 Navigator.of(context).pop(); // close drawer
@@ -93,9 +93,10 @@ class _ScreenBlankState extends State<ScreenBlank> {
                       width: 250,
                       padding: const EdgeInsets.symmetric(
                           vertical: 12, horizontal: 16),
-                      child: const Row(
+                      child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
-                        children: [Icon(Icons.favorite), Text("Favoutites")],
+                        children: [const Icon(Icons.favorite),
+                          Text(S.of(context).propped)],
                       ))),
               onTap: () {
                 Navigator.of(context).pop(); // close drawer

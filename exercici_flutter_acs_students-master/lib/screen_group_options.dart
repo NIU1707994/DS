@@ -5,6 +5,7 @@ import 'package:exercise_flutter_acs/screen_schedule.dart';
 import 'package:exercise_flutter_acs/screen_info_user_group.dart';
 import 'package:flutter/material.dart';
 import 'screen_list_users.dart';
+import 'generated/l10n.dart';
 
 class ScreenGroupOptions extends StatefulWidget {
   UserGroup userGroup;
@@ -31,7 +32,7 @@ class _ScreenGroupOptionsState extends State<ScreenGroupOptions> {
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.primary,
         foregroundColor: Theme.of(context).colorScheme.onPrimary,
-        title: Text("Users $_appBarName"),
+        title: Text(S.of(context).usersTitle(_appBarName)),
       ),
       body: Center(
         child: GridView.count(
@@ -50,18 +51,18 @@ class _ScreenGroupOptionsState extends State<ScreenGroupOptions> {
               },
               child: Card(
                 color: Colors.grey.shade700,
-                child: const Center(
+                child: Center(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Icon(
+                      const Icon(
                         Icons.article_outlined,
                         size: 100,
                         color: Colors.white,
                       ),
                       Text(
-                        "Info",
-                        style: TextStyle(
+                        S.of(context).info,
+                        style: const TextStyle(
                             color: Colors.white, fontWeight: FontWeight.bold),
                       )
                     ],
@@ -76,18 +77,18 @@ class _ScreenGroupOptionsState extends State<ScreenGroupOptions> {
               },
               child: Card(
                 color: Colors.grey.shade700,
-                child: const Center(
+                child: Center(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Icon(
+                      const Icon(
                         Icons.calendar_month,
                         size: 100,
                         color: Colors.white,
                       ),
                       Text(
-                        "Schedule",
-                        style: TextStyle(
+                        S.of(context).schedule,
+                        style: const TextStyle(
                             color: Colors.white, fontWeight: FontWeight.bold),
                       )
                     ],
@@ -103,18 +104,18 @@ class _ScreenGroupOptionsState extends State<ScreenGroupOptions> {
               },
               child: Card(
                 color: Colors.grey.shade700,
-                child: const Center(
+                child: Center(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Icon(
+                      const Icon(
                         Icons.room_preferences_outlined,
                         size: 100,
                         color: Colors.white,
                       ),
                       Text(
-                        "Actions",
-                        style: TextStyle(
+                        S.of(context).actions,
+                        style: const TextStyle(
                             color: Colors.white, fontWeight: FontWeight.bold),
                       )
                     ],
@@ -129,18 +130,18 @@ class _ScreenGroupOptionsState extends State<ScreenGroupOptions> {
               },
               child: Card(
                 color: Colors.grey.shade700,
-                child: const Center(
+                child: Center(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Icon(
+                      const Icon(
                         Icons.holiday_village,
                         size: 100,
                         color: Colors.white,
                       ),
                       Text(
-                        "Places",
-                        style: TextStyle(
+                        S.of(context).places,
+                        style: const TextStyle(
                             color: Colors.white, fontWeight: FontWeight.bold),
                       )
                     ],
@@ -155,18 +156,18 @@ class _ScreenGroupOptionsState extends State<ScreenGroupOptions> {
               },
               child: Card(
                 color: Colors.grey.shade700,
-                child: const Center(
+                child: Center(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Icon(
+                      const Icon(
                         Icons.manage_accounts,
                         size: 100,
                         color: Colors.white,
                       ),
                       Text(
-                        "Users",
-                        style: TextStyle(
+                        S.of(context).users,
+                        style: const TextStyle(
                             color: Colors.white, fontWeight: FontWeight.bold),
                       )
                     ],
