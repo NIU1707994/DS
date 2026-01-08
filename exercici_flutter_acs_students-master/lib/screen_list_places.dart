@@ -78,39 +78,14 @@ class _ScreenListPlaces extends State<ScreenListPlaces> {
 
           List<dynamic> items = root.children;
 
-
           return Scaffold(
-            appBar: AppbarPers(id: root.id, onStateChanged: _refressPage),
-            body: ListView.separated(
-              itemCount: items.length, //ScrenFavorites()
-              separatorBuilder: (context, index) => const Divider(),
-              itemBuilder: (context, index) => _buildRow(items[index]),
-            ),
-            bottomNavigationBar: BottomNavigationBar(
-              type: BottomNavigationBarType.fixed,
-              backgroundColor: Theme.of(context).colorScheme.primary,
-              selectedItemColor: Theme.of(context).colorScheme.onPrimary,
-              unselectedItemColor: Theme.of(context).colorScheme.onPrimary,
-              showSelectedLabels: true,
-              showUnselectedLabels: false,
-              items: <BottomNavigationBarItem>[
-                BottomNavigationBarItem(
-                    icon: const Icon(Icons.apartment),
-                    label: S.of(context).places),
-                BottomNavigationBarItem(
-                    icon: const Icon(Icons.group),
-                    label: S.of(context).groups),
-                BottomNavigationBarItem(
-                    icon: const Icon(Icons.favorite),
-                    label: S.of(context).favorites),
-                BottomNavigationBarItem(
-                    icon: const Icon(Icons.warning),
-                    label: S.of(context).propped),
-              ],
-              currentIndex: selectedIndex,
-              onTap: _changeSelected,
-            ),
-          );
+              appBar: AppbarPers(id: root.id, onStateChanged: _refressPage),
+              body: ListView.separated(
+                itemCount: items.length, //ScrenFavorites()
+                separatorBuilder: (context, index) => const Divider(),
+                itemBuilder: (context, index) => _buildRow(items[index]),
+              ),
+              bottomNavigationBar: _buidNavigationBar());
         } else if (snapshot.hasError) {
           return Scaffold(
               body: Center(child: Text("Error: ${snapshot.error}")));
@@ -118,6 +93,29 @@ class _ScreenListPlaces extends State<ScreenListPlaces> {
         // MENTRE ESPEREM: Mostrem la rodeta de càrrega
         return const Scaffold(body: Center(child: CircularProgressIndicator()));
       },
+    );
+  }
+
+  Widget _buidNavigationBar() {
+    return BottomNavigationBar(
+      type: BottomNavigationBarType.fixed,
+      backgroundColor: Theme.of(context).colorScheme.primary,
+      selectedItemColor: Theme.of(context).colorScheme.onPrimary,
+      unselectedItemColor: Theme.of(context).colorScheme.onPrimary,
+      showSelectedLabels: true,
+      showUnselectedLabels: false,
+      items: <BottomNavigationBarItem>[
+        BottomNavigationBarItem(
+            icon: const Icon(Icons.apartment), label: S.of(context).places),
+        BottomNavigationBarItem(
+            icon: const Icon(Icons.group), label: S.of(context).groups),
+        BottomNavigationBarItem(
+            icon: const Icon(Icons.favorite), label: S.of(context).favorites),
+        BottomNavigationBarItem(
+            icon: const Icon(Icons.warning), label: S.of(context).propped),
+      ],
+      currentIndex: selectedIndex,
+      onTap: _changeSelected,
     );
   }
 

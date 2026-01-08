@@ -164,131 +164,133 @@ class _ScreenDoorsSettingsState extends State<ScreenDoorsSettings> {
     final screenSize = MediaQuery.of(context).size;
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text(S.of(context).doorTitle(door.id)),
-        backgroundColor: Theme.of(context).colorScheme.primary,
-        foregroundColor: Theme.of(context).colorScheme.onPrimary,
-      ),
-      body: FutureBuilder<Door>(
-          future: _futureDoor,
-          builder: (context, snapshot) {
-            return Stack(children: [
-              Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    SegmentedButton(
-                      segments: <ButtonSegment<String>>[
-                        ButtonSegment(
-                            value: 'locked',
-                            tooltip: S.of(context).actionLock,
-                            icon: const Padding(
-                              padding: EdgeInsets.all(8.0),
-                              child: Icon(
-                                Icons.lock_outline,
-                                size: 50,
-                              ),
-                            ),
-                            enabled: enableSatates[0]),
-                        ButtonSegment(
-                            value: 'unlocked',
-                            tooltip: S.of(context).actionUnlock,
-                            icon: const Padding(
-                              padding: EdgeInsets.all(8.0),
-                              child: Icon(
-                                Icons.lock_open,
-                                size: 50,
-                              ),
-                            ),
-                            enabled: enableSatates[1]),
-                        ButtonSegment(
-                            value: 'unlocked_shortly',
-                            tooltip: S.of(context).actionUnlockShortly,
-                            icon: const Padding(
+        appBar: AppBar(
+          title: Text(S.of(context).doorTitle(door.id)),
+          backgroundColor: Theme.of(context).colorScheme.primary,
+          foregroundColor: Theme.of(context).colorScheme.onPrimary,
+        ),
+        body: FutureBuilder<Door>(
+            future: _futureDoor,
+            builder: (context, snapshot) {
+              return Stack(children: [
+                Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SegmentedButton(
+                        segments: <ButtonSegment<String>>[
+                          ButtonSegment(
+                              value: 'locked',
+                              tooltip: S.of(context).actionLock,
+                              icon: const Padding(
                                 padding: EdgeInsets.all(8.0),
-                                child:
-                                    Icon(Icons.lock_clock_outlined, size: 50)),
-                            enabled: enableSatates[2]),
-                      ],
-                      selected: <String>{door.state},
-                      onSelectionChanged: (Set<String> newState) {
-                        _changeState(newState.first);
-                      },
-                      showSelectedIcon: false,
-                    ),
-                    const SizedBox(
-                      height: 30,
-                    ),
-                    SegmentedButton(
-                      segments: <ButtonSegment<String>>[
-                        ButtonSegment(
-                            value: 'close',
-                            tooltip: S.of(context).actionClose,
-                            icon: const Padding(
-                              padding: EdgeInsets.all(8.0),
-                              child: Icon(
-                                Icons.sensor_door_sharp,
-                                size: 50,
+                                child: Icon(
+                                  Icons.lock_outline,
+                                  size: 50,
+                                ),
                               ),
-                            ),
-                            enabled: enableActions[0]),
-                        ButtonSegment(
-                            value: 'open',
-                            tooltip: S.of(context).actionOpen,
-                            icon: const Padding(
-                              padding: EdgeInsets.all(8.0),
-                              child: Icon(
-                                Icons.meeting_room,
-                                size: 50,
+                              enabled: enableSatates[0]),
+                          ButtonSegment(
+                              value: 'unlocked',
+                              tooltip: S.of(context).actionUnlock,
+                              icon: const Padding(
+                                padding: EdgeInsets.all(8.0),
+                                child: Icon(
+                                  Icons.lock_open,
+                                  size: 50,
+                                ),
                               ),
-                            ),
-                            enabled: enableActions[1]),
-                      ],
-                      selected: <String>{action},
-                      onSelectionChanged: (Set<String> newAction) {
-                        _changeAction(newAction.first);
-                      },
-                      showSelectedIcon: false,
-                    )
-                  ],
-                ),
-              ),
-              snapshot.connectionState != ConnectionState.done
-                  ? Positioned(
-                      top: screenSize.height * 0.3,
-                      left: screenSize.width * 0.4,
-                      child: SizedBox(
-                        height: MediaQuery.of(context).size.height / 4,
-                        width: MediaQuery.of(context).size.width / 4,
-                        child: const Center(
-                          child: CircularProgressIndicator(),
-                        ),
+                              enabled: enableSatates[1]),
+                          ButtonSegment(
+                              value: 'unlocked_shortly',
+                              tooltip: S.of(context).actionUnlockShortly,
+                              icon: const Padding(
+                                  padding: EdgeInsets.all(8.0),
+                                  child: Icon(Icons.lock_clock_outlined,
+                                      size: 50)),
+                              enabled: enableSatates[2]),
+                        ],
+                        selected: <String>{door.state},
+                        onSelectionChanged: (Set<String> newState) {
+                          _changeState(newState.first);
+                        },
+                        showSelectedIcon: false,
                       ),
-                    )
-                  : Container()
-            ]);
-          }),
-      bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        backgroundColor: Theme.of(context).colorScheme.primary,
-        selectedItemColor: Theme.of(context).colorScheme.onPrimary,
-        unselectedItemColor: Theme.of(context).colorScheme.onPrimary,
-        showSelectedLabels: true,
-        showUnselectedLabels: false,
-        items: <BottomNavigationBarItem>[
-          BottomNavigationBarItem(icon: const Icon(Icons.apartment),
-              label: S.of(context).places,),
-          BottomNavigationBarItem(icon: const Icon(Icons.group),
-              label: S.of(context).groups,),
-          BottomNavigationBarItem(
-              icon: const Icon(Icons.favorite),
-              label: S.of(context).favorites,),
-          BottomNavigationBarItem(icon: const Icon(Icons.warning),
-              label: S.of(context).propped,),
-        ],
-        currentIndex: selectedIndex,
-        onTap: _changeSelected,
-      ),
+                      const SizedBox(
+                        height: 30,
+                      ),
+                      SegmentedButton(
+                        segments: <ButtonSegment<String>>[
+                          ButtonSegment(
+                              value: 'close',
+                              tooltip: S.of(context).actionClose,
+                              icon: const Padding(
+                                padding: EdgeInsets.all(8.0),
+                                child: Icon(
+                                  Icons.sensor_door_sharp,
+                                  size: 50,
+                                ),
+                              ),
+                              enabled: enableActions[0]),
+                          ButtonSegment(
+                              value: 'open',
+                              tooltip: S.of(context).actionOpen,
+                              icon: const Padding(
+                                padding: EdgeInsets.all(8.0),
+                                child: Icon(
+                                  Icons.meeting_room,
+                                  size: 50,
+                                ),
+                              ),
+                              enabled: enableActions[1]),
+                        ],
+                        selected: <String>{action},
+                        onSelectionChanged: (Set<String> newAction) {
+                          _changeAction(newAction.first);
+                        },
+                        showSelectedIcon: false,
+                      )
+                    ],
+                  ),
+                ),
+                snapshot.connectionState != ConnectionState.done
+                    ? Positioned(
+                        top: screenSize.height * 0.3,
+                        left: screenSize.width * 0.4,
+                        child: SizedBox(
+                          height: MediaQuery.of(context).size.height / 4,
+                          width: MediaQuery.of(context).size.width / 4,
+                          child: const Center(
+                            child: CircularProgressIndicator(),
+                          ),
+                        ),
+                      )
+                    : Container()
+              ]);
+            }),
+        bottomNavigationBar: _buidNavigationBar());
+  }
+
+  Widget _buidNavigationBar() {
+    return BottomNavigationBar(
+      type: BottomNavigationBarType.fixed,
+      backgroundColor: Theme.of(context).colorScheme.primary,
+      selectedItemColor: Theme.of(context).colorScheme.onPrimary,
+      unselectedItemColor: Theme.of(context).colorScheme.onPrimary,
+      showSelectedLabels: true,
+      showUnselectedLabels: false,
+      items: <BottomNavigationBarItem>[
+        BottomNavigationBarItem(
+            icon: const Icon(Icons.apartment), label: S.of(context).places),
+        BottomNavigationBarItem(
+            icon: const Icon(Icons.group), label: S.of(context).groups),
+        BottomNavigationBarItem(
+            icon: const Icon(Icons.favorite), label: S.of(context).favorites),
+        BottomNavigationBarItem(
+            icon: const Icon(Icons.warning), label: S.of(context).propped),
+      ],
+      currentIndex: selectedIndex,
+      onTap: _changeSelected,
     );
   }
 }

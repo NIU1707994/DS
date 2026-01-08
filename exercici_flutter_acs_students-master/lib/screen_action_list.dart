@@ -1,4 +1,8 @@
 import 'package:exercise_flutter_acs/data.dart';
+import 'package:exercise_flutter_acs/screen_favourites.dart';
+import 'package:exercise_flutter_acs/screen_list_groups.dart';
+import 'package:exercise_flutter_acs/screen_list_places.dart';
+import 'package:exercise_flutter_acs/screen_propped.dart';
 import 'package:flutter/material.dart' hide Actions;
 import 'generated/l10n.dart';
 
@@ -15,6 +19,16 @@ class _ScreenActionListState extends State<ScreenActionList> {
   late UserGroup userGroup;
   late List<String> actions;
   late List<bool> checkedList;
+  int selectedIndex = 1;
+
+  final List<Widget> screenOptions = [
+    const ScreenListPlaces(
+      id: 'building',
+    ),
+    ScreenListGroups(userGroups: Data.userGroups),
+    const ScreenFavorites(),
+    const ScreenPropped()
+  ];
 
   @override
   void initState() {
@@ -30,6 +44,15 @@ class _ScreenActionListState extends State<ScreenActionList> {
         checkedList[index] = true;
       }
     }
+  }
+
+  void _changeSelected(int index) {
+    setState(() {
+      selectedIndex = index;
+    });
+
+    Navigator.of(context).push(MaterialPageRoute<void>(
+        builder: (context) => screenOptions[selectedIndex]));
   }
 
   String _getLocalizedAction(String actionCode) {
@@ -114,6 +137,30 @@ class _ScreenActionListState extends State<ScreenActionList> {
           ],
         ),
       ),
+      bottomNavigationBar: _buidNavigationBar(),
+    );
+  }
+
+  Widget _buidNavigationBar() {
+    return BottomNavigationBar(
+      type: BottomNavigationBarType.fixed,
+      backgroundColor: Theme.of(context).colorScheme.primary,
+      selectedItemColor: Theme.of(context).colorScheme.onPrimary,
+      unselectedItemColor: Theme.of(context).colorScheme.onPrimary,
+      showSelectedLabels: true,
+      showUnselectedLabels: false,
+      items: <BottomNavigationBarItem>[
+        BottomNavigationBarItem(
+            icon: const Icon(Icons.apartment), label: S.of(context).places),
+        BottomNavigationBarItem(
+            icon: const Icon(Icons.group), label: S.of(context).groups),
+        BottomNavigationBarItem(
+            icon: const Icon(Icons.favorite), label: S.of(context).favorites),
+        BottomNavigationBarItem(
+            icon: const Icon(Icons.warning), label: S.of(context).propped),
+      ],
+      currentIndex: selectedIndex,
+      onTap: _changeSelected,
     );
   }
 }

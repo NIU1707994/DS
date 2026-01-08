@@ -1,4 +1,8 @@
 import 'package:exercise_flutter_acs/data.dart';
+import 'package:exercise_flutter_acs/screen_favourites.dart';
+import 'package:exercise_flutter_acs/screen_list_groups.dart';
+import 'package:exercise_flutter_acs/screen_list_places.dart';
+import 'package:exercise_flutter_acs/screen_propped.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:weekday_selector/weekday_selector.dart';
@@ -16,6 +20,16 @@ class _ScreeScheduleState extends State<ScreeSchedule> {
   late UserGroup userGroup;
   late Schedule newSchedule;
   List<bool> weekdays = List.filled(7, false);
+  int selectedIndex = 1;
+
+  final List<Widget> screenOptions = [
+    const ScreenListPlaces(
+      id: 'building',
+    ),
+    ScreenListGroups(userGroups: Data.userGroups),
+    const ScreenFavorites(),
+    const ScreenPropped()
+  ];
   @override
   void initState() {
     super.initState();
@@ -27,6 +41,15 @@ class _ScreeScheduleState extends State<ScreeSchedule> {
         weekdays[day] = true;
       }
     }
+  }
+
+  void _changeSelected(int index) {
+    setState(() {
+      selectedIndex = index;
+    });
+
+    Navigator.of(context).push(MaterialPageRoute<void>(
+        builder: (context) => screenOptions[selectedIndex]));
   }
 
   @override
@@ -149,6 +172,30 @@ class _ScreeScheduleState extends State<ScreeSchedule> {
               ]),
         ),
       ),
+      bottomNavigationBar: _buidNavigationBar(),
+    );
+  }
+
+  Widget _buidNavigationBar() {
+    return BottomNavigationBar(
+      type: BottomNavigationBarType.fixed,
+      backgroundColor: Theme.of(context).colorScheme.primary,
+      selectedItemColor: Theme.of(context).colorScheme.onPrimary,
+      unselectedItemColor: Theme.of(context).colorScheme.onPrimary,
+      showSelectedLabels: true,
+      showUnselectedLabels: false,
+      items: <BottomNavigationBarItem>[
+        BottomNavigationBarItem(
+            icon: const Icon(Icons.apartment), label: S.of(context).places),
+        BottomNavigationBarItem(
+            icon: const Icon(Icons.group), label: S.of(context).groups),
+        BottomNavigationBarItem(
+            icon: const Icon(Icons.favorite), label: S.of(context).favorites),
+        BottomNavigationBarItem(
+            icon: const Icon(Icons.warning), label: S.of(context).propped),
+      ],
+      currentIndex: selectedIndex,
+      onTap: _changeSelected,
     );
   }
 
@@ -186,8 +233,7 @@ class _ScreeScheduleState extends State<ScreeSchedule> {
         context: context,
         firstDate: first,
         lastDate: DateTime(DateTime.now().year + 10),
-        initialDate: initial
-    );
+        initialDate: initial);
 
     if (newStartDate != null) {
       setState(() {
@@ -204,8 +250,7 @@ class _ScreeScheduleState extends State<ScreeSchedule> {
         context: context,
         firstDate: first,
         lastDate: DateTime(DateTime.now().year + 10),
-        initialDate: initial
-    );
+        initialDate: initial);
 
     if (newEndDate != null) {
       setState(() {
@@ -247,7 +292,8 @@ class _ScreeScheduleState extends State<ScreeSchedule> {
     }
 
     // Validar Hores
-    int startMinutes = newSchedule.fromTime.hour * 60 + newSchedule.fromTime.minute;
+    int startMinutes =
+        newSchedule.fromTime.hour * 60 + newSchedule.fromTime.minute;
     int endMinutes = newSchedule.toTime.hour * 60 + newSchedule.toTime.minute;
 
     if (startMinutes >= endMinutes) {
@@ -278,5 +324,4 @@ class _ScreeScheduleState extends State<ScreeSchedule> {
           );
         });
   }
-
 }

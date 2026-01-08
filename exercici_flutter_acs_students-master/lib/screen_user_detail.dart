@@ -1,4 +1,8 @@
 import 'dart:io';
+import 'package:exercise_flutter_acs/screen_favourites.dart';
+import 'package:exercise_flutter_acs/screen_list_groups.dart';
+import 'package:exercise_flutter_acs/screen_list_places.dart';
+import 'package:exercise_flutter_acs/screen_propped.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:exercise_flutter_acs/data.dart';
 import 'package:flutter/material.dart';
@@ -20,6 +24,16 @@ class _ScreenUserDetailState extends State<ScreenUserDetail> {
   late TextEditingController _controllerName;
   late TextEditingController _controllerCredential;
   late FileImage imageAvatar;
+  int selectedIndex = 1;
+
+  final List<Widget> screenOptions = [
+    const ScreenListPlaces(
+      id: 'building',
+    ),
+    ScreenListGroups(userGroups: Data.userGroups),
+    const ScreenFavorites(),
+    const ScreenPropped()
+  ];
 
   @override
   void initState() {
@@ -33,6 +47,15 @@ class _ScreenUserDetailState extends State<ScreenUserDetail> {
     _controllerName.text = user.name;
     _controllerCredential.text = user.credential;
     imageAvatar = FileImage(File(user.imageName));
+  }
+
+  void _changeSelected(int index) {
+    setState(() {
+      selectedIndex = index;
+    });
+
+    Navigator.of(context).push(MaterialPageRoute<void>(
+        builder: (context) => screenOptions[selectedIndex]));
   }
 
   @override
@@ -61,13 +84,14 @@ class _ScreenUserDetailState extends State<ScreenUserDetail> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  shape: const CircleBorder(),
-                ),
+                  style: ElevatedButton.styleFrom(
+                    shape: const CircleBorder(),
+                  ),
                   onPressed: () async {
-                    FilePickerResult? result = await FilePicker.platform.pickFiles(
-                      initialDirectory: p.join(Directory.current.path, './faces')
-                    );
+                    FilePickerResult? result = await FilePicker.platform
+                        .pickFiles(
+                            initialDirectory:
+                                p.join(Directory.current.path, './faces'));
 
                     if (result != null) {
                       user.imageName = result.files.single.path!;
@@ -77,11 +101,9 @@ class _ScreenUserDetailState extends State<ScreenUserDetail> {
                     }
                   },
                   child: CircleAvatar(
-                    backgroundColor: Colors.transparent,
-                    radius: 100,
-                    foregroundImage: imageAvatar
-                  )
-              ),
+                      backgroundColor: Colors.transparent,
+                      radius: 100,
+                      foregroundImage: imageAvatar)),
               const SizedBox(height: 16),
               TextField(
                 controller: _controllerName,
@@ -110,12 +132,35 @@ class _ScreenUserDetailState extends State<ScreenUserDetail> {
           ),
         ),
       ),
+      bottomNavigationBar: _buidNavigationBar(),
+    );
+  }
+
+  Widget _buidNavigationBar() {
+    return BottomNavigationBar(
+      type: BottomNavigationBarType.fixed,
+      backgroundColor: Theme.of(context).colorScheme.primary,
+      selectedItemColor: Theme.of(context).colorScheme.onPrimary,
+      unselectedItemColor: Theme.of(context).colorScheme.onPrimary,
+      showSelectedLabels: true,
+      showUnselectedLabels: false,
+      items: <BottomNavigationBarItem>[
+        BottomNavigationBarItem(
+            icon: const Icon(Icons.apartment), label: S.of(context).places),
+        BottomNavigationBarItem(
+            icon: const Icon(Icons.group), label: S.of(context).groups),
+        BottomNavigationBarItem(
+            icon: const Icon(Icons.favorite), label: S.of(context).favorites),
+        BottomNavigationBarItem(
+            icon: const Icon(Icons.warning), label: S.of(context).propped),
+      ],
+      currentIndex: selectedIndex,
+      onTap: _changeSelected,
     );
   }
 
   void saveNames() {
     setState(() {
-
       var indexUserGroup = Data.userGroups.indexOf(userGroup);
 
       if (userGroup.users.contains(user)) {
