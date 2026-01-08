@@ -102,7 +102,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String errorPropCheck(Object action) {
-    return 'Not possible to $action check if any door is propped';
+    return 'Not possible to $action check if any door is propped or unlocked shortly';
   }
 
   @override

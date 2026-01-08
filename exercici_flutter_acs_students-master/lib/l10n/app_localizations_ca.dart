@@ -102,7 +102,7 @@ class AppLocalizationsCa extends AppLocalizations {
 
   @override
   String errorPropCheck(Object action) {
-    return 'No es pot fer l\'acció \'$action\', revisa si hi ha portes forçades';
+    return 'No es pot fer l\'acció \'$action\', revisa si hi ha portes forçades o desbloquejades temporalment';
   }
 
   @override

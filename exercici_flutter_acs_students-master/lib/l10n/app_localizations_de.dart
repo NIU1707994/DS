@@ -60,56 +60,56 @@ class AppLocalizationsDe extends AppLocalizations {
   String get submit => 'Bestätigen';
 
   @override
-  String get saved => 'Saved!';
+  String get saved => 'Gespeichert!';
 
   @override
-  String get nameGroup => 'Name Group';
+  String get nameGroup => 'Namensgruppe';
 
   @override
   String get description => 'Beschreibung';
 
   @override
-  String get enterText => 'Please enter some text';
+  String get enterText => 'Bitte geben Sie einen Text ein';
 
   @override
-  String get actionsSaved => 'Actions saved correctly!';
+  String get actionsSaved => 'Aktionen korrekt gespeichert!';
 
   @override
   String doorTitle(Object id) {
-    return 'Door $id';
+    return 'Tür $id';
   }
 
   @override
-  String get doorLocked => 'The door has been locked';
+  String get doorLocked => 'Die Tür ist verschlossen';
 
   @override
-  String get doorUnlocked => 'The door has been unlocked';
+  String get doorUnlocked => 'Die Tür ist unverschlossen';
 
   @override
-  String get doorUnlockedShortly => 'The door has been unlocked shortly';
+  String get doorUnlockedShortly => 'Die Tür wurde vor kurzem entriegelt';
 
   @override
-  String get doorClosed => 'The door has been closed';
+  String get doorClosed => 'Die Tür ist geschlossen';
 
   @override
-  String get doorOpened => 'The door has been opened';
+  String get doorOpened => 'Die Tür ist geöffnet';
 
   @override
-  String get areaLockedCorrectly => 'Area locked correctly';
+  String get areaLockedCorrectly => 'Bereich korrekt gesperrt';
 
   @override
-  String get areaUnlockedCorrectly => 'Area unlocked correctly';
+  String get areaUnlockedCorrectly => 'Bereich korrekt entsperrt';
 
   @override
   String errorPropCheck(Object action) {
-    return 'Not possible to $action check if any door is propped';
+    return 'Es ist nicht möglich, mit dem Befehl $action zu prüfen, ob eine Tür blockiert ist';
   }
 
   @override
-  String get noProppedDoors => 'There are no propped doors';
+  String get noProppedDoors => 'Es gibt keine abgestützten Türen';
 
   @override
-  String get noFavorites => 'No favorites yet';
+  String get noFavorites => 'Noch keine Favoriten';
 
   @override
   String get from => 'Von';
@@ -121,16 +121,16 @@ class AppLocalizationsDe extends AppLocalizations {
   String get weekdays => 'Wochentage';
 
   @override
-  String get accept => 'Accept';
+  String get accept => 'Akzeptieren';
 
   @override
-  String get incorrectData => 'Incorrect data';
+  String get incorrectData => 'Falsche Daten';
 
   @override
-  String get dateError => 'Start date must be before end date.';
+  String get dateError => 'Das Startdatum muss vor dem Enddatum liegen.';
 
   @override
-  String get timeError => 'Start time must be before end time.';
+  String get timeError => 'Die Startzeit muss vor der Endzeit liegen.';
 
   @override
   String get user => 'Benutzer';
