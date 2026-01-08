@@ -41,7 +41,9 @@ class _ScreenBlankState extends State<ScreenBlank> {
                   children: [
                     const Icon(Icons.apartment),
                     const SizedBox(width: 10),
-                    Text(S.of(context).places)
+                    Container(
+                        width: 90,
+                        child: Center(child: Text(S.of(context).places)))
                   ],
                 ),
               )),
@@ -60,8 +62,15 @@ class _ScreenBlankState extends State<ScreenBlank> {
                           vertical: 12, horizontal: 16),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
-                        children: [const Icon(Icons.group),
-                          Text(S.of(context).groups)],
+                        children: [
+                          const Icon(Icons.group),
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          Container(
+                              width: 90,
+                              child: Center(child: Text(S.of(context).groups)))
+                        ],
                       ))),
               onTap: () {
                 Navigator.of(context).pop();
@@ -78,7 +87,16 @@ class _ScreenBlankState extends State<ScreenBlank> {
                           vertical: 12, horizontal: 16),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
-                        children: [const Icon(Icons.favorite), Text(S.of(context).favorites)],
+                        children: [
+                          const Icon(Icons.favorite),
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          Container(
+                              width: 90,
+                              child:
+                                  Center(child: Text(S.of(context).favorites)))
+                        ],
                       ))),
               onTap: () {
                 Navigator.of(context).pop(); // close drawer
@@ -95,8 +113,15 @@ class _ScreenBlankState extends State<ScreenBlank> {
                           vertical: 12, horizontal: 16),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
-                        children: [const Icon(Icons.favorite),
-                          Text(S.of(context).propped)],
+                        children: [
+                          const Icon(Icons.warning),
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          Container(
+                              width: 90,
+                              child: Center(child: Text(S.of(context).propped)))
+                        ],
                       ))),
               onTap: () {
                 Navigator.of(context).pop(); // close drawer
