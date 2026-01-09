@@ -257,7 +257,7 @@ class S {
   /// `Not possible to {action} check if any door is propped`
   String errorPropCheck(Object action) {
     return Intl.message(
-      'Not possible to $action check if any door is propped or unlocked shortly',
+      'Not possible to $action check if any door is propped',
       name: 'errorPropCheck',
       desc: '',
       args: [action],
