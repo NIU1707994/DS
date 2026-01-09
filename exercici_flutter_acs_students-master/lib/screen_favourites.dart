@@ -47,12 +47,33 @@ class _ScreenFavoritesState extends State<ScreenFavorites> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          backgroundColor: Theme.of(context).colorScheme.primary,
-          foregroundColor: Theme.of(context).colorScheme.onPrimary,
-          title: Text(S.of(context).favorites),
-          centerTitle: true,
-          automaticallyImplyLeading: false,
-        ),
+            backgroundColor: Theme.of(context).colorScheme.primary,
+            foregroundColor: Theme.of(context).colorScheme.onPrimary,
+            title: Text(S.of(context).favorites),
+            centerTitle: true,
+            automaticallyImplyLeading: false,
+            actions: [
+              PopupMenuButton<Locale>(
+                icon: const Icon(Icons.language),
+                onSelected: (Locale newLocale) {
+                  S.load(newLocale);
+                },
+                itemBuilder: (BuildContext context) => <PopupMenuEntry<Locale>>[
+                  const PopupMenuItem<Locale>(
+                    value: Locale('en'),
+                    child: Text('English'),
+                  ),
+                  const PopupMenuItem<Locale>(
+                    value: Locale('ca'),
+                    child: Text('Català'),
+                  ),
+                  const PopupMenuItem<Locale>(
+                    value: Locale('es'),
+                    child: Text('Español'),
+                  ),
+                ],
+              ),
+            ]),
         body: visibleFavorites.isEmpty
             ? Center(child: Text(S.of(context).noFavorites))
             : ListView.separated(

@@ -165,10 +165,31 @@ class _ScreenDoorsSettingsState extends State<ScreenDoorsSettings> {
 
     return Scaffold(
         appBar: AppBar(
-          title: Text(S.of(context).doorTitle(door.id)),
-          backgroundColor: Theme.of(context).colorScheme.primary,
-          foregroundColor: Theme.of(context).colorScheme.onPrimary,
-        ),
+            title: Text(S.of(context).doorTitle(door.id)),
+            backgroundColor: Theme.of(context).colorScheme.primary,
+            foregroundColor: Theme.of(context).colorScheme.onPrimary,
+            actions: [
+              PopupMenuButton<Locale>(
+                icon: const Icon(Icons.language),
+                onSelected: (Locale newLocale) {
+                  S.load(newLocale);
+                },
+                itemBuilder: (BuildContext context) => <PopupMenuEntry<Locale>>[
+                  const PopupMenuItem<Locale>(
+                    value: Locale('en'),
+                    child: Text('English'),
+                  ),
+                  const PopupMenuItem<Locale>(
+                    value: Locale('ca'),
+                    child: Text('Català'),
+                  ),
+                  const PopupMenuItem<Locale>(
+                    value: Locale('es'),
+                    child: Text('Español'),
+                  ),
+                ],
+              ),
+            ]),
         body: FutureBuilder<Door>(
             future: _futureDoor,
             builder: (context, snapshot) {

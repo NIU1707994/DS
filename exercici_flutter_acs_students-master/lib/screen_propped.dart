@@ -59,13 +59,35 @@ class _ScreenProppedState extends State<ScreenPropped> {
           List<Door> items = snapshot.data!;
           return Scaffold(
               appBar: AppBar(
-                leadingWidth: 0,
-                backgroundColor: Theme.of(context).colorScheme.primary,
-                foregroundColor: Theme.of(context).colorScheme.onPrimary,
-                title: Text(S.of(context).propped),
-                centerTitle: true,
-                automaticallyImplyLeading: false,
-              ),
+                  leadingWidth: 0,
+                  backgroundColor: Theme.of(context).colorScheme.primary,
+                  foregroundColor: Theme.of(context).colorScheme.onPrimary,
+                  title: Text(S.of(context).propped),
+                  centerTitle: true,
+                  automaticallyImplyLeading: false,
+                  actions: [
+                    PopupMenuButton<Locale>(
+                      icon: const Icon(Icons.language),
+                      onSelected: (Locale newLocale) {
+                        S.load(newLocale);
+                      },
+                      itemBuilder: (BuildContext context) =>
+                          <PopupMenuEntry<Locale>>[
+                        const PopupMenuItem<Locale>(
+                          value: Locale('en'),
+                          child: Text('English'),
+                        ),
+                        const PopupMenuItem<Locale>(
+                          value: Locale('ca'),
+                          child: Text('Català'),
+                        ),
+                        const PopupMenuItem<Locale>(
+                          value: Locale('es'),
+                          child: Text('Español'),
+                        ),
+                      ],
+                    ),
+                  ]),
               body: (items.isNotEmpty)
                   ? ListView.separated(
                       itemCount: items.length, //ScrenFavorites()

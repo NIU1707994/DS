@@ -1,13 +1,8 @@
-
 import 'package:exercise_flutter_acs/favourites_storage.dart';
 import 'package:exercise_flutter_acs/requests.dart';
 import 'package:exercise_flutter_acs/tree.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'generated/l10n.dart';
-
-import 'package:exercise_flutter_acs/main.dart';
-
 
 class AppbarPers extends StatefulWidget implements PreferredSizeWidget {
   final String id;
@@ -75,8 +70,7 @@ class _AppbarPersState extends State<AppbarPers> {
           ? S.of(context).areaLockedCorrectly
           : S.of(context).areaUnlockedCorrectly;
 
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text(msg)));
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(msg)));
 
       widget.onStateChanged();
     } else {
@@ -85,9 +79,8 @@ class _AppbarPersState extends State<AppbarPers> {
         lockedAreaIcon = previousIcon;
       });
 
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content:
-              Text(S.of(context).errorPropCheck(action))));
+      ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(S.of(context).errorPropCheck(action))));
     }
   }
 
@@ -115,10 +108,6 @@ class _AppbarPersState extends State<AppbarPers> {
             title: Text(root!.id),
             centerTitle: true,
             actions: [
-              IconButton(onPressed: _addFavourites, icon: Icon(favouriteIcon)),
-              IconButton(
-                  onPressed: _lockUnlockArea, icon: Icon(lockedAreaIcon)),
-
               PopupMenuButton<Locale>(
                 icon: const Icon(Icons.language),
                 onSelected: (Locale newLocale) {
@@ -134,11 +123,48 @@ class _AppbarPersState extends State<AppbarPers> {
                     child: Text('Català'),
                   ),
                   const PopupMenuItem<Locale>(
-                    value: Locale('de'),
-                    child: Text('Deutsch'),
+                    value: Locale('es'),
+                    child: Text('Español'),
                   ),
                 ],
               ),
+              PopupMenuButton(
+                  color: Theme.of(context).colorScheme.primary,
+                  itemBuilder: (BuildContext context) =>
+                      <PopupMenuEntry<Locale>>[
+                        PopupMenuItem(
+                          onTap: _addFavourites,
+                          child: Row(
+                            children: [
+                              Icon(favouriteIcon),
+                              const SizedBox(
+                                width: 5,
+                              ),
+                              Text(
+                                S.of(context).favorites,
+                                style: const TextStyle(color: Colors.white),
+                              )
+                            ],
+                          ),
+                        ),
+                        PopupMenuItem(
+                          onTap: _lockUnlockArea,
+                          child: Row(
+                            children: [
+                              Icon(lockedAreaIcon),
+                              const SizedBox(
+                                width: 5,
+                              ),
+                              Text(
+                                state == 'lock'
+                                    ? (S.of(context).actionUnlock)
+                                    : (S.of(context).actionLock),
+                                style: const TextStyle(color: Colors.white),
+                              )
+                            ],
+                          ),
+                        )
+                      ])
             ],
           );
         } else if (snapshot.hasError) {
