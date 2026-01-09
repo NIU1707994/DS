@@ -17,13 +17,13 @@ import 'package:intl/message_lookup_by_library.dart';
 import 'package:intl/src/intl_helpers.dart';
 
 import 'messages_ca.dart' as messages_ca;
-import 'messages_de.dart' as messages_de;
+import 'messages_es.dart' as messages_es;
 import 'messages_en.dart' as messages_en;
 
 typedef Future<dynamic> LibraryLoader();
 Map<String, LibraryLoader> _deferredLibraries = {
   'ca': () => new SynchronousFuture(null),
-  'de': () => new SynchronousFuture(null),
+  'es': () => new SynchronousFuture(null),
   'en': () => new SynchronousFuture(null),
 };
 
@@ -31,8 +31,8 @@ MessageLookupByLibrary? _findExact(String localeName) {
   switch (localeName) {
     case 'ca':
       return messages_ca.messages;
-    case 'de':
-      return messages_de.messages;
+    case 'es':
+      return messages_es.messages;
     case 'en':
       return messages_en.messages;
     default:
